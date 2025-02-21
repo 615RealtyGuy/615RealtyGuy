@@ -562,13 +562,14 @@ h1, h2, h3, h4, h5, h6 {
         margin: 0 auto;
     }
 
-    nav {
-        display: flex;
-        flex-direction: column; /* Stacks navigation links */
-        align-items: center;
-        width: 100%;
-    }
-
+nav {
+    display: flex;
+    flex-direction: row; /* Keeps buttons in a row */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap; /* Allows wrapping if needed */
+}
     .logo img {
         display: block;
         margin: 0 auto;
