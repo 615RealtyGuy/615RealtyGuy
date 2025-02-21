@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - 615 Realty Guy</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        /* General Page Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000000; /* Matches your theme */
+            color: #D2B56C; /* Gold text color */
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #000;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #D2B56C;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            color: #fff;
+        }
+
+        /* Contact Dropdown */
+        .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropbtn {
+            background-color: transparent;
+            border: none;
+            color: #D2B56C;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 200px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            text-align: left;
+        }
+
+        .dropdown-content a {
+            display: block;
+            color: #D2B56C;
+            padding: 10px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* About Section */
+        .about-section {
+            text-align: center;
+            padding: 50px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .about-section h1 {
+            font-size: 2.5rem;
+        }
+
+        /* About Me Text */
+        .about-text {
+            text-align: center;
+            max-width: 800px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Image & Checkmark List Layout */
+        .about-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px; /* Space between sections */
+            margin-top: 30px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .about-image {
+            width: 250px;
+            height: auto;
+            border-radius: 50%;
+            border: 3px solid #D2B56C;
+            flex-shrink: 0;
+        }
+
+        .about-list {
+            text-align: left;
+            flex: 1;
+        }
+
+        .about-list h2 {
+            font-size: 1.8rem;
+            color: #D2B56C;
+            margin-bottom: 10px;
+        }
+
+        .about-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .about-list ul li {
+            font-size: 1.2rem;
+            color: #D2B56C;
+            margin-bottom: 10px;
+        }
+
+        /* Contact Button */
+        .contact-button {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 30px;
+            background-color: #D2B56C;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .contact-button:hover {
+            background-color: #c19a5c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-container {
+                flex-direction: column; /* Stacks elements vertically on mobile */
+                align-items: center;
+                text-align: center;
+            }
+
+            .about-list {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="https://615realtyguy.com">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="services.html">Services</a></li>
+
+            <!-- Contact Dropdown -->
+            <li class="dropdown">
+                <button class="dropbtn">Contact</button>
+                <div class="dropdown-content">
+                    <a href="https://calendly.com/615realtyguy" target="_blank">Schedule a Consult</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank">Contact Form</a>
+                    <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">Facebook</a>
+                    <a href="https://www.instagram.com/615realtyguy/" target="_blank">Instagram</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- About Me Section -->
+    <section class="about-section">
+        <h1>About Me</h1>
+
+        <!-- About Me Text -->
+        <div class="about-text">
+            <p>Before stepping into the world of real estate, I dedicated my career to serving others as an ICU nurse. In that role, I learned the importance of precision, care, and unwavering commitment—qualities that I now bring to my work in real estate.</p>
+
+            <p>Buying or selling a home is one of the most significant decisions a person can make, and just like in healthcare, every situation is unique and requires a personalized approach. I take my role as your real estate professional seriously, providing you with the best resources, market insights, and guidance to make informed decisions with confidence.</p>
+
+            <p>My mission is simple: <strong>to help people.</strong> Whether it was in the ICU or now in real estate, my goal has always been to offer support, expertise, and peace of mind when it matters most. I strive to make every transaction as smooth and stress-free as possible, ensuring my clients feel empowered every step of the way.</p>
+
+            <p>With my background in high-pressure, detail-oriented work, you can trust that I will handle your real estate needs with the same level of dedication and care.</p>
+
+            <p>Let’s work together to achieve your real estate goals.</p>
+        </div>
+
+        <!-- Image on the Left, Checkmark List on the Right -->
+        <div class="about-container">
+            <img src="https://i.imgur.com/ZHE1UdS.png" alt="John Crowder - 615RealtyGuy" class="about-image">
+
+            <div class="about-list">
+                <h2>Why Work With Me?</h2>
+                <ul>
+                    <li>✅ Expert in local market trends & macroeconomics - I'm a data nerd</li>
+                    <li>✅ Professional & clear communication</li>
+                    <li>✅ Utilize all the latest tech to serve you</li>
+                    <li>✅ Passionate about finding the right home for you</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank" class="contact-button">Get in Touch</a>
+    </section>
+
+</body>
+</html>
+
+<section class="testimonials-section">
+    <h2 class="gradient-title">What My Clients Say</h2>
+    <div class="carousel-container">
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button> <!-- Left Arrow -->
+        <div class="testimonial-container">
+            <div class="testimonial active">
+                <p>"John went above and beyond for us! He found the perfect home and made sure every step was seamless. Couldn't be happier!"</p>
+                <h4>- Tim M.</h4>
+                <div class="star-rating">
+                    ★ ★ ★ ★ ★
+                </div>
+            </div>
+            <div class="testimonial">
+                <p>"John was amazing throughout the entire process! His knowledge of the market and clear communication made buying my first home a breeze!"</p>
+                <h4>- Emily R.</h4>
+                <div class="star-rating">
+                    ★ ★ ★ ★ ★
+                </div>
+            </div>
+            <div class="testimonial">
+                <p>"I highly recommend John for anyone looking to buy or sell a home. His professionalism and expertise made everything stress-free!"</p>
+                <h4>- Michael B.</h4>
+                <div class="star-rating">
+                    ★ ★ ★ ★ ★
+                </div>
+            </div>
+            <div class="testimonial">
+                <p>"John was incredibly helpful and made selling our home a smooth and successful experience. He truly cares about his clients!"</p>
+                <h4>- Sarah L.</h4>
+                <div class="star-rating">
+                    ★ ★ ★ ★ ★
+                </div>
+            </div>
+            <div class="testimonial">
+                <p>"I've worked with a lot of realtors, and John stands out as one of the best. Highly knowledgeable and genuinely cares about his clients!"</p>
+                <h4>- Mike H.</h4>
+                <div class="star-rating">
+                    ★ ★ ★ ★ ★
+                </div>
+            </div>
+            <div class="testimonial">
+                <p>"We were nervous first-time home buyers, but John made the entire process easy and enjoyable. He's the best!"</p>
+                <h4>- Holly C.</h4>
+                <div class="star-rating">
+                    ★ ★ ★ ★ ★
+                </div>
+            </div>
+        </div>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button> <!-- Right Arrow -->
+    </div>
+</section>
+
+<style>
+    /* Testimonials Section */
+    .testimonials-section {
+        text-align: center;
+        padding: 50px 20px;
+        background-color: #000000; /* Matches your theme */
+    }
+
+    /* Gold Gradient Title */
+    .gradient-title {
+        font-size: 2.5rem;
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+        background: linear-gradient(to right, #feee9f, #b18841);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+        letter-spacing: 1.5px;
+        padding: 10px 20px;
+    }
+
+    /* Thin Gold Border Around Carousel */
+    .carousel-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        max-width: 700px;
+        margin: auto;
+        padding: 20px;
+        border-radius: 12px;
+        border: 2px solid transparent; /* Thin border */
+        background: linear-gradient(#000, #000) padding-box, 
+                    linear-gradient(to right, #b18841, #feee9f) border-box; /* Gold border */
+        box-shadow: 0px 4px 10px rgba(210, 181, 108, 0.5); /* Soft glow */
+    }
+
+    /* Testimonial Box */
+    .testimonial-container {
+        overflow: hidden;
+        width: 80%;
+        max-width: 500px;
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.85); /* Slightly transparent black */
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .testimonial {
+        display: none;
+        font-size: 1.2rem;
+        color: #ccc;
+        text-align: center;
+    }
+
+    .testimonial.active {
+        display: block;
+    }
+
+    .testimonial h4 {
+        color: #feee9f; /* Light gold text */
+        margin-top: 10px;
+        font-size: 1.1rem;
+    }
+
+    /* Star Rating */
+    .star-rating {
+        font-size: 1.5rem;
+        color: transparent;
+        background: linear-gradient(to right, #feee9f, #b18841);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-top: 10px;
+        letter-spacing: 5px;
+    }
+
+    /* Carousel Navigation Buttons */
+    .prev, .next {
+        background-color: transparent;
+        border: none;
+        color: #D2B56C;
+        font-size: 2rem;
+        cursor: pointer;
+        padding: 10px;
+        transition: 0.3s;
+    }
+
+    .prev:hover, .next:hover {
+        color: #fff;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .testimonial-container {
+            width: 90%;
+        }
+
+        .testimonial {
+            font-size: 1rem;
+            padding: 15px;
+        }
+
+        .prev, .next {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<script>
+    let currentSlide = 0;
+    const testimonials = document.querySelectorAll(".testimonial");
+
+    function moveSlide(step) {
+        testimonials[currentSlide].classList.remove("active");
+        currentSlide = (currentSlide + step + testimonials.length) % testimonials.length;
+        testimonials[currentSlide].classList.add("active");
+    }
+
+    function autoSlide() {
+        moveSlide(1); // Move to next testimonial
+    }
+
+    // Auto-rotate every 3 seconds
+    let slideInterval = setInterval(autoSlide, 3000);
+
+    // Pause auto-scroll when hovering over testimonials
+    document.querySelector(".testimonial-container").addEventListener("mouseenter", () => {
+        clearInterval(slideInterval);
+    });
+
+    // Resume auto-scroll when leaving
+    document.querySelector(".testimonial-container").addEventListener("mouseleave", () => {
+        slideInterval = setInterval(autoSlide, 3000);
+    });
+</script>
