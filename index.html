@@ -159,33 +159,44 @@
             height: 30px;
         }
 
-        /* Responsive Fixes */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                text-align: center;
-            }
-            nav {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .dropdown {
-                width: 100%;
-            }
-            .dropdown-content {
-                position: static;
-                width: 100%;
-                text-align: center;
-            }
-            footer {
-                flex-direction: column;
-                text-align: center;
-            }
-            .social-icons {
-                justify-content: center;
-                margin-top: 10px;
-            }
-        }
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .dropdown {
+        width: 100%;
+    }
+    .dropdown-content {
+        position: static;
+        width: 100%;
+        text-align: center;
+    }
+    footer {
+        flex-direction: column;
+        text-align: center;
+    }
+    .social-icons {
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    /* ✅ Services Section Text Optimization */
+    .services-section h2 {
+        font-size: 1.6rem; /* Adjusts font size */
+        line-height: 1.3; /* Improves spacing between lines */
+        text-align: center;
+        max-width: 80%; /* Limits excessive line breaks */
+        margin: 0 auto; /* Centers text */
+        padding: 10px 0; /* Adds breathing room */
+    }
+}
+
     </style>
 </head>
 <body>
