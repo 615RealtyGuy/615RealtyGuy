@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>615 Realty Guy - Home</title>
     <style>
+        /* General Styles */
         body {
             font-family: 'Futura', sans-serif;
             background-color: #000000;
@@ -12,30 +13,23 @@
             margin: 0;
             padding: 0;
             text-align: center;
-            
-            body {
-    font-family: 'Futura', sans-serif;
-    background-color: #00000;
-    color: #d2b56c;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-/* Apply Gold Gradient to All Headings */
-h1, h2, h3, h4, h5, h6 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    background: linear-gradient(to right, #feee9f, #b18841);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-    letter-spacing: 1.5px;
-    padding: 10px 20px;
-}
-
+            overflow-x: hidden; /* Fixes horizontal scrolling */
         }
+
+        /* Apply Gold Gradient to All Headings */
+        h1, h2, h3, h4, h5, h6 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #feee9f, #b18841);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            letter-spacing: 1.5px;
+            padding: 10px 20px;
+        }
+
+        /* Banner Styling */
         .banner {
             background: black;
             padding: 2px;
@@ -43,140 +37,179 @@ h1, h2, h3, h4, h5, h6 {
         .banner img {
             max-width: 100%;
             height: auto;
+            display: block;
+            margin: 0 auto;
         }
+
+        /* Header */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2px;
+            padding: 10px;
             background: black;
+            width: 100%;
         }
+
+        /* Logo */
         .logo img {
             max-width: 100px;
+            display: block;
         }
+
+        /* Navigation */
         nav {
             display: flex;
             align-items: center;
+            gap: 15px;
         }
         nav a {
             color: #d2b56c;
             text-decoration: none;
-            margin: 0 10px;
             font-size: 16px;
+            font-weight: bold;
+            padding: 10px 15px;
+            transition: color 0.3s;
         }
-        .services-section {
-            padding: 40px;
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
+        nav a:hover {
+            color: #feee9f;
         }
-        .services-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-        .service-card {
-            position: relative;
-            width: 48%;
-            height: 350px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .service-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            border-radius: 10px;
-        }
-        .blog-section {
-            padding: 40px;
-            width: 90%;
-            max-width: 1200px;
-            margin: auto;
-        }
-        .mortgage-calculator {
-            background: none;
-            padding: 20px;
-            margin: 40px auto;
-            width: 90%;
-            max-width: 1200px;
-            border-radius: 10px;
-            color: white;
-        }
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-        .social-icons img {
-            width: 30px;
-            height: 30px;
-        }
-        footer {
-            background: black;
-            padding: 20px;
-            color: #d2b56c;
-            text-align: center;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        footer p {
-            flex-grow: 1;
-            text-align: center;
-        }
-    .dropdown {
+
+        /* Dropdown Menu */
+        .dropdown {
             position: relative;
             display: inline-block;
         }
+
+        /* Style for the dropdown button */
         .dropbtn {
             background-color: black;
             color: #d2b56c;
-            padding: 10px;
+            padding: 10px 15px;
             font-size: 16px;
             border: none;
             cursor: pointer;
+            font-weight: bold;
         }
+
+        /* Style for the dropdown content */
         .dropdown-content {
             display: none;
             position: absolute;
             background-color: black;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
             right: 0;
+            border-radius: 5px;
         }
+
+        /* Style dropdown links */
         .dropdown-content a {
             color: #d2b56c;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
+            white-space: nowrap;
         }
+
+        /* Gold Glow Hover Effect */
         .dropdown-content a:hover {
-            background-color: #3a3a3a;
+            background: linear-gradient(to right, #feee9f, #b18841);
+            color: black !important;
+            box-shadow: 0px 0px 10px rgba(210, 181, 108, 0.7);
         }
+
+        /* Show dropdown on hover */
         .dropdown:hover .dropdown-content {
             display: block;
         }
-        </style>
+
+        /* Footer */
+        footer {
+            background: black;
+            padding: 20px;
+            color: #d2b56c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Footer Text */
+        footer p {
+            margin: 0;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        /* Social Media Icons */
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .social-icons a {
+            display: inline-block;
+        }
+        .social-icons img {
+            width: 30px; /* Correct size */
+            height: 30px;
+        }
+
+        /* Responsive Fixes */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .dropdown {
+                width: 100%;
+            }
+            .dropdown-content {
+                position: static;
+                width: 100%;
+                text-align: center;
+            }
+            footer {
+                flex-direction: column;
+                text-align: center;
+            }
+            .social-icons {
+                justify-content: center;
+                margin-top: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
+
+    <!-- Banner -->
     <div class="banner">
-        <a href="https://sixonefive.homes" target="_blank"><img src="https://i.imgur.com/XLvCp6R.png" alt="Brokerage Banner"></a>
+        <a href="https://sixonefive.homes" target="_blank">
+            <img src="https://i.imgur.com/XLvCp6R.png" alt="Brokerage Banner">
+        </a>
     </div>
+
+    <!-- Header -->
     <header>
         <div class="logo">
             <img src="https://i.imgur.com/7L0crEF.png" alt="Personal Logo">
         </div>
         <nav>
             <a href="#home">Home</a>
-            <a href="about.html">About Me</a>
+            <a href="#about">About Me</a>
             <a href="https://substack.com/@615realtyguy?utm_source=user-menu" target="_blank">Blog</a>
-        <div class="dropdown">
+            <div class="dropdown">
                 <button class="dropbtn">Contact</button>
                 <div class="dropdown-content">
-                  <li><a href="https://calendly.com/615realtyguy" target="_blank">Schedule a Consult</a></li>
+                    <a href="https://calendly.com/615realtyguy" target="_blank">Schedule a Consult</a>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank">Contact Form</a>
                     <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">Facebook</a>
                     <a href="https://www.instagram.com/615realtyguy/" target="_blank">Instagram</a>
@@ -184,6 +217,11 @@ h1, h2, h3, h4, h5, h6 {
             </div>
         </nav>
     </header>
+
+
+</body>
+</html>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -336,6 +374,68 @@ h1, h2, h3, h4, h5, h6 {
     background: #3a3a3a;
     color: #fff;
 }
+
+/* Fix CTA Section Overflow */
+.cta-section {
+    text-align: center;
+    background: linear-gradient(to right, #feee9f, #b18841); /* Gold gradient */
+    padding: 20px 5%; /* Reduce padding to prevent overflow */
+    border-radius: 10px;
+    margin: 40px auto;
+    max-width: 90%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Prevents any extra width */
+}
+
+/* Ensure the CTA title and text don't stretch beyond the container */
+.cta-section h2, .cta-section p {
+    max-width: 90%; /* Keeps text within bounds */
+    word-wrap: break-word; /* Ensures long words don't overflow */
+}
+
+/* CTA Button Fix */
+.cta-button {
+    background: #231f20;
+    color: #feee9f;
+    padding: 8px 18px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+    display: inline-block;
+    width: auto;
+    max-width: 100%;
+}
+
+/* CTA Section Fix for Mobile */
+@media (max-width: 768px) {
+    .cta-section {
+        padding: 15px 5%;
+        width: 90%;
+        max-width: 100%;
+    }
+
+    .cta-section h2 {
+        font-size: 1.2rem; /* Adjust for mobile */
+    }
+
+    .cta-section p {
+        font-size: 0.9rem; /* Keep text size readable */
+    }
+
+    .cta-button {
+        font-size: 0.9rem; /* Make button text smaller on mobile */
+    }
+}
+
+
 </style>
 
 
@@ -549,11 +649,18 @@ h1, h2, h3, h4, h5, h6 {
     }
 
    /* Responsive Design */
+
+
+
 @media (max-width: 768px) {
     body {
         text-align: center;
         padding: 0;
         overflow-x: hidden; /* Prevents horizontal scrolling */
+    }
+
+    html, body {
+        max-width: 100%;
     }
 
     header, .banner, .spotify-section, .instagram-section {
@@ -562,18 +669,30 @@ h1, h2, h3, h4, h5, h6 {
         margin: 0 auto;
     }
 
-nav {
-    display: flex;
-    flex-direction: row; /* Keeps buttons in a row */
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    flex-wrap: wrap; /* Allows wrapping if needed */
-}
+    nav {
+        display: flex;
+        flex-wrap: wrap; /* Allows buttons to wrap if needed */
+        justify-content: center; /* Ensures buttons are centered */
+        align-items: center;
+        width: 100%;
+        gap: 10px; /* Prevents elements from stretching too far */
+    }
+
     .logo img {
         display: block;
         margin: 0 auto;
         max-width: 80px; /* Adjusts logo size for mobile */
+    }
+
+    .banner img {
+        width: 100%; /* Ensures banner fits within mobile screens */
+        height: auto;
+    }
+
+    .cta-section, .services-section, .blog-section {
+        width: 90%; /* Ensures sections fit inside the screen */
+        max-width: 600px; /* Prevents sections from being too wide */
+        margin: auto; /* Centers them */
     }
 
     .testimonial-container {
@@ -598,6 +717,11 @@ nav {
         max-width: 100%;
     }
 }
+
+
+
+
+
 
 </style>
 
@@ -674,6 +798,19 @@ nav {
     .elfsight-app-8792f413-f9e4-4ad5-8920-5b5bce2c2abb {
         width: 100% !important; /* Forces the widget to take the full width */
     }
+
+/* Social Media Icons - Gold Glow Hover Effect */
+.social-icons a {
+    display: inline-block;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.social-icons a:hover {
+    transform: scale(1.1); /* Slightly enlarges the icon */
+    box-shadow: 0px 0px 15px rgba(210, 181, 108, 0.7); /* Gold glow effect */
+}
+
+
 </style>
 
 
@@ -690,7 +827,14 @@ nav {
               secondary: "#626262",
               background: "#000000",
             }
-          };
+          };nav {
+    display: flex;
+    flex-direction: row; /* Keeps buttons in a row */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-wrap: wrap; /* Allows wrapping if needed */
+}
         </script>
         <script src="https://substackapi.com/embeds/feed.js" async></script>
     </section>
@@ -700,16 +844,22 @@ nav {
         <div class="elfsight-app-d097dce5-b120-4984-b485-6395c97adfc1" data-elfsight-app-lazy></div>
     </section>
 
-    <footer>
-        <p>&copy; 2025 615Realtyguy.com - Your Trusted Real Estate Partner</p>
-        <div class="social-icons">
-            <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">
-                <img src="https://i.imgur.com/pXurSVm.png" alt="Facebook" class="social-icon">
-            </a>
-            <a href="https://www.instagram.com/615realtyguy/" target="_blank">
-                <img src="https://i.imgur.com/v2vc2NV.png" alt="Instagram" class="social-icon">
-            </a>
-        </div>
-    </footer>
+<!-- Footer (ONLY ONE INSTANCE) -->
+<footer>
+    <p>&copy; 2025 615Realtyguy.com - Your Trusted Real Estate Partner</p>
+    <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">
+            <img src="https://i.imgur.com/pXurSVm.png" alt="Facebook">
+        </a>
+        <a href="https://www.instagram.com/615realtyguy/" target="_blank">
+            <img src="https://i.imgur.com/v2vc2NV.png" alt="Instagram">
+        </a>
+    </div>
+</footer>
+
+</body>
+</html>
+
+  
 </body>
 </html>
