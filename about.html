@@ -364,16 +364,21 @@
         font-size: 1.1rem;
     }
 
-    /* Star Rating */
     .star-rating {
-        font-size: 1.5rem;
-        color: transparent;
-        background: linear-gradient(to right, #feee9f, #b18841);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-top: 10px;
-        letter-spacing: 5px;
-    }
+    display: flex; /* Makes sure all stars stay on one line */
+    justify-content: center; /* Centers the stars */
+    align-items: center; /* Ensures vertical alignment */
+    font-size: 1.5rem;
+    color: transparent;
+    background: linear-gradient(to right, #feee9f, #b18841);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 10px;
+    letter-spacing: 2px; /* Reduces spacing to prevent wrapping */
+    white-space: nowrap; /* Prevents stars from breaking to a new line */
+    gap: 4px; /* Ensures spacing is uniform */
+}
+
 
     /* Carousel Navigation Buttons */
     .prev, .next {
