@@ -196,6 +196,60 @@
                 text-align: center;
             }
         }
+
+ /* Footer */
+        footer {
+            background: black;
+            padding: 20px;
+            color: #d2b56c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Footer Text with Gold Gradient */
+footer p {
+    font-size: 1rem; /* Adjust as needed */
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(to right, #feee9f, #b18841); /* Gold Gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 1px;
+    padding: 5px 10px;
+}
+
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Aligns the logo to the far left */
+}
+
+.footer-logo img {
+    max-width: 80px; /* Adjust size to match the 615RealtyGuy logo */
+    height: auto; /* Maintains aspect ratio */
+}
+
+
+
+        /* Social Media Icons */
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .social-icons a {
+            display: inline-block;
+        }
+        .social-icons img {
+            width: 30px; /* Correct size */
+            height: 30px;
+        }
+        
     </style>
 </head>
 <body>
@@ -451,3 +505,23 @@
         slideInterval = setInterval(autoSlide, 3000);
     });
 </script>
+
+
+<!-- Footer (ONLY ONE INSTANCE) -->
+<footer>
+
+<div class="footer-logo">
+    <img src="https://i.imgur.com/Mue4Nnr.png" alt="Company Logo">
+</div>
+
+
+    <p>&copy; 2025 615Realtyguy - Your Trusted Real Estate Partner</p>
+    <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">
+            <img src="https://i.imgur.com/pXurSVm.png" alt="Facebook">
+        </a>
+        <a href="https://www.instagram.com/615realtyguy/" target="_blank">
+            <img src="https://i.imgur.com/v2vc2NV.png" alt="Instagram">
+        </a>
+    </div>
+</footer>
