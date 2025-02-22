@@ -159,7 +159,7 @@
             height: 30px;
         }
 
-/* Responsive Fixes */
+       /* Responsive Fixes */
 @media (max-width: 768px) {
     header {
         flex-direction: column;
@@ -196,6 +196,16 @@
         padding: 10px 0; /* Adds breathing room */
     }
 }
+
+.blog-section {
+    display: block !important;
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #000000;
+    max-width: 100%;
+    min-height: 300px; /* Ensures enough space */
+}
+
 
     </style>
 </head>
@@ -829,30 +839,24 @@
 </style>
 
 
-    <section class="blog-section">
-        <h2>My Blogs</h2>
-        <div id="substack-feed-embed"></div>
-        <script>
-          window.SubstackFeedWidget = {
-            substackUrl: "615realtyguy.substack.com",
-            posts: 3,
-            layout: "right",
-            colors: {
-              primary: "#D2B56C",
-              secondary: "#626262",
-              background: "#000000",
-            }
-          };nav {
-    display: flex;
-    flex-direction: row; /* Keeps buttons in a row */
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    flex-wrap: wrap; /* Allows wrapping if needed */
-}
-        </script>
-        <script src="https://substackapi.com/embeds/feed.js" async></script>
-    </section>
+<section class="blog-section">
+    <h2>My Blogs</h2>
+    <div id="substack-feed-embed"></div>
+    <script>
+      window.SubstackFeedWidget = {
+        substackUrl: "615realtyguy.substack.com",
+        posts: 3,
+        layout: "right",
+        colors: {
+          primary: "#D2B56C",
+          secondary: "#626262",
+          background: "#000000",
+        }
+      };
+    </script>
+    <script src="https://substackapi.com/embeds/feed.js" async></script>
+</section>
+
 
     <section class="mortgage-calculator">
         <script src="https://static.elfsight.com/platform/platform.js" async></script>
