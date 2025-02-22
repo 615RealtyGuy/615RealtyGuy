@@ -622,16 +622,20 @@
         font-size: 1.1rem;
     }
 
-    /* Star Rating */
+   /* Star Rating - Keep on One Line */
     .star-rating {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-size: 1.5rem;
         color: transparent;
         background: linear-gradient(to right, #feee9f, #b18841);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-top: 10px;
-        letter-spacing: 5px;
-    }
+        letter-spacing: 2px; /* Reduce spacing so stars fit */
+        white-space: nowrap; /* Prevent wrapping */
+        gap: 4px; /* Adjusts spacing between stars */
 
     /* Carousel Navigation Buttons */
     .prev, .next {
