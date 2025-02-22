@@ -137,22 +137,33 @@
         }
 
         .about-list h2 {
-            font-size: 1.8rem;
-            color: #D2B56C;
-            margin-bottom: 10px;
-        }
+    font-size: 1.8rem;
+    color: #D2B56C;
+    margin-bottom: 10px;
+}
 
-        .about-list ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+.about-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-        .about-list ul li {
-            font-size: 1.2rem;
-            color: #D2B56C;
-            margin-bottom: 10px;
-        }
+.about-list ul li {
+    display: flex; /* Align checkbox & text in a row */
+    align-items: center; /* Align them vertically */
+    gap: 10px; /* Add spacing between checkbox and text */
+    font-size: 1.2rem;
+    color: #D2B56C;
+    margin-bottom: 10px;
+    flex-wrap: nowrap; /* Prevents text from wrapping under the checkbox */
+}
+
+/* If you're using an <img> tag for checkboxes */
+.about-list ul li img {
+    flex-shrink: 0; /* Prevents the checkbox from resizing */
+    width: 24px; /* Adjust checkbox size if needed */
+    height: 24px;
+}
 
         /* Contact Button */
         .contact-button {
