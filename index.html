@@ -543,6 +543,135 @@
 </section>
 
 
+<section id="home-valuation" class="valuation-section">
+    <h2>Get Your Free Home Valuation</h2>
+    <p>Click below & enter your info to receive a detailed estimate of your home's value.</p>
+    <div class="valuation-container">
+        <img src="https://i.imgur.com/9Fkpeih.png" alt="Home Valuation" class="valuation-image">
+        <button class="toggle-form-button" onclick="toggleForm()">Get My Home Value</button>
+        <form action="https://formsubmit.co/83702f691ccf936247e5971732f874a1" method="POST" class="valuation-form" id="valuation-form">
+            <input type="text" name="first_name" placeholder="Enter Your First Name" required>
+            <input type="text" name="last_name" placeholder="Enter Your Last Name" required>
+            <input type="text" name="address" placeholder="Enter Your Home Address" required>
+            <input type="email" name="email" placeholder="Enter Your Email" required>
+            <input type="hidden" name="_subject" value="New Home Valuation Request">
+            <div class="button-container">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<style>
+    /* Styling for Home Valuation Section */
+    .valuation-section {
+        text-align: center;
+        background-color: #000000;
+        color: #d2b56c;
+        padding: 40px 20px;
+    }
+
+    .valuation-section h2 {
+        font-size: 2rem;
+        color: #d2b56c;
+    }
+
+    .valuation-section p {
+        font-size: 1.2rem;
+        color: #feee9f;
+    }
+
+    .valuation-container {
+        max-width: 400px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .valuation-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .toggle-form-button {
+        background: linear-gradient(to right, #feee9f, #b18841);
+        color: #000;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        width: 100%;
+    }
+
+    .toggle-form-button:hover {
+        background: #b18841;
+        color: white;
+    }
+
+    .valuation-form {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .valuation-form input {
+        padding: 12px;
+        font-size: 1rem;
+        border: 2px solid #d2b56c;
+        background-color: #000;
+        color: #d2b56c;
+        border-radius: 5px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .valuation-form button {
+        background: linear-gradient(to right, #feee9f, #b18841);
+        color: #000;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .valuation-form button:hover {
+        background: #b18841;
+        color: white;
+    }
+</style>
+
+<script>
+    function toggleForm() {
+        var form = document.getElementById("valuation-form");
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "flex";
+        } else {
+            form.style.display = "none";
+        }
+    }
+</script>
+    
+
+
 <section class="testimonials-section">
     <h2 class="gradient-title">What My Clients Say</h2>
     <div class="carousel-container">
