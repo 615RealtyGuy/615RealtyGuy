@@ -164,6 +164,39 @@
 
         resizeCanvas();
         gameLoop();
+
+document.getElementById("upBtn").addEventListener("touchstart", function (e) {
+    e.preventDefault(); // Prevent double-tap zoom
+    movePaddle("up");
+});
+
+document.getElementById("downBtn").addEventListener("touchstart", function (e) {
+    e.preventDefault(); // Prevent double-tap zoom
+    movePaddle("down");
+});
+
+document.getElementById("upBtn").addEventListener("touchend", stopPaddle);
+document.getElementById("downBtn").addEventListener("touchend", stopPaddle);
+
+let moveInterval;
+
+function movePaddle(direction) {
+    stopPaddle(); // Ensure no other movement is active
+    moveInterval = setInterval(() => {
+        if (direction === "up" && rightPaddleY > 0) {
+            rightPaddleY -= canvasHeight * 0.02; // Adjust movement speed based on screen size
+        } else if (direction === "down" && rightPaddleY < canvas.height - paddleHeight) {
+            rightPaddleY += canvasHeight * 0.02;
+        }
+    }, 16); // Smooth 60 FPS-like movement
+}
+
+function stopPaddle() {
+    clearInterval(moveInterval);
+}
+
+
+    
     </script>
 </body>
 </html>
