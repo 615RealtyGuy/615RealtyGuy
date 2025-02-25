@@ -40,6 +40,8 @@
             display: block;
             margin: auto;
             border: 2px solid #d2b56c;
+            max-width: 100%;
+            height: auto;
         }
 
         /* Touch Controls */
@@ -69,7 +71,7 @@
     </div>
     <h1>House Pong 🏡🏓</h1>
     <p>Use the arrow keys (⬆️⬇️) or touch buttons for mobile users.</p>
-    <canvas id="pongCanvas" width="600" height="400"></canvas>
+    <canvas id="pongCanvas"></canvas>
     
     <div class="touch-controls">
         <button class="touch-button" id="upBtn">⬆️</button>
@@ -80,19 +82,34 @@
         const canvas = document.getElementById("pongCanvas");
         const ctx = canvas.getContext("2d");
 
-        const paddleWidth = 20, paddleHeight = 80;
-        let leftPaddleY = (canvas.height - paddleHeight) / 2;
-        let rightPaddleY = (canvas.height - paddleHeight) / 2;
-        let ballX = canvas.width / 2, ballY = canvas.height / 2;
-        let ballSpeedX = 4, ballSpeedY = 3;
+        let canvasWidth, canvasHeight;
+        let paddleWidth, paddleHeight;
+        let leftPaddleY, rightPaddleY;
+        let ballX, ballY, ballSpeedX, ballSpeedY;
+
+        function resizeCanvas() {
+            canvasWidth = window.innerWidth * 0.9;
+            canvasHeight = window.innerHeight * 0.6;
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+
+            paddleWidth = canvasWidth * 0.03;
+            paddleHeight = canvasHeight * 0.2;
+            leftPaddleY = (canvasHeight - paddleHeight) / 2;
+            rightPaddleY = (canvasHeight - paddleHeight) / 2;
+            ballX = canvasWidth / 2;
+            ballY = canvasHeight / 2;
+            ballSpeedX = canvasWidth * 0.005;
+            ballSpeedY = canvasHeight * 0.005;
+        }
 
         function drawRect(x, y, width, height, emoji) {
-            ctx.font = "40px Arial";
+            ctx.font = `${canvasWidth * 0.05}px Arial`;
             ctx.fillText(emoji, x, y + height / 2);
         }
 
         function drawBall(x, y, emoji) {
-            ctx.font = "30px Arial";
+            ctx.font = `${canvasWidth * 0.04}px Arial`;
             ctx.fillText(emoji, x, y);
         }
 
@@ -119,9 +136,9 @@
 
             // AI for left paddle
             if (leftPaddleY + paddleHeight / 2 < ballY) {
-                leftPaddleY += 3;
+                leftPaddleY += canvasHeight * 0.01;
             } else {
-                leftPaddleY -= 3;
+                leftPaddleY -= canvasHeight * 0.01;
             }
         }
 
@@ -132,18 +149,22 @@
         }
         
         document.addEventListener("keydown", function (e) {
-            if (e.key === "ArrowUp" && rightPaddleY > 0) rightPaddleY -= 20;
-            if (e.key === "ArrowDown" && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += 20;
+            if (e.key === "ArrowUp" && rightPaddleY > 0) rightPaddleY -= canvasHeight * 0.05;
+            if (e.key === "ArrowDown" && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += canvasHeight * 0.05;
         });
 
         document.getElementById("upBtn").addEventListener("click", function () {
-            if (rightPaddleY > 0) rightPaddleY -= 20;
+            if (rightPaddleY > 0) rightPaddleY -= canvasHeight * 0.05;
         });
         document.getElementById("downBtn").addEventListener("click", function () {
-            if (rightPaddleY < canvas.height - paddleHeight) rightPaddleY += 20;
+            if (rightPaddleY < canvas.height - paddleHeight) rightPaddleY += canvasHeight * 0.05;
         });
 
+        window.addEventListener("resize", resizeCanvas);
+
+        resizeCanvas();
         gameLoop();
     </script>
 </body>
 </html>
+
