@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Pong - 615 Realty Guy</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Futura', sans-serif;
+            background-color: #000000;
+            color: #d2b56c;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Home Button */
+        .home-button {
+            margin-top: 10px;
+        }
+
+        .home-button a {
+            color: #d2b56c;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .home-button a:hover {
+            color: #feee9f;
+        }
+
+        /* Game Styles */
+        canvas {
+            background: url('https://i.imgur.com/CuZ9Mfx.png') no-repeat center center;
+            background-size: cover;
+            display: block;
+            margin: auto;
+            border: 2px solid #d2b56c;
+        }
+
+        /* Touch Controls */
+        .touch-controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .touch-button {
+            background: #d2b56c;
+            color: #000;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .touch-button:active {
+            background: #feee9f;
+        }
+    </style>
+</head>
+<body>
+    <div class="home-button">
+        <a href="https://615realtyguy.com">🏠 Home</a>
+    </div>
+    <h1>House Pong 🏡🏓</h1>
+    <p>Use the arrow keys (⬆️⬇️) or touch buttons for mobile users.</p>
+    <canvas id="pongCanvas" width="600" height="400"></canvas>
+    
+    <div class="touch-controls">
+        <button class="touch-button" id="upBtn">⬆️</button>
+        <button class="touch-button" id="downBtn">⬇️</button>
+    </div>
+    
+    <script>
+        const canvas = document.getElementById("pongCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const paddleWidth = 20, paddleHeight = 80;
+        let leftPaddleY = (canvas.height - paddleHeight) / 2;
+        let rightPaddleY = (canvas.height - paddleHeight) / 2;
+        let ballX = canvas.width / 2, ballY = canvas.height / 2;
+        let ballSpeedX = 4, ballSpeedY = 3;
+
+        function drawRect(x, y, width, height, emoji) {
+            ctx.font = "40px Arial";
+            ctx.fillText(emoji, x, y + height / 2);
+        }
+
+        function drawBall(x, y, emoji) {
+            ctx.font = "30px Arial";
+            ctx.fillText(emoji, x, y);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawRect(20, leftPaddleY, paddleWidth, paddleHeight, "🏡");
+            drawRect(canvas.width - 40, rightPaddleY, paddleWidth, paddleHeight, "🏡");
+            drawBall(ballX, ballY, "📄");
+        }
+
+        function update() {
+            ballX += ballSpeedX;
+            ballY += ballSpeedY;
+            
+            if (ballY <= 0 || ballY >= canvas.height) {
+                ballSpeedY = -ballSpeedY;
+            }
+            if (
+                (ballX <= 40 && ballY >= leftPaddleY && ballY <= leftPaddleY + paddleHeight) ||
+                (ballX >= canvas.width - 40 && ballY >= rightPaddleY && ballY <= rightPaddleY + paddleHeight)
+            ) {
+                ballSpeedX = -ballSpeedX;
+            }
+
+            // AI for left paddle
+            if (leftPaddleY + paddleHeight / 2 < ballY) {
+                leftPaddleY += 3;
+            } else {
+                leftPaddleY -= 3;
+            }
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowUp" && rightPaddleY > 0) rightPaddleY -= 20;
+            if (e.key === "ArrowDown" && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += 20;
+        });
+
+        document.getElementById("upBtn").addEventListener("click", function () {
+            if (rightPaddleY > 0) rightPaddleY -= 20;
+        });
+        document.getElementById("downBtn").addEventListener("click", function () {
+            if (rightPaddleY < canvas.height - paddleHeight) rightPaddleY += 20;
+        });
+
+        gameLoop();
+    </script>
+</body>
+</html>
