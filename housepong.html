@@ -168,6 +168,8 @@
         let ballX, ballY, ballSpeedX, ballSpeedY;
         let maxBallSpeed = canvasWidth * 0.02; // Set a maximum speed limit
 
+        let moveInterval;
+
         function resizeCanvas() {
             canvasWidth = window.innerWidth * 0.9;
             canvasHeight = window.innerHeight * 0.6;
@@ -269,20 +271,29 @@
             startCountdown();
         });
 
-        document.addEventListener("keydown", function (e) {
-            if (!gameStarted) return;
-            if (e.key === "ArrowUp" && rightPaddleY > 0) rightPaddleY -= canvasHeight * 0.05;
-            if (e.key === "ArrowDown" && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += canvasHeight * 0.05;
-        });
+        function startMoving(direction) {
+            if (moveInterval) return;
+            moveInterval = setInterval(() => {
+                if (!gameStarted) return;
+                if (direction === 'up' && rightPaddleY > 0) rightPaddleY -= canvasHeight * 0.05;
+                if (direction === 'down' && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += canvasHeight * 0.05;
+            }, 1000 / 60); // 60 FPS
+        }
 
-        document.getElementById("upBtn").addEventListener("click", function () {
-            if (!gameStarted) return;
-            if (rightPaddleY > 0) rightPaddleY -= canvasHeight * 0.05;
+        function stopMoving() {
+            clearInterval(moveInterval);
+            moveInterval = null;
+        }
+
+        document.getElementById("upBtn").addEventListener("touchstart", function () {
+            startMoving('up');
         });
-        document.getElementById("downBtn").addEventListener("click", function () {
-            if (!gameStarted) return;
-            if (rightPaddleY < canvas.height - paddleHeight) rightPaddleY += canvasHeight * 0.05;
+        document.getElementById("upBtn").addEventListener("touchend", stopMoving);
+
+        document.getElementById("downBtn").addEventListener("touchstart", function () {
+            startMoving('down');
         });
+        document.getElementById("downBtn").addEventListener("touchend", stopMoving);
 
         pauseButton.addEventListener("click", function() {
             isPaused = !isPaused;
@@ -296,3 +307,4 @@
     </script>
 </body>
 </html>
+
