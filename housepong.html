@@ -275,8 +275,8 @@
             if (moveInterval) return;
             moveInterval = setInterval(() => {
                 if (!gameStarted) return;
-                if (direction === 'up' && rightPaddleY > 0) rightPaddleY -= canvasHeight * 0.05;
-                if (direction === 'down' && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += canvasHeight * 0.05;
+                if (direction === 'up' && rightPaddleY > 0) rightPaddleY -= canvasHeight * 0.0375;
+                if (direction === 'down' && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += canvasHeight * 0.0375;
             }, 1000 / 60); // 60 FPS
         }
 
@@ -307,4 +307,5 @@
     </script>
 </body>
 </html>
+
 
