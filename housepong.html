@@ -63,6 +63,68 @@
         .touch-button:active {
             background: #feee9f;
         }
+
+        /* Start Button Overlay */
+        .start-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        .start-button {
+            background: #d2b56c;
+            color: #000;
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .start-button:hover {
+            background: #feee9f;
+        }
+
+        /* Countdown Overlay */
+        .countdown-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            font-size: 3rem;
+            color: #d2b56c;
+        }
+
+        /* Rebound Counter Styles */
+        .rebound-counter {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: #d2b56c;
+        }
+
+        /* Pause Button Styles */
+        .pause-button {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: #d2b56c;
+            color: #000;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .pause-button:hover {
+            background: #feee9f;
+        }
     </style>
 </head>
 <body>
@@ -70,22 +132,41 @@
         <a href="https://615realtyguy.com">🏠 Home</a>
     </div>
     <h1>House Pong 🏡🏓</h1>
-    <p>Use the arrow keys (⬆️⬇️) or touch buttons for mobile users to bounce the contract back & forth.</p>
+    <p>Use the arrow keys (⬆️⬇️) or touch buttons for mobile users to bounce the contract back & forth</p>
     <canvas id="pongCanvas"></canvas>
     
+    <div class="start-overlay" id="startOverlay">
+        <button class="start-button" id="startButton">Start Game</button>
+    </div>
+
+    <div class="countdown-overlay" id="countdownOverlay" style="display: none;"></div>
+
     <div class="touch-controls">
         <button class="touch-button" id="upBtn">⬆️</button>
         <button class="touch-button" id="downBtn">⬇️</button>
     </div>
+
+    <div class="rebound-counter" id="reboundCounter">Rebounds: 0</div>
+
+    <button class="pause-button" id="pauseButton">Pause</button>
     
     <script>
         const canvas = document.getElementById("pongCanvas");
         const ctx = canvas.getContext("2d");
+        const startButton = document.getElementById("startButton");
+        const startOverlay = document.getElementById("startOverlay");
+        const countdownOverlay = document.getElementById("countdownOverlay");
+        const reboundCounter = document.getElementById("reboundCounter");
+        const pauseButton = document.getElementById("pauseButton");
+        let gameStarted = false;
+        let playerReboundCount = 0;
+        let isPaused = false;
 
         let canvasWidth, canvasHeight;
         let paddleWidth, paddleHeight;
         let leftPaddleY, rightPaddleY;
         let ballX, ballY, ballSpeedX, ballSpeedY;
+        let maxBallSpeed = canvasWidth * 0.02; // Set a maximum speed limit
 
         function resizeCanvas() {
             canvasWidth = window.innerWidth * 0.9;
@@ -95,6 +176,10 @@
 
             paddleWidth = canvasWidth * 0.03;
             paddleHeight = canvasHeight * 0.2;
+            resetGame();
+        }
+
+        function resetGame() {
             leftPaddleY = (canvasHeight - paddleHeight) / 2;
             rightPaddleY = (canvasHeight - paddleHeight) / 2;
             ballX = canvasWidth / 2;
@@ -116,7 +201,7 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawRect(20, leftPaddleY, paddleWidth, paddleHeight, "🏡");
-            drawRect(canvas.width - 40, rightPaddleY, paddleWidth, paddleHeight, "🏡");
+            drawRect(canvas.width - 40 - paddleWidth, rightPaddleY, paddleWidth, paddleHeight, "🏡");
             drawBall(ballX, ballY, "📄");
         }
 
@@ -129,75 +214,85 @@
             }
             if (
                 (ballX <= 40 && ballY >= leftPaddleY && ballY <= leftPaddleY + paddleHeight) ||
-                (ballX >= canvas.width - 40 && ballY >= rightPaddleY && ballY <= rightPaddleY + paddleHeight)
+                (ballX >= canvas.width - 40 - paddleWidth && ballY >= rightPaddleY && ballY <= rightPaddleY + paddleHeight)
             ) {
                 ballSpeedX = -ballSpeedX;
+                if (ballX >= canvas.width - 40 - paddleWidth && ballX <= canvas.width) {
+                    playerReboundCount++;
+                    reboundCounter.textContent = `Rebounds: ${playerReboundCount}`;
+                    if (playerReboundCount % 5 === 0) {
+                        ballSpeedX *= 1.1; // Increase speed by 10%
+                        ballSpeedY *= 1.1;
+                    }
+                }
             }
 
-            // AI for left paddle
-            if (leftPaddleY + paddleHeight / 2 < ballY) {
-                leftPaddleY += canvasHeight * 0.01;
+            // AI for left paddle with randomness
+            const baseSpeed = canvasHeight * 0.005;
+            const aiSpeed = baseSpeed + Math.random() * canvasHeight * 0.002; // Variable speed
+            const errorMargin = Math.random() * canvasHeight * 0.02 - canvasHeight * 0.01; // Error margin
+            const reactionDelay = Math.random() > 0.7 ? aiSpeed : 0; // Randomized reaction time
+            if (leftPaddleY + paddleHeight / 2 < ballY + errorMargin + reactionDelay) {
+                leftPaddleY += aiSpeed;
             } else {
-                leftPaddleY -= canvasHeight * 0.01;
+                leftPaddleY -= aiSpeed;
             }
         }
 
         function gameLoop() {
-            update();
+            if (gameStarted && !isPaused) {
+                update();
+            }
             draw();
             requestAnimationFrame(gameLoop);
         }
         
+        function startCountdown() {
+            let countdown = 3;
+            countdownOverlay.style.display = "block";
+            countdownOverlay.textContent = countdown;
+
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    countdownOverlay.textContent = countdown;
+                } else {
+                    clearInterval(countdownInterval);
+                    countdownOverlay.style.display = "none";
+                    gameStarted = true;
+                }
+            }, 1000);
+        }
+
+        startButton.addEventListener("click", function() {
+            startOverlay.style.display = "none";
+            startCountdown();
+        });
+
         document.addEventListener("keydown", function (e) {
+            if (!gameStarted) return;
             if (e.key === "ArrowUp" && rightPaddleY > 0) rightPaddleY -= canvasHeight * 0.05;
             if (e.key === "ArrowDown" && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += canvasHeight * 0.05;
         });
 
         document.getElementById("upBtn").addEventListener("click", function () {
+            if (!gameStarted) return;
             if (rightPaddleY > 0) rightPaddleY -= canvasHeight * 0.05;
         });
         document.getElementById("downBtn").addEventListener("click", function () {
+            if (!gameStarted) return;
             if (rightPaddleY < canvas.height - paddleHeight) rightPaddleY += canvasHeight * 0.05;
+        });
+
+        pauseButton.addEventListener("click", function() {
+            isPaused = !isPaused;
+            pauseButton.textContent = isPaused ? "Resume" : "Pause";
         });
 
         window.addEventListener("resize", resizeCanvas);
 
         resizeCanvas();
         gameLoop();
-
-document.getElementById("upBtn").addEventListener("touchstart", function (e) {
-    e.preventDefault(); // Prevent double-tap zoom
-    movePaddle("up");
-});
-
-document.getElementById("downBtn").addEventListener("touchstart", function (e) {
-    e.preventDefault(); // Prevent double-tap zoom
-    movePaddle("down");
-});
-
-document.getElementById("upBtn").addEventListener("touchend", stopPaddle);
-document.getElementById("downBtn").addEventListener("touchend", stopPaddle);
-
-let moveInterval;
-
-function movePaddle(direction) {
-    stopPaddle(); // Ensure no other movement is active
-    moveInterval = setInterval(() => {
-        if (direction === "up" && rightPaddleY > 0) {
-            rightPaddleY -= canvasHeight * 0.02; // Adjust movement speed based on screen size
-        } else if (direction === "down" && rightPaddleY < canvas.height - paddleHeight) {
-            rightPaddleY += canvasHeight * 0.02;
-        }
-    }, 16); // Smooth 60 FPS-like movement
-}
-
-function stopPaddle() {
-    clearInterval(moveInterval);
-}
-
-
-    
     </script>
 </body>
 </html>
-
