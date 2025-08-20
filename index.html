@@ -573,7 +573,340 @@
     </div>
 </section>
 
+<!-- ========================= -->
+<!-- Market Reports Carousel Widget (FormSubmit passthrough) -->
+<!-- ========================= -->
+<style>
+  .mrw { background:#000; color:#d2b56c; padding:40px 20px; font-family:'Futura',sans-serif; text-align:center; }
+  .mrw h2 { font-size:2rem; text-transform:uppercase; background:linear-gradient(to right,#feee9f,#b18841);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:inline-block; letter-spacing:1.5px; }
+  .mrw p.sub { color:#feee9f; margin:8px 0 20px; }
 
+  /* Carousel */
+  .mrw-carousel { position:relative; max-width:760px; margin:16px auto 0; }
+  .mrw-viewport { overflow:hidden; border-radius:14px; border:2px solid transparent;
+    background:linear-gradient(#000,#000) padding-box, linear-gradient(to right,#b18841,#feee9f) border-box;
+    box-shadow:0 4px 10px rgba(210,181,108,.25); }
+  .mrw-track { display:flex; transition:transform .35s ease; touch-action:pan-y; }
+  .mrw-slide { min-width:100%; box-sizing:border-box; }
+  .mrw-card { background:#000; display:flex; flex-direction:column; }
+  .mrw-card img { width:100%; height:240px; object-fit:cover; display:block; }
+  .mrw-card .body { padding:14px; text-align:left; }
+  .mrw-card h3 { margin:0; font-size:1.2rem; color:#feee9f; }
+  .mrw-card .subt { font-size:.95rem; color:#d2b56c; opacity:.85; margin-top:6px; }
+  .mrw-btn { margin-top:12px; width:100%; border:2px solid #d2b56c; background:transparent; color:#d2b56c;
+    padding:10px 12px; font-weight:bold; border-radius:8px; cursor:pointer; transition:.25s; text-transform:uppercase; }
+  .mrw-btn:hover { background:linear-gradient(to right,#feee9f,#b18841); color:#000; box-shadow:0 0 10px rgba(210,181,108,.7); }
+
+  /* Arrows */
+  .mrw-arrow {
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(0,0,0,.75);
+    border:2px solid #d2b56c;
+    color:#d2b56c;
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:1.8rem;
+    z-index:5; /* sit above slides */
+    transition:background .25s;
+  }
+  .mrw-arrow:hover { background:rgba(0,0,0,.9); }
+  .mrw-prev { left:-70px; }
+  .mrw-next { right:-70px; }
+  @media (max-width: 900px){
+    .mrw-prev { left:-50px; }
+    .mrw-next { right:-50px; }
+  }
+  @media (max-width: 640px){
+    .mrw-prev { left:10px; }
+    .mrw-next { right:10px; }
+  }
+
+  /* Dots */
+  .mrw-dots { display:flex; gap:6px; justify-content:center; margin-top:12px; }
+  .mrw-dot { width:8px; height:8px; border-radius:50%; background:#3a3a3a; border:1px solid #d2b56c; cursor:pointer; }
+  .mrw-dot.active { background:#d2b56c; }
+
+  /* Modal */
+  .mrw-modal-wrap { position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:9999; }
+  .mrw-backdrop { position:absolute; inset:0; background:rgba(0,0,0,.6); }
+  .mrw-modal { position:relative; width:100%; max-width:520px; background:#000; border-radius:14px; overflow:hidden;
+    border:2px solid transparent; background:linear-gradient(#000,#000) padding-box, linear-gradient(to right,#b18841,#feee9f) border-box;
+    box-shadow:0 10px 30px rgba(0,0,0,.6); }
+  .mrw-hdr { display:flex; align-items:center; justify-content:space-between; padding:16px 18px; }
+  .mrw-hdr h3 { margin:0; font-size:1.2rem; color:#feee9f; }
+  .mrw-x { background:transparent; border:none; color:#d2b56c; font-size:1.4rem; cursor:pointer; }
+  .mrw-frm { padding:16px 18px 20px; text-align:left; }
+  .mrw-frm label { display:block; font-size:.9rem; color:#feee9f; margin-top:10px; }
+  .mrw-frm input[type="text"], .mrw-frm input[type="email"] {
+    width:100%; padding:10px 12px; border:2px solid #d2b56c; background:#000; color:#d2b56c; border-radius:8px; margin-top:6px;
+  }
+  .mrw-frm .consent { display:flex; align-items:flex-start; gap:8px; margin-top:12px; color:#d2b56c; font-size:.9rem; }
+  .mrw-err { margin-top:10px; background:#300; color:#ffbaba; border:1px solid #b33; padding:8px 10px; border-radius:8px; font-size:.9rem; }
+  .mrw-ok  { margin-top:10px; background:#083; color:#dfffe7; border:1px solid #0b5; padding:8px 10px; border-radius:8px; font-size:.9rem; }
+  .mrw-submit { margin-top:14px; width:100%; padding:12px; font-weight:bold; border-radius:10px; border:none; cursor:pointer;
+    background:linear-gradient(to right,#feee9f,#b18841); color:#000; text-transform:uppercase; }
+</style>
+
+
+<section id="market-reports" class="mrw">
+  <h2>Free Local Market Reports</h2>
+  <p class="sub">Pick your area to get an instant report. Enter your info and receive the free report.</p>
+
+  <div class="mrw-carousel">
+    <button class="mrw-arrow mrw-prev" id="mrw-prev" aria-label="Previous area">‹</button>
+    <div class="mrw-viewport">
+      <div class="mrw-track" id="mrw-track"></div>
+    </div>
+    <button class="mrw-arrow mrw-next" id="mrw-next" aria-label="Next area">›</button>
+  </div>
+
+  <div class="mrw-dots" id="mrw-dots"></div>
+</section>
+
+<!-- Modal -->
+<div class="mrw-modal-wrap" id="mrw-modal" aria-hidden="true">
+  <div class="mrw-backdrop" data-mrw-close></div>
+  <div class="mrw-modal" role="dialog" aria-modal="true" aria-labelledby="mrw-title">
+    <div class="mrw-hdr">
+      <h3 id="mrw-title">Get the Market Report</h3>
+      <button class="mrw-x" title="Close" data-mrw-close>&times;</button>
+    </div>
+
+    <!-- FormSubmit: using your token -->
+    <form id="mrw-form" class="mrw-frm" method="POST" action="https://formsubmit.co/83702f691ccf936247e5971732f874a1">
+      <!-- Honeypot -->
+      <input type="text" name="company" id="mrw-hp" style="display:none" tabindex="-1" autocomplete="off">
+      <!-- Dynamic redirect per selected report (to your on-site passthrough page) -->
+      <input type="hidden" name="_next" id="mrw-next-url" value="">
+      <!-- Email subject / options -->
+      <input type="hidden" name="_subject" value="New Market Report Request">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_autoresponse" value="Thanks for requesting a market report from 615 Realty Guy. Your link is on the next page — and I’ve emailed you a copy as well.">
+      <!-- Helpful fields in the email -->
+      <input type="hidden" name="widget_source" value="MarketReportCarousel">
+      <input type="hidden" name="report_link" id="mrw-report-link" value="">
+
+      <label>Full Name
+        <input type="text" name="name" id="mrw-name" required>
+      </label>
+
+      <label>Email
+        <input type="email" name="email" id="mrw-email" required>
+      </label>
+
+      <label>Phone (optional)
+        <input type="text" name="phone" id="mrw-phone">
+      </label>
+
+      <label>Area / Report
+        <input type="text" name="area" id="mrw-area" readonly>
+      </label>
+
+      <label class="consent">
+        <input type="checkbox" id="mrw-consent" required>
+        <span>I agree to receive the selected market report and occasional real-estate updates from 615 Realty Guy. I can unsubscribe anytime.</span>
+      </label>
+
+      <div id="mrw-msg"></div>
+      <button type="submit" class="mrw-submit">Send me the report</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  // ---------- YOUR REPORTS (with slugs for on-site passthrough) ----------
+  const reports = [
+    {
+      slug: "cottontown-37048",
+      title: "Cottontown, TN 37048",
+      subtitle: "SFH • Market Snapshot",
+      coverImage: "https://i.imgur.com/7uIgbAw.jpeg",
+      reportUrl: "https://www.narrpr.com/reports-v2/e3260df1-534d-4d9c-a3e3-ff38a8f936ca/pdf"
+    },
+    {
+      slug: "sumner-county",
+      title: "Sumner County, TN",
+      subtitle: "SFH • Market Snapshot",
+      coverImage: "https://i.imgur.com/5r8xq4k.png",
+      reportUrl: "https://www.narrpr.com/reports-v2/e8b06656-db2e-4428-b237-c58428b9bbe5/pdf"
+    },
+     {
+     slug: "gallatin-37066",
+      title: "Gallatin Tn, 37066",
+      subtitle: "SFH • Market Snapshot",
+      coverImage: "https://i.imgur.com/cKDkiJ0.jpeg",
+      reportUrl: "https://www.narrpr.com/reports-v2/d92848d5-e6e7-4bfc-9790-acc8a316cab9/pdf"
+    },
+    {
+     slug: "robertson-county",
+      title: "Robertson County, TN",
+      subtitle: "SFH • Market Snapshot",
+      coverImage: "https://i.imgur.com/QfoFDXs.jpeg",
+      reportUrl: "https://www.narrpr.com/reports-v2/e921c015-b8d2-4b65-9e19-aa38cbc3e2f5/pdf"
+    },
+    {
+    slug: "springfield-37172",
+      title: "Springfield, TN 37172",
+      subtitle: "SFH • Market Snapshot",
+      coverImage: "https://i.imgur.com/O7Bwz9v.jpeg",
+      reportUrl: "https://www.narrpr.com/reports-v2/c3a6a649-cef9-4c41-bfd3-d3f617d1bb67/pdf"
+    },
+    {
+      slug: "portland-37148",
+      title: "Portland, TN 37148",
+      subtitle: "SFH • Market Snapshott",
+      coverImage: "https://i.imgur.com/l3Ma5Sf.jpeg",
+      reportUrl: "https://www.narrpr.com/reports-v2/4097cf74-7edd-4760-a3ec-50d0fb246ac8/pdf"
+    },
+    {
+      slug: "white-house-37188",
+      title: "White House, TN 37188",
+      subtitle: "SFH • Market Snapshot",
+      coverImage: "https://i.imgur.com/wfFlG7m.jpeg",
+      reportUrl: "https://www.narrpr.com/reports-v2/2b2f551d-b86d-412f-b98e-9ed74757ba3c/pdf"
+    }
+  ];
+  // ----------------------------------------------------------------------
+
+  // Carousel elements
+  const track = document.getElementById("mrw-track");
+  const dotsWrap = document.getElementById("mrw-dots");
+  const prevBtn = document.getElementById("mrw-prev");
+  const nextBtn = document.getElementById("mrw-next");
+
+  // Modal & form elements
+  const modalWrap = document.getElementById("mrw-modal");
+  const form = document.getElementById("mrw-form");
+  const hp = document.getElementById("mrw-hp");
+  const nameEl = document.getElementById("mrw-name");
+  const emailEl = document.getElementById("mrw-email");
+  const phoneEl = document.getElementById("mrw-phone");
+  const areaEl = document.getElementById("mrw-area");
+  const nextUrlEl = document.getElementById("mrw-next-url"); // <- renamed to avoid ID collision
+  const reportLinkEl = document.getElementById("mrw-report-link");
+  const consentEl = document.getElementById("mrw-consent");
+  const msg = document.getElementById("mrw-msg");
+
+  let index = 0;
+  let selectedReport = null;
+
+  // Build slides + dots
+  function buildCarousel() {
+    track.innerHTML = reports.map((r, i) => `
+      <div class="mrw-slide">
+        <article class="mrw-card">
+          <img src="${r.coverImage}" alt="${r.title}">
+          <div class="body">
+            <h3>${r.title}</h3>
+            ${r.subtitle ? `<div class="subt">${r.subtitle}</div>` : ""}
+            <button class="mrw-btn" data-open="${i}">Get report</button>
+          </div>
+        </article>
+      </div>
+    `).join("");
+
+    dotsWrap.innerHTML = reports.map((_, i) => `<button class="mrw-dot" data-dot="${i}" aria-label="Go to ${reports[i].title}"></button>`).join("");
+
+    // Wire open buttons
+    track.querySelectorAll("[data-open]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const r = reports[Number(btn.getAttribute("data-open"))];
+        openModal(r);
+      });
+    });
+
+    // Wire dots
+    dotsWrap.querySelectorAll("[data-dot]").forEach(dot => {
+      dot.addEventListener("click", () => goTo(Number(dot.getAttribute("data-dot"))));
+    });
+  }
+
+  function goTo(i) {
+    index = (i + reports.length) % reports.length;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dotsWrap.querySelectorAll(".mrw-dot").forEach((d, di) => d.classList.toggle("active", di === index));
+  }
+  function next() { goTo(index + 1); }
+  function prev() { goTo(index - 1); }
+
+  prevBtn.addEventListener("click", prev);
+  nextBtn.addEventListener("click", next);
+
+  // Keyboard arrows (not when modal is open)
+  document.addEventListener("keydown", (e) => {
+    if (modalWrap.style.display === "flex") return;
+    if (e.key === "ArrowLeft") prev();
+    if (e.key === "ArrowRight") next();
+  });
+
+  // Touch swipe
+  let startX = null;
+  track.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive:true });
+  track.addEventListener("touchmove", (e) => {
+    if (startX == null) return;
+    const dx = e.touches[0].clientX - startX;
+    if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); startX = null; }
+  }, { passive:true });
+  track.addEventListener("touchend", () => { startX = null; });
+
+  function openModal(report) {
+    selectedReport = report;
+    document.getElementById("mrw-title").textContent = `Get the ${report.title} Report`;
+    areaEl.value = report.title;
+
+    // Redirect to your on-site passthrough page: /reports/[slug].html
+    nextUrlEl.value = `/reports/${report.slug}.html`;
+
+    // Include the live RPR link in the email you receive
+    reportLinkEl.value = report.reportUrl;
+
+    msg.innerHTML = "";
+    modalWrap.style.display = "flex";
+    nameEl.focus();
+  }
+
+  function closeModal() {
+    modalWrap.style.display = "none";
+    selectedReport = null;
+    form.reset();
+    areaEl.value = "";
+    msg.innerHTML = "";
+  }
+
+  // Close (overlay or X)
+  modalWrap.querySelectorAll("[data-mrw-close]").forEach(el => el.addEventListener("click", closeModal));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modalWrap.style.display === "flex") closeModal(); });
+
+  // Validate + submit (FormSubmit handles POST + redirect)
+  form.addEventListener("submit", (e) => {
+    if (hp.value) { e.preventDefault(); return; } // honeypot
+    if (!nameEl.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+      e.preventDefault();
+      msg.innerHTML = `<div class="mrw-err">Please enter your name and a valid email.</div>`;
+      return;
+    }
+    if (!consentEl.checked) {
+      e.preventDefault();
+      msg.innerHTML = `<div class="mrw-err">Please confirm consent to receive your report.</div>`;
+      return;
+    }
+    msg.innerHTML = `<div class="mrw-ok">Thanks! Sending you the report link now…</div>`;
+  });
+
+  // Init
+  buildCarousel();
+  goTo(0);
+</script>
+
+    
 
 
 <section id="home-valuation" class="valuation-section">
@@ -1068,3 +1401,4 @@
   
 </body>
 </html>
+
