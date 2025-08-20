@@ -151,160 +151,219 @@
 
     <button class="pause-button" id="pauseButton">Pause</button>
     
-    <script>
-        const canvas = document.getElementById("pongCanvas");
-        const ctx = canvas.getContext("2d");
-        const startButton = document.getElementById("startButton");
-        const startOverlay = document.getElementById("startOverlay");
-        const countdownOverlay = document.getElementById("countdownOverlay");
-        const reboundCounter = document.getElementById("reboundCounter");
-        const pauseButton = document.getElementById("pauseButton");
-        let gameStarted = false;
-        let playerReboundCount = 0;
-        let isPaused = false;
+<script>
+    const canvas = document.getElementById("pongCanvas");
+    const ctx = canvas.getContext("2d");
+    const startButton = document.getElementById("startButton");
+    const startOverlay = document.getElementById("startOverlay");
+    const countdownOverlay = document.getElementById("countdownOverlay");
+    const reboundCounter = document.getElementById("reboundCounter");
+    const pauseButton = document.getElementById("pauseButton");
 
-        let canvasWidth, canvasHeight;
-        let paddleWidth, paddleHeight;
-        let leftPaddleY, rightPaddleY;
-        let ballX, ballY, ballSpeedX, ballSpeedY;
-        let maxBallSpeed = canvasWidth * 0.02; // Set a maximum speed limit
+    let gameStarted = false;
+    let playerReboundCount = 0;
+    let isPaused = false;
 
-        let moveInterval;
+    let canvasWidth, canvasHeight;
+    let paddleWidth, paddleHeight;
+    let leftPaddleY, rightPaddleY;
+    let ballX, ballY, ballSpeedX, ballSpeedY;
 
-        function resizeCanvas() {
-            canvasWidth = window.innerWidth * 0.9;
-            canvasHeight = window.innerHeight * 0.6;
-            canvas.width = canvasWidth;
-            canvas.height = canvasHeight;
+    // Unified input state (works for both keyboard & touch)
+    let moveUp = false;
+    let moveDown = false;
 
-            paddleWidth = canvasWidth * 0.03;
-            paddleHeight = canvasHeight * 0.2;
-            resetGame();
+    function resizeCanvas() {
+        canvasWidth = window.innerWidth * 0.9;
+        canvasHeight = window.innerHeight * 0.6;
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+
+        paddleWidth = canvasWidth * 0.03;
+        paddleHeight = canvasHeight * 0.2;
+        resetGame();
+    }
+
+    function resetGame() {
+        leftPaddleY = (canvasHeight - paddleHeight) / 2;
+        rightPaddleY = (canvasHeight - paddleHeight) / 2;
+        ballX = canvasWidth / 2;
+        ballY = canvasHeight / 2;
+        ballSpeedX = canvasWidth * 0.005;
+        ballSpeedY = canvasHeight * 0.005;
+    }
+
+    function drawRect(x, y, width, height, emoji) {
+        ctx.font = `${canvasWidth * 0.05}px Arial`;
+        ctx.fillText(emoji, x, y + height / 2);
+    }
+
+    function drawBall(x, y, emoji) {
+        ctx.font = `${canvasWidth * 0.04}px Arial`;
+        ctx.fillText(emoji, x, y);
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawRect(20, leftPaddleY, paddleWidth, paddleHeight, "🏡");
+        drawRect(canvas.width - 40 - paddleWidth, rightPaddleY, paddleWidth, paddleHeight, "🏡");
+        drawBall(ballX, ballY, "📄");
+    }
+
+    function update() {
+        // Move right paddle from input state
+        const paddleStep = canvasHeight * 0.0375;
+        if (moveUp && rightPaddleY > 0) {
+            rightPaddleY = Math.max(0, rightPaddleY - paddleStep);
+        }
+        if (moveDown && rightPaddleY < canvas.height - paddleHeight) {
+            rightPaddleY = Math.min(canvas.height - paddleHeight, rightPaddleY + paddleStep);
         }
 
-        function resetGame() {
-            leftPaddleY = (canvasHeight - paddleHeight) / 2;
-            rightPaddleY = (canvasHeight - paddleHeight) / 2;
-            ballX = canvasWidth / 2;
-            ballY = canvasHeight / 2;
-            ballSpeedX = canvasWidth * 0.005;
-            ballSpeedY = canvasHeight * 0.005;
+        // Ball physics
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+
+        if (ballY <= 0 || ballY >= canvas.height) {
+            ballSpeedY = -ballSpeedY;
         }
 
-        function drawRect(x, y, width, height, emoji) {
-            ctx.font = `${canvasWidth * 0.05}px Arial`;
-            ctx.fillText(emoji, x, y + height / 2);
-        }
+        // Paddle collisions
+        const rightPaddleX = canvas.width - 40 - paddleWidth;
 
-        function drawBall(x, y, emoji) {
-            ctx.font = `${canvasWidth * 0.04}px Arial`;
-            ctx.fillText(emoji, x, y);
-        }
+        const hitLeft =
+            ballX <= 40 &&
+            ballY >= leftPaddleY &&
+            ballY <= leftPaddleY + paddleHeight;
 
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawRect(20, leftPaddleY, paddleWidth, paddleHeight, "🏡");
-            drawRect(canvas.width - 40 - paddleWidth, rightPaddleY, paddleWidth, paddleHeight, "🏡");
-            drawBall(ballX, ballY, "📄");
-        }
+        const hitRight =
+            ballX >= rightPaddleX &&
+            ballY >= rightPaddleY &&
+            ballY <= rightPaddleY + paddleHeight;
 
-        function update() {
-            ballX += ballSpeedX;
-            ballY += ballSpeedY;
-            
-            if (ballY <= 0 || ballY >= canvas.height) {
-                ballSpeedY = -ballSpeedY;
-            }
-            if (
-                (ballX <= 40 && ballY >= leftPaddleY && ballY <= leftPaddleY + paddleHeight) ||
-                (ballX >= canvas.width - 40 - paddleWidth && ballY >= rightPaddleY && ballY <= rightPaddleY + paddleHeight)
-            ) {
-                ballSpeedX = -ballSpeedX;
-                if (ballX >= canvas.width - 40 - paddleWidth && ballX <= canvas.width) {
-                    playerReboundCount++;
-                    reboundCounter.textContent = `Rebounds: ${playerReboundCount}`;
-                    if (playerReboundCount % 5 === 0) {
-                        ballSpeedX *= 1.1; // Increase speed by 10%
-                        ballSpeedY *= 1.1;
-                    }
+        if (hitLeft || hitRight) {
+            ballSpeedX = -ballSpeedX;
+
+            // Count only player's rebounds (right side)
+            if (hitRight) {
+                playerReboundCount++;
+                reboundCounter.textContent = `Rebounds: ${playerReboundCount}`;
+
+                // Slight difficulty ramp
+                if (playerReboundCount % 5 === 0) {
+                    ballSpeedX *= 1.1;
+                    ballSpeedY *= 1.1;
                 }
             }
+        }
 
-            // AI for left paddle with randomness
-            const baseSpeed = canvasHeight * 0.005;
-            const aiSpeed = baseSpeed + Math.random() * canvasHeight * 0.002; // Variable speed
-            const errorMargin = Math.random() * canvasHeight * 0.02 - canvasHeight * 0.01; // Error margin
-            const reactionDelay = Math.random() > 0.7 ? aiSpeed : 0; // Randomized reaction time
-            if (leftPaddleY + paddleHeight / 2 < ballY + errorMargin + reactionDelay) {
-                leftPaddleY += aiSpeed;
+        // Simple AI for left paddle with randomness
+        const baseSpeed = canvasHeight * 0.005;
+        const aiSpeed = baseSpeed + Math.random() * canvasHeight * 0.002;
+        const errorMargin = Math.random() * canvasHeight * 0.02 - canvasHeight * 0.01;
+        const reactionDelay = Math.random() > 0.7 ? aiSpeed : 0;
+
+        if (leftPaddleY + paddleHeight / 2 < ballY + errorMargin + reactionDelay) {
+            leftPaddleY = Math.min(canvasHeight - paddleHeight, leftPaddleY + aiSpeed);
+        } else {
+            leftPaddleY = Math.max(0, leftPaddleY - aiSpeed);
+        }
+    }
+
+    function gameLoop() {
+        if (gameStarted && !isPaused) {
+            update();
+        }
+        draw();
+        requestAnimationFrame(gameLoop);
+    }
+
+    function startCountdown() {
+        let countdown = 3;
+        countdownOverlay.style.display = "block";
+        countdownOverlay.textContent = countdown;
+
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) {
+                countdownOverlay.textContent = countdown;
             } else {
-                leftPaddleY -= aiSpeed;
+                clearInterval(countdownInterval);
+                countdownOverlay.style.display = "none";
+                gameStarted = true;
             }
-        }
+        }, 1000);
+    }
 
-        function gameLoop() {
-            if (gameStarted && !isPaused) {
-                update();
-            }
-            draw();
-            requestAnimationFrame(gameLoop);
-        }
-        
-        function startCountdown() {
-            let countdown = 3;
-            countdownOverlay.style.display = "block";
-            countdownOverlay.textContent = countdown;
+    // Start button
+    startButton.addEventListener("click", function () {
+        startOverlay.style.display = "none";
+        startCountdown();
+    });
 
-            const countdownInterval = setInterval(() => {
-                countdown--;
-                if (countdown > 0) {
-                    countdownOverlay.textContent = countdown;
-                } else {
-                    clearInterval(countdownInterval);
-                    countdownOverlay.style.display = "none";
-                    gameStarted = true;
-                }
-            }, 1000);
-        }
+    // Touch controls -> toggle unified input state
+    const upBtn = document.getElementById("upBtn");
+    const downBtn = document.getElementById("downBtn");
 
-        startButton.addEventListener("click", function() {
-            startOverlay.style.display = "none";
-            startCountdown();
+    function bindTouch(el, setter) {
+        el.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            setter(true);
+        }, { passive: false });
+
+        el.addEventListener("touchend", (e) => {
+            e.preventDefault();
+            setter(false);
+        }, { passive: false });
+
+        // Also support mouse for desktop clicks on the buttons
+        el.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            setter(true);
         });
+        window.addEventListener("mouseup", () => setter(false));
+        el.addEventListener("mouseleave", () => setter(false));
+    }
 
-        function startMoving(direction) {
-            if (moveInterval) return;
-            moveInterval = setInterval(() => {
-                if (!gameStarted) return;
-                if (direction === 'up' && rightPaddleY > 0) rightPaddleY -= canvasHeight * 0.0375;
-                if (direction === 'down' && rightPaddleY < canvas.height - paddleHeight) rightPaddleY += canvasHeight * 0.0375;
-            }, 1000 / 60); // 60 FPS
+    bindTouch(upBtn, (v) => { moveUp = v; });
+    bindTouch(downBtn, (v) => { moveDown = v; });
+
+    // Keyboard controls (ArrowUp/Down, W/S)
+    function isUpKey(code) {
+        return code === "ArrowUp" || code === "KeyW";
+    }
+    function isDownKey(code) {
+        return code === "ArrowDown" || code === "KeyS";
+    }
+
+    window.addEventListener("keydown", (e) => {
+        if (isUpKey(e.code) || isDownKey(e.code)) {
+            // prevent page scrolling
+            e.preventDefault();
         }
+        if (isUpKey(e.code)) moveUp = true;
+        if (isDownKey(e.code)) moveDown = true;
+    }, { passive: false });
 
-        function stopMoving() {
-            clearInterval(moveInterval);
-            moveInterval = null;
+    window.addEventListener("keyup", (e) => {
+        if (isUpKey(e.code) || isDownKey(e.code)) {
+            e.preventDefault();
         }
+        if (isUpKey(e.code)) moveUp = false;
+        if (isDownKey(e.code)) moveDown = false;
+    }, { passive: false });
 
-        document.getElementById("upBtn").addEventListener("touchstart", function () {
-            startMoving('up');
-        });
-        document.getElementById("upBtn").addEventListener("touchend", stopMoving);
+    // Pause button
+    pauseButton.addEventListener("click", function () {
+        isPaused = !isPaused;
+        pauseButton.textContent = isPaused ? "Resume" : "Pause";
+    });
 
-        document.getElementById("downBtn").addEventListener("touchstart", function () {
-            startMoving('down');
-        });
-        document.getElementById("downBtn").addEventListener("touchend", stopMoving);
+    window.addEventListener("resize", resizeCanvas);
 
-        pauseButton.addEventListener("click", function() {
-            isPaused = !isPaused;
-            pauseButton.textContent = isPaused ? "Resume" : "Pause";
-        });
+    resizeCanvas();
+    gameLoop();
+</script>
 
-        window.addEventListener("resize", resizeCanvas);
-
-        resizeCanvas();
-        gameLoop();
-    </script>
 </body>
 </html>
