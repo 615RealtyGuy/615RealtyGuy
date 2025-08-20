@@ -679,19 +679,26 @@
       <button class="mrw-x" title="Close" data-mrw-close>&times;</button>
     </div>
 
-    <!-- FormSubmit: using your token -->
-    <form id="mrw-form" class="mrw-frm" method="POST" action="https://formsubmit.co/83702f691ccf936247e5971732f874a1">
+    <!-- ✅ WIDGET FORM (FormSubmit) -->
+    <form id="mrw-form"
+          class="mrw-frm"
+          action="https://formsubmit.co/83702f691ccf936247e5971732f874a1"
+          method="POST">
       <!-- Honeypot -->
       <input type="text" name="company" id="mrw-hp" style="display:none" tabindex="-1" autocomplete="off">
-      <!-- Dynamic redirect per selected report (to your on-site passthrough page) -->
+
+      <!-- ✅ FormSubmit redirect destination (set by JS before submit) -->
       <input type="hidden" name="_next" id="mrw-next-url" value="">
-      <!-- Email subject / options -->
+
+      <!-- Optional FormSubmit settings -->
       <input type="hidden" name="_subject" value="New Market Report Request">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="_autoresponse" value="Thanks for requesting a market report from 615 Realty Guy. Your link is on the next page — and I’ve emailed you a copy as well.">
+
       <!-- Helpful fields in the email -->
       <input type="hidden" name="widget_source" value="MarketReportCarousel">
       <input type="hidden" name="report_link" id="mrw-report-link" value="">
+      <input type="hidden" name="area" id="mrw-area" value="">
 
       <label>Full Name
         <input type="text" name="name" id="mrw-name" required>
@@ -705,20 +712,18 @@
         <input type="text" name="phone" id="mrw-phone">
       </label>
 
-      <label>Area / Report
-        <input type="text" name="area" id="mrw-area" readonly>
-      </label>
-
       <label class="consent">
         <input type="checkbox" id="mrw-consent" required>
         <span>I agree to receive the selected market report and occasional real-estate updates from 615 Realty Guy. I can unsubscribe anytime.</span>
       </label>
 
       <div id="mrw-msg"></div>
+      <!-- ✅ Submit button INSIDE the form -->
       <button type="submit" class="mrw-submit">Send me the report</button>
     </form>
   </div>
 </div>
+
 
 <script>
   // ---------- YOUR REPORTS (with slugs for on-site passthrough) ----------
@@ -1403,6 +1408,7 @@
   
 </body>
 </html>
+
 
 
 
