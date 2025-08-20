@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You - 615 Realty Guy</title>
+  <style>
+    body {
+      font-family: 'Futura', sans-serif;
+      background-color: #000;
+      color: #d2b56c;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .logo img { max-width: 250px; display:block; margin-bottom:30px; }
+    .thank-you-container { padding:20px; max-width:720px; }
+    .thank-you-container h1 {
+      font-size:2.5rem; font-weight:bold; text-transform:uppercase;
+      background: linear-gradient(to right,#feee9f,#b18841);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .thank-you-container p { font-size:1.2rem; color:#feee9f; margin-bottom:30px; }
+
+    .btn {
+      background: linear-gradient(to right,#feee9f,#b18841);
+      color:#000; padding:12px 20px; font-size:1.1rem; font-weight:bold;
+      border:none; border-radius:5px; cursor:pointer; transition:.3s ease-in-out;
+      text-decoration:none; display:inline-block; margin:6px;
+    }
+    .btn:hover { background:#b18841; color:#fff; }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="https://i.imgur.com/Mue4Nnr.png" alt="615 Realty Guy Logo">
+  </div>
+
+  <div class="thank-you-container">
+    <h1>Thank You!</h1>
+    <p id="message">Your market report is ready.</p>
+
+    <!-- Buttons injected dynamically -->
+    <div id="buttons"></div>
+
+    <!-- Back home fallback -->
+    <div style="margin-top:20px;">
+      <a href="https://615realtyguy.com" class="btn">Get your FREE Market Report</a>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const slug = params.get("slug");
+    const title = params.get("title");
+
+    // Update message with area name if available
+    if (title) {
+      document.getElementById("message").textContent =
+        `Your ${title} market report is ready.`;
+    }
+
+    const buttons = document.getElementById("buttons");
+
+    if (slug) {
+      // Report button
+      const reportBtn = document.createElement("a");
+      reportBtn.href = `/reports/${slug}.html`;
+      reportBtn.className = "btn";
+      reportBtn.textContent = "Open Your Report";
+      reportBtn.target = "_blank";
+      reportBtn.rel = "noopener";
+
+      // Calendly button
+      const calBtn = document.createElement("a");
+      calBtn.href = "https://calendly.com/615realtyguy";
+      calBtn.className = "btn";
+      calBtn.textContent = "Schedule a Call";
+      calBtn.target = "_blank";
+      calBtn.rel = "noopener";
+
+      buttons.appendChild(reportBtn);
+      buttons.appendChild(calBtn);
+    } else {
+      document.getElementById("message").textContent =
+        "Click the link below for your Market Report.";
+    }
+  </script>
+</body>
+</html>
