@@ -134,7 +134,7 @@
     </div>
     <h1>House Pong 🏡🏓</h1>
     <p>Use the arrow keys (⬆️⬇️) or touch buttons for mobile users to bounce the contract back & forth</p>
-    <canvas id="pongCanvas"></canvas>
+<canvas id="pongCanvas" tabindex="0"></canvas>
     
     <div class="start-overlay" id="startOverlay">
         <button class="start-button" id="startButton">Start Game</button>
@@ -169,13 +169,13 @@
     let leftPaddleY, rightPaddleY;
     let ballX, ballY, ballSpeedX, ballSpeedY;
 
-    // Unified input state (works for both keyboard & touch)
+    // Unified input state
     let moveUp = false;
     let moveDown = false;
 
     function resizeCanvas() {
-        canvasWidth = window.innerWidth * 0.9;
-        canvasHeight = window.innerHeight * 0.6;
+        canvasWidth = Math.max(320, window.innerWidth * 0.9);
+        canvasHeight = Math.max(240, window.innerHeight * 0.6);
         canvas.width = canvasWidth;
         canvas.height = canvasHeight;
 
@@ -210,17 +210,21 @@
         drawBall(ballX, ballY, "📄");
     }
 
-    function update() {
-        // Move right paddle from input state
-        const paddleStep = canvasHeight * 0.0375;
+    function handlePaddleInput() {
+        // Always allow paddle movement (even before start or while paused)
+        const paddleStep = Math.max(1, canvasHeight * 0.0375);
         if (moveUp && rightPaddleY > 0) {
             rightPaddleY = Math.max(0, rightPaddleY - paddleStep);
         }
         if (moveDown && rightPaddleY < canvas.height - paddleHeight) {
             rightPaddleY = Math.min(canvas.height - paddleHeight, rightPaddleY + paddleStep);
         }
+    }
 
-        // Ball physics
+    function updateBallAndAI() {
+        // Only the ball/AI are gated by start & pause
+        if (!gameStarted || isPaused) return;
+
         ballX += ballSpeedX;
         ballY += ballSpeedY;
 
@@ -228,7 +232,6 @@
             ballSpeedY = -ballSpeedY;
         }
 
-        // Paddle collisions
         const rightPaddleX = canvas.width - 40 - paddleWidth;
 
         const hitLeft =
@@ -244,12 +247,9 @@
         if (hitLeft || hitRight) {
             ballSpeedX = -ballSpeedX;
 
-            // Count only player's rebounds (right side)
             if (hitRight) {
                 playerReboundCount++;
                 reboundCounter.textContent = `Rebounds: ${playerReboundCount}`;
-
-                // Slight difficulty ramp
                 if (playerReboundCount % 5 === 0) {
                     ballSpeedX *= 1.1;
                     ballSpeedY *= 1.1;
@@ -257,7 +257,7 @@
             }
         }
 
-        // Simple AI for left paddle with randomness
+        // Left paddle AI with a bit of noise
         const baseSpeed = canvasHeight * 0.005;
         const aiSpeed = baseSpeed + Math.random() * canvasHeight * 0.002;
         const errorMargin = Math.random() * canvasHeight * 0.02 - canvasHeight * 0.01;
@@ -271,9 +271,8 @@
     }
 
     function gameLoop() {
-        if (gameStarted && !isPaused) {
-            update();
-        }
+        handlePaddleInput();     // <- runs every frame
+        updateBallAndAI();       // <- runs only when started & not paused
         draw();
         requestAnimationFrame(gameLoop);
     }
@@ -299,71 +298,77 @@
     startButton.addEventListener("click", function () {
         startOverlay.style.display = "none";
         startCountdown();
+        // Keep focus on canvas for immediate key input
+        setTimeout(() => canvas.focus(), 0);
     });
 
-    // Touch controls -> toggle unified input state
+    // Touch + Mouse + Pointer helpers for on-screen buttons
     const upBtn = document.getElementById("upBtn");
     const downBtn = document.getElementById("downBtn");
 
-    function bindTouch(el, setter) {
-        el.addEventListener("touchstart", (e) => {
-            e.preventDefault();
-            setter(true);
-        }, { passive: false });
-
-        el.addEventListener("touchend", (e) => {
-            e.preventDefault();
-            setter(false);
-        }, { passive: false });
-
-        // Also support mouse for desktop clicks on the buttons
-        el.addEventListener("mousedown", (e) => {
+    function bindPress(el, setter) {
+        // Pointer events cover mouse + touch on modern browsers
+        el.addEventListener("pointerdown", (e) => {
             e.preventDefault();
             setter(true);
         });
+        el.addEventListener("pointerup", (e) => {
+            e.preventDefault();
+            setter(false);
+        });
+        el.addEventListener("pointerleave", () => setter(false));
+
+        // Fallback touch (older Safari)
+        el.addEventListener("touchstart", (e) => { e.preventDefault(); setter(true); }, { passive: false });
+        el.addEventListener("touchend",   (e) => { e.preventDefault(); setter(false); }, { passive: false });
+
+        // Fallback mouse (older browsers)
+        el.addEventListener("mousedown", (e) => { e.preventDefault(); setter(true); });
         window.addEventListener("mouseup", () => setter(false));
-        el.addEventListener("mouseleave", () => setter(false));
     }
 
-    bindTouch(upBtn, (v) => { moveUp = v; });
-    bindTouch(downBtn, (v) => { moveDown = v; });
+    bindPress(upBtn,   (v) => { moveUp = v; });
+    bindPress(downBtn, (v) => { moveDown = v; });
 
-    // Keyboard controls (ArrowUp/Down, W/S)
-    function isUpKey(code) {
-        return code === "ArrowUp" || code === "KeyW";
+    // Keyboard controls (ArrowUp/Down, W/S) — support both code & key
+    function isUp(ev) {
+        return ev.code === "ArrowUp" || ev.code === "KeyW" || ev.key === "ArrowUp" || ev.key === "w" || ev.key === "W";
     }
-    function isDownKey(code) {
-        return code === "ArrowDown" || code === "KeyS";
+    function isDown(ev) {
+        return ev.code === "ArrowDown" || ev.code === "KeyS" || ev.key === "ArrowDown" || ev.key === "s" || ev.key === "S";
     }
 
     window.addEventListener("keydown", (e) => {
-        if (isUpKey(e.code) || isDownKey(e.code)) {
-            // prevent page scrolling
-            e.preventDefault();
-        }
-        if (isUpKey(e.code)) moveUp = true;
-        if (isDownKey(e.code)) moveDown = true;
+        if (isUp(e) || isDown(e)) e.preventDefault();
+        if (isUp(e)) moveUp = true;
+        if (isDown(e)) moveDown = true;
     }, { passive: false });
 
     window.addEventListener("keyup", (e) => {
-        if (isUpKey(e.code) || isDownKey(e.code)) {
-            e.preventDefault();
-        }
-        if (isUpKey(e.code)) moveUp = false;
-        if (isDownKey(e.code)) moveDown = false;
+        if (isUp(e) || isDown(e)) e.preventDefault();
+        if (isUp(e)) moveUp = false;
+        if (isDown(e)) moveDown = false;
     }, { passive: false });
 
     // Pause button
     pauseButton.addEventListener("click", function () {
         isPaused = !isPaused;
         pauseButton.textContent = isPaused ? "Resume" : "Pause";
+        canvas.focus();
     });
+
+    // Ensure canvas gets focus so keys work immediately
+    window.addEventListener("load", () => {
+        canvas.focus();
+    });
+    canvas.addEventListener("click", () => canvas.focus());
 
     window.addEventListener("resize", resizeCanvas);
 
     resizeCanvas();
     gameLoop();
 </script>
+
 
 </body>
 </html>
