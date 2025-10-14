@@ -135,73 +135,63 @@
     <p class="footer">© <span id="year"></span> SixOneFive Real Estate Advisors • TN Lic #361652</p>
   </div>
 
-  <script>
-    // ====== CONFIGURE THESE ======
-    const FORM_ENDPOINT = 'https://formspree.io/f/mzzjyjba'; // Replace with your Formspree form ID
-    const PDF_PATH = '/downloads/downsizing_guide.pdf'; // Put the PDF in your repo at this path
-    const SEND_EMAIL_THROUGH_FORMSPREE = true; // If your Formspree plan sends emails on submit
-    // ==============================
+<script>
+  const FORM_ENDPOINT = 'https://formspree.io/f/mzzjyjba';
+  const PDF_PATH = '/downloads/downsizing_guide.pdf';
 
-    const form = document.getElementById('leadForm');
-    const success = document.getElementById('success');
-    const link = document.getElementById('downloadLink');
+  const form = document.getElementById('leadForm');
+  const success = document.getElementById('success');
+  const link = document.getElementById('downloadLink');
 
-    document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    function triggerDownload(path) {
-      // Trigger file download
-      const a = document.createElement('a');
-      a.href = path;
-      a.download = '';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    }
+  function triggerDownload(path) {
+    const a = document.createElement('a');
+    a.href = path;
+    a.download = '';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      // Basic client-side validation guard
-      if (!data.email) return alert('Please enter a valid email address.');
+    const formData = new FormData(form);
+    if (!formData.get('email')) return alert('Please enter a valid email address.');
 
-      // Disable button while submitting
-      const btn = form.querySelector('button[type="submit"]');
-      const original = btn.textContent;
-      btn.textContent = 'Sending…';
-      btn.disabled = true;
+    const btn = form.querySelector('button[type="submit"]');
+    const original = btn.textContent;
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
 
-      try {
-        // Submit to Formspree (AJAX)
-        const res = await fetch(FORM_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData,
+        mode: 'cors'
+      });
 
-        if (res.ok) {
-          // FB/IG lead event
-          try { fbq && fbq('track', 'Lead'); } catch (err) {}
-
-          // Swap UI to success state
-          form.style.display = 'none';
-          success.classList.add('show');
-
-          // Set link + auto-download
-          link.href = PDF_PATH;
-          setTimeout(() => triggerDownload(PDF_PATH), 300);
-        } else {
-          const payload = await res.json().catch(() => ({}));
-          throw new Error(payload.error || 'Submission failed');
-        }
-      } catch (err) {
-        alert('Sorry, something went wrong. Please try again, or email 615RealtyGuy@gmail.com.');
-        console.error(err);
-      } finally {
-        btn.textContent = original;
-        btn.disabled = false;
+      if (res.ok) {
+        try { fbq && fbq('track', 'Lead'); } catch (_) {}
+        form.style.display = 'none';
+        success.classList.add('show');
+        link.href = PDF_PATH;
+        setTimeout(() => triggerDownload(PDF_PATH), 300);
+      } else {
+        const payload = await res.json().catch(() => ({}));
+        throw new Error(payload.error || `Submission failed (status ${res.status})`);
       }
-    });
-  </script>
+    } catch (err) {
+      alert('Sorry, something went wrong. Please try again, or email 615RealtyGuy@gmail.com.');
+      console.error(err);
+    } finally {
+      btn.textContent = original;
+      btn.disabled = false;
+    }
+  });
+</script>
+
 </body>
 </html>
