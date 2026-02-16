@@ -1,494 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/favicon.png">
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>615 Realty Guy - Market Stats</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
 
-  <style>
-    /* ====== SITE STYLES (matches homepage) ====== */
-    body {
-      font-family: 'Futura', sans-serif;
-      background-color: #000000;
-      color: #d2b56c;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Stats | 615 Realty Guy</title>
 
-    /* Gold Gradient Headings */
-    h1, h2, h3, h4, h5, h6 {
-      font-size: 2.2rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      background: linear-gradient(to right, #feee9f, #b18841);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
-      letter-spacing: 1.5px;
-      padding: 10px 20px;
-      margin: 18px 0 6px;
-    }
+<style>
 
-    /* Banner */
-    .banner {
-      background: black;
-      padding: 2px;
-    }
-    .banner img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
+/* ============================= */
+/* GLOBAL SITE STYLES */
+/* ============================= */
 
-    /* Header */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      background: black;
-      width: 100%;
-      box-sizing: border-box;
-    }
+body {
+    font-family: 'Futura', sans-serif;
+    background-color: #000000;
+    color: #d2b56c;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
 
-    /* Logo */
-    .logo img {
-      max-width: 100px;
-      display: block;
-    }
+/* Gold Gradient Headings */
+h1, h2 {
+    background: linear-gradient(to right, #feee9f, #b18841);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-    /* Navigation */
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    nav a {
-      color: #d2b56c;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: bold;
-      padding: 10px 15px;
-      transition: color 0.3s;
-    }
-    nav a:hover {
-      color: #feee9f;
-    }
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: black;
+}
 
-    /* Dropdown Menu */
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    .dropbtn {
-      background-color: black;
-      color: #d2b56c;
-      padding: 10px 15px;
-      font-size: 16px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: black;
-      min-width: 180px;
-      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-      right: 0;
-      border-radius: 5px;
-      text-align: left;
-      border: 1px solid rgba(210, 181, 108, 0.25);
-    }
-    .dropdown-content a {
-      color: #d2b56c;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      white-space: nowrap;
-    }
-    .dropdown-content a:hover {
-      background: linear-gradient(to right, #feee9f, #b18841);
-      color: black !important;
-      box-shadow: 0px 0px 10px rgba(210, 181, 108, 0.7);
-    }
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
+.logo img {
+    max-width: 100px;
+}
 
-    /* Page layout */
-    .page {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 18px 14px 60px;
-      box-sizing: border-box;
-    }
+nav {
+    display: flex;
+    gap: 20px;
+}
 
-    .subtitle {
-      margin: 0 auto 18px;
-      max-width: 900px;
-      color: rgba(210, 181, 108, 0.85);
-      font-size: 15px;
-      line-height: 1.4;
-      padding: 0 14px;
-    }
+nav a {
+    color: #d2b56c;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
 
-    /* Center the widget */
-    .widget-wrap {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 10px 0 0;
-    }
+nav a:hover {
+    color: #feee9f;
+}
 
-    /* A subtle gold-outline panel so the widget feels “embedded” in your site */
-    .widget-panel {
-      border-radius: 18px;
-      padding: 14px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(210,181,108,0.25);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
-    }
+/* ============================= */
+/* RATE CARD */
+/* ============================= */
 
-    /* ====== WIDGET (your existing code, small polish) ====== */
-    html { background: transparent; }
+.rate-card {
+    max-width: 700px;
+    margin: 60px auto 30px auto;
+    padding: 30px;
+    background: linear-gradient(145deg, #0f0f12, #1a1a1f);
+    border: 1px solid rgba(210,181,108,0.25);
+    border-radius: 16px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+}
 
+.rate-title {
+    font-size: 18px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.rate-value {
+    font-size: 56px;
+    font-weight: bold;
+    background: linear-gradient(to right, #feee9f, #b18841);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.rate-date {
+    font-size: 13px;
+    color: #999;
+    margin-top: 10px;
+}
+
+/* ============================= */
+/* MARKET WIDGET */
+/* ============================= */
+
+.market-widget{
+    width: 800px;
+    margin: 0 auto 80px auto;
+    background: linear-gradient(145deg, #0f0f12, #1a1a1f);
+    border-radius:16px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.6);
+    overflow:hidden;
+}
+
+.widget-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 20px;
+    background: rgba(0,0,0,0.3);
+}
+
+#marketSelect{
+    background:#1e1e22;
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:8px;
+    padding:8px 12px;
+}
+
+.widget-indicator{
+    font-size:14px;
+    color:#b18841;
+}
+
+.widget-frame{
+    position:relative;
+    width:100%;
+    height:500px;
+    background:#000;
+}
+
+.widget-frame iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+    opacity:0;
+    transition: opacity .5s ease;
+}
+
+.widget-frame iframe.active{
+    opacity:1;
+}
+
+.nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background: rgba(0,0,0,0.6);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:20px;
+    border:1px solid rgba(255,255,255,0.2);
+}
+
+.nav.left{ left:15px; }
+.nav.right{ right:15px; }
+
+@media(max-width:900px){
     .market-widget{
-      width: 760px; /* bigger on desktop while staying centered */
-      max-width: calc(100vw - 40px);
-      background: linear-gradient(145deg, #0f0f12, #1a1a1f);
-      border-radius:14px;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-      box-shadow:0 20px 40px rgba(0,0,0,0.50);
-      color:#fff;
-      overflow:hidden;
+        width:95%;
     }
+}
 
-    .widget-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:10px 12px;
-      gap:10px;
-      background: rgba(0,0,0,0.18);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    #marketSelect{
-      background:#111114;
-      color:#fff;
-      border:1px solid rgba(210,181,108,0.35); /* hint of your gold */
-      border-radius:10px;
-      padding:8px 10px;
-      font-size:13px;
-      outline:none;
-      max-width: 260px;
-    }
-
-    #marketSelect:focus{
-      box-shadow: 0 0 0 3px rgba(210,181,108,0.18);
-    }
-
-    .widget-indicator{
-      font-size:13px;
-      color:#cfcfd8;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 360px;
-      text-align:right;
-    }
-
-    .widget-frame{
-      position:relative;
-      width:100%;
-      height: 470px; /* more room for charts on desktop */
-      overflow:hidden;
-      background:#0b0b0e;
-    }
-
-    .widget-frame iframe{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      border:0;
-      opacity:0;
-      transition: opacity .35s ease;
-      pointer-events:auto;
-      background:#0b0b0e;
-    }
-
-    .widget-frame iframe.active{
-      opacity:1;
-    }
-
-    .nav{
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      width:30px;
-      height:30px;
-      border-radius:999px;
-      background: rgba(0,0,0,0.55);
-      border:1px solid rgba(255,255,255,0.12);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:20px;
-      color:#fff;
-      cursor:pointer;
-      user-select:none;
-      transition: .15s ease;
-      z-index:10;
-    }
-    .nav:hover{ background: rgba(255,255,255,0.18); }
-    .nav.left{ left:10px; }
-    .nav.right{ right:10px; }
-    .nav.disabled{ opacity:0.25; pointer-events:none; }
-
-    .disclaimer{
-      margin: 14px auto 0;
-      max-width: 860px;
-      color: rgba(210,181,108,0.70);
-      font-size: 12.5px;
-      line-height: 1.45;
-      padding: 0 14px;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        text-align: center;
-      }
-      nav {
-        flex-direction: column;
-        gap: 10px;
-      }
-      .dropdown { width: 100%; }
-      .dropdown-content {
-        position: static;
-        width: 100%;
-        text-align: center;
-        right: auto;
-      }
-      h1 { font-size: 1.7rem; }
-      .widget-frame { height: 390px; }
-      .widget-panel { padding: 10px; }
-    }
-  </style>
+</style>
 </head>
 
 <body>
-  <!-- Banner -->
-  <div class="banner">
-    <a href="https://sixonefive.homes" target="_blank" rel="noopener">
-      <img src="https://i.imgur.com/XLvCp6R.png" alt="Brokerage Banner">
+
+<header>
+  <div class="logo">
+    <a href="../index.html">
+      <img src="https://i.imgur.com/Mue4Nnr.png" alt="615 Logo">
     </a>
   </div>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="https://substack.com/@615realtyguy" target="_blank">Blog</a>
+  </nav>
+</header>
 
-  <!-- Header (duplicated from homepage, with Market Stats included) -->
-  <header>
-    <div class="logo">
-      <a href="https://615realtyguy.com/">
-        <img src="https://i.imgur.com/Mue4Nnr.png" alt="Personal Logo">
-      </a>
-    </div>
+<!-- Mortgage Rate Card -->
+<div class="rate-card">
+  <div class="rate-title">30-Year Fixed Mortgage Rate</div>
+  <div class="rate-value" id="mortgageRate">Loading...</div>
+  <div class="rate-date" id="rateDate"></div>
+</div>
 
-    <nav>
-      <a href="/#home">Home</a>
-      <a href="/about.html">About Me</a>
-      <a href="https://substack.com/@615realtyguy?utm_source=user-menu" target="_blank" rel="noopener">Blog</a>
-      <a href="/market_widget/">Market Stats</a>
-
-      <div class="dropdown">
-        <button class="dropbtn">Contact</button>
-        <div class="dropdown-content">
-          <a href="https://calendly.com/615realtyguy" target="_blank" rel="noopener">Schedule a Consult</a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank" rel="noopener">Contact Form</a>
-          <a href="/downsizing-guide.html" target="_blank" rel="noopener" style="color:#c8a652;font-weight:600;">Downsizing Guide</a>
-          <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank" rel="noopener">Facebook</a>
-          <a href="https://www.instagram.com/615realtyguy/" target="_blank" rel="noopener">Instagram</a>
-        </div>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Page Content -->
-  <div class="page">
-    <h1>Market Stats</h1>
-    <div class="subtitle">
-      Live snapshots for <b>White House (37188)</b>, <b>Robertson County</b>, and <b>Sumner County</b>.
-      Use the arrows to browse charts, or let them auto-rotate every 10 seconds.
-    </div>
-
-    <div class="widget-wrap">
-      <div class="widget-panel">
-        <div class="market-widget" id="widget">
-          <div class="widget-header">
-            <select id="marketSelect"></select>
-            <div class="widget-indicator" id="indicator">—</div>
-          </div>
-
-          <div class="widget-frame" id="frameHost">
-            <!-- iframes injected here -->
-            <div class="nav left" id="btnPrev" title="Previous">‹</div>
-            <div class="nav right" id="btnNext" title="Next">›</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="disclaimer">
-      Data is displayed via embedded market reports. If a chart fails to load for some visitors, it may be due to third-party embed restrictions or ad/tracker blocking.
-    </div>
+<!-- Market Widget -->
+<div class="market-widget">
+  <div class="widget-header">
+      <select id="marketSelect"></select>
+      <div class="widget-indicator" id="indicator">—</div>
   </div>
 
-  <script>
-    // Labels + URLs per market
-    const markets = {
-      "White House (37188)": [
-        { label: "Pricing Trends",   url: "https://go.realtracs.com/1evji2y" },
-        { label: "Price per Sqft",   url: "https://go.realtracs.com/1evjUG3" },
-        { label: "DOM",              url: "https://go.realtracs.com/1evjb2g" },
-        { label: "Showings",         url: "https://go.realtracs.com/1evjhE7" },
-        { label: "Months Supply",    url: "https://go.realtracs.com/1evjm6O" },
-        { label: "Market Inventory", url: "https://go.realtracs.com/1evjo1D" },
-      ],
+  <div class="widget-frame" id="frameHost">
+      <div class="nav left" id="btnPrev">‹</div>
+      <div class="nav right" id="btnNext">›</div>
+  </div>
+</div>
 
-      "Robertson County": [
-        { label: "Pricing Trends",   url: "https://go.realtracs.com/1evlNAJ" },
-        { label: "Price per Sqft",   url: "https://go.realtracs.com/1evlX6f" },
-        { label: "DOM",              url: "https://go.realtracs.com/1evlTFp" },
-        { label: "Showings",         url: "https://go.realtracs.com/1evlcFx" },
-      ],
+<script>
 
-      "Sumner County": [
-        { label: "Pricing Trends",   url: "https://go.realtracs.com/1evlq6b" },
-        { label: "Price per Sqft",   url: "https://go.realtracs.com/1evlu8q" },
-        { label: "DOM",              url: "https://go.realtracs.com/1evlhDS" },
-        { label: "Showings",         url: "https://go.realtracs.com/1evle3V" },
-      ],
-    };
+/* ============================= */
+/* FRED API RATE */
+/* ============================= */
 
-    const ROTATE_MS = 10000;
+async function fetchMortgageRate() {
+    const apiKey = "34684a23adfe87cc951f21b8364a46a8";
+    const url = `https://api.stlouisfed.org/fred/series/observations?series_id=MORTGAGE30US&api_key=${apiKey}&file_type=json&sort_order=desc&limit=1`;
 
-    const widget = document.getElementById("widget");
-    const select = document.getElementById("marketSelect");
-    const indicator = document.getElementById("indicator");
-    const frameHost = document.getElementById("frameHost");
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const latest = data.observations[0];
+        document.getElementById("mortgageRate").innerText = latest.value + "%";
+        document.getElementById("rateDate").innerText = "As of " + latest.date;
+    } catch (error) {
+        document.getElementById("mortgageRate").innerText = "Unavailable";
+    }
+}
+fetchMortgageRate();
 
-    const btnPrev = document.getElementById("btnPrev");
-    const btnNext = document.getElementById("btnNext");
+/* ============================= */
+/* MARKET ROTATOR */
+/* ============================= */
 
-    let frames = [];
-    let currentMarket = null;
-    let currentIndex = 0;
-    let interval = null;
+const markets = {
+  "White House (37188)": [
+    { label:"Pricing Trends", url:"https://go.realtracs.com/1evji2y"},
+    { label:"Price per Sqft", url:"https://go.realtracs.com/1evjUG3"},
+    { label:"DOM", url:"https://go.realtracs.com/1evjb2g"},
+    { label:"Showings", url:"https://go.realtracs.com/1evjhE7"},
+    { label:"Months Supply", url:"https://go.realtracs.com/1evjm6O"},
+    { label:"Market Inventory", url:"https://go.realtracs.com/1evjo1D"},
+  ],
+  "Robertson County": [
+    { label:"Pricing Trends", url:"https://go.realtracs.com/1evlNAJ"},
+    { label:"Price per Sqft", url:"https://go.realtracs.com/1evlX6f"},
+    { label:"DOM", url:"https://go.realtracs.com/1evlTFp"},
+    { label:"Showings", url:"https://go.realtracs.com/1evlcFx"},
+  ],
+  "Sumner County": [
+    { label:"Pricing Trends", url:"https://go.realtracs.com/1evlq6b"},
+    { label:"Price per Sqft", url:"https://go.realtracs.com/1evlu8q"},
+    { label:"DOM", url:"https://go.realtracs.com/1evlhDS"},
+    { label:"Showings", url:"https://go.realtracs.com/1evle3V"},
+  ]
+};
 
-    function populateDropdown(){
-      Object.keys(markets).forEach(name => {
-        const opt = document.createElement("option");
-        opt.value = name;
-        opt.textContent = name;
+const select = document.getElementById("marketSelect");
+const frameHost = document.getElementById("frameHost");
+const indicator = document.getElementById("indicator");
+const btnPrev = document.getElementById("btnPrev");
+const btnNext = document.getElementById("btnNext");
+
+let frames = [];
+let currentIndex = 0;
+let currentMarket = null;
+
+function populateDropdown(){
+    Object.keys(markets).forEach(name=>{
+        const opt=document.createElement("option");
+        opt.value=name;
+        opt.textContent=name;
         select.appendChild(opt);
-      });
-    }
+    });
+}
 
-    function clearIframes(){
-      frames.forEach(f => f.remove());
-      frames = [];
-    }
-
-    function updateNavState(){
-      const disabled = frames.length <= 1;
-      btnPrev.classList.toggle("disabled", disabled);
-      btnNext.classList.toggle("disabled", disabled);
-    }
-
-    function showFrame(idx){
-      const charts = markets[currentMarket] || [];
-      frames.forEach((f, i) => f.classList.toggle("active", i === idx));
-      indicator.textContent = charts[idx]?.label ?? "—";
-    }
-
-    function buildIframes(marketName){
-      clearIframes();
-      currentMarket = marketName;
-
-      const charts = markets[marketName] || [];
-      charts.forEach(c => {
-        const iframe = document.createElement("iframe");
-        iframe.src = c.url;
+function buildIframes(market){
+    frames.forEach(f=>f.remove());
+    frames=[];
+    currentMarket=market;
+    markets[market].forEach(chart=>{
+        const iframe=document.createElement("iframe");
+        iframe.src=chart.url;
         frameHost.insertBefore(iframe, btnPrev);
         frames.push(iframe);
-      });
+    });
+    currentIndex=0;
+    showFrame(0);
+}
 
-      currentIndex = 0;
-      if (frames.length > 0) showFrame(0);
-      updateNavState();
-      resetTimer();
-    }
+function showFrame(idx){
+    frames.forEach((f,i)=>f.classList.toggle("active",i===idx));
+    indicator.textContent = markets[currentMarket][idx].label;
+}
 
-    function next(){
-      if (frames.length <= 1) return;
-      currentIndex = (currentIndex + 1) % frames.length;
-      showFrame(currentIndex);
-      resetTimer();
-    }
+btnNext.onclick=()=>{
+    currentIndex=(currentIndex+1)%frames.length;
+    showFrame(currentIndex);
+};
 
-    function prev(){
-      if (frames.length <= 1) return;
-      currentIndex = (currentIndex - 1 + frames.length) % frames.length;
-      showFrame(currentIndex);
-      resetTimer();
-    }
+btnPrev.onclick=()=>{
+    currentIndex=(currentIndex-1+frames.length)%frames.length;
+    showFrame(currentIndex);
+};
 
-    function startTimer(){
-      stopTimer();
-      if (frames.length <= 1) return;
-      interval = setInterval(() => {
-        currentIndex = (currentIndex + 1) % frames.length;
-        showFrame(currentIndex);
-      }, ROTATE_MS);
-    }
+select.addEventListener("change",()=>buildIframes(select.value));
 
-    function stopTimer(){
-      if (interval) clearInterval(interval);
-      interval = null;
-    }
+populateDropdown();
+select.value="White House (37188)";
+buildIframes(select.value);
 
-    function resetTimer(){
-      stopTimer();
-      startTimer();
-    }
+</script>
 
-    // Controls
-    btnNext.addEventListener("click", next);
-    btnPrev.addEventListener("click", prev);
-
-    // Pause auto-rotate on hover
-    widget.addEventListener("mouseenter", stopTimer);
-    widget.addEventListener("mouseleave", startTimer);
-
-    // Market switching
-    select.addEventListener("change", () => buildIframes(select.value));
-
-    // Init
-    populateDropdown();
-    select.value = "White House (37188)";
-    buildIframes(select.value);
-  </script>
 </body>
 </html>
