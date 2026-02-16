@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Market Widget</title>
+  <style>
+    html, body { margin:0; padding:0; background:transparent; }
+
+    .market-widget{
+      width:560px;
+      background: linear-gradient(145deg, #0f0f12, #1a1a1f);
+      border-radius:14px;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+      box-shadow:0 20px 40px rgba(0,0,0,0.50);
+      color:#fff;
+      overflow:hidden;
+    }
+
+    .widget-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:8px 12px;
+      gap:10px;
+      background: rgba(0,0,0,0.10);
+    }
+
+    #marketSelect{
+      background:#1e1e22;
+      color:#fff;
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:8px;
+      padding:6px 10px;
+      font-size:12px;
+      outline:none;
+      max-width: 230px;
+    }
+
+    .widget-indicator{
+      font-size:12px;
+      color:#9a9aa3;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width: 280px;
+      text-align:right;
+    }
+
+    .widget-frame{
+      position:relative;
+      width:100%;
+      height:360px;
+      overflow:hidden;
+      background:#0b0b0e;
+    }
+
+    .widget-frame iframe{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+      opacity:0;
+      transition: opacity .5s ease;
+      pointer-events:auto;
+    }
+
+    .widget-frame iframe.active{
+      opacity:1;
+    }
+
+    .nav{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:26px;
+      height:26px;
+      border-radius:999px;
+      background: rgba(0,0,0,0.55);
+      border:1px solid rgba(255,255,255,0.12);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      color:#fff;
+      cursor:pointer;
+      user-select:none;
+      transition: .15s ease;
+      z-index:10;
+    }
+    .nav:hover{ background: rgba(255,255,255,0.18); }
+    .nav.left{ left:8px; }
+    .nav.right{ right:8px; }
+
+    .nav.disabled{
+      opacity:0.25;
+      pointer-events:none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="market-widget" id="widget">
+    <div class="widget-header">
+      <select id="marketSelect"></select>
+      <div class="widget-indicator" id="indicator">—</div>
+    </div>
+
+    <div class="widget-frame" id="frameHost">
+      <!-- iframes injected here -->
+      <div class="nav left" id="btnPrev" title="Previous">‹</div>
+      <div class="nav right" id="btnNext" title="Next">›</div>
+    </div>
+  </div>
+
+  <script>
+    // Labels + URLs per market. Each market can have any number of charts.
+    const markets = {
+      "White House (37188)": [
+        { label: "Pricing Trends",  url: "https://go.realtracs.com/1evji2y" },
+        { label: "Price per Sqft",  url: "https://go.realtracs.com/1evjUG3" },
+        { label: "DOM",             url: "https://go.realtracs.com/1evjb2g" },
+        { label: "Showings",        url: "https://go.realtracs.com/1evjhE7" },
+        { label: "Months Supply",   url: "https://go.realtracs.com/1evjm6O" },
+        { label: "Market Inventory",url: "https://go.realtracs.com/1evjo1D" },
+      ],
+
+      "Robertson County": [
+        { label: "Pricing Trends",  url: "https://go.realtracs.com/1evlNAJ" },
+        { label: "Price per Sqft",  url: "https://go.realtracs.com/1evlX6f" },
+        { label: "DOM",             url: "https://go.realtracs.com/1evlTFp" },
+        { label: "Showings",        url: "https://go.realtracs.com/1evlcFx" },
+      ],
+
+      "Sumner County": [
+        { label: "Pricing Trends",  url: "https://go.realtracs.com/1evlq6b" },
+        { label: "Price per Sqft",  url: "https://go.realtracs.com/1evlu8q" },
+        { label: "DOM",             url: "https://go.realtracs.com/1evlhDS" },
+        { label: "Showings",        url: "https://go.realtracs.com/1evle3V" },
+      ],
+    };
+
+    const ROTATE_MS = 10000;
+
+    const widget = document.getElementById("widget");
+    const select = document.getElementById("marketSelect");
+    const indicator = document.getElementById("indicator");
+    const frameHost = document.getElementById("frameHost");
+
+    const btnPrev = document.getElementById("btnPrev");
+    const btnNext = document.getElementById("btnNext");
+
+    let frames = [];
+    let currentMarket = null;
+    let currentIndex = 0;
+    let interval = null;
+
+    function populateDropdown(){
+      Object.keys(markets).forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        select.appendChild(opt);
+      });
+    }
+
+    function clearIframes(){
+      frames.forEach(f => f.remove());
+      frames = [];
+    }
+
+    function updateNavState(){
+      const disabled = frames.length <= 1;
+      btnPrev.classList.toggle("disabled", disabled);
+      btnNext.classList.toggle("disabled", disabled);
+    }
+
+    function showFrame(idx){
+      const charts = markets[currentMarket] || [];
+      frames.forEach((f, i) => f.classList.toggle("active", i === idx));
+      indicator.textContent = charts[idx]?.label ?? "—";
+    }
+
+    function buildIframes(marketName){
+      clearIframes();
+      currentMarket = marketName;
+
+      const charts = markets[marketName] || [];
+      charts.forEach(c => {
+        const iframe = document.createElement("iframe");
+        iframe.src = c.url;
+        // Insert behind nav buttons so arrows stay on top
+        frameHost.insertBefore(iframe, btnPrev);
+        frames.push(iframe);
+      });
+
+      currentIndex = 0;
+      if (frames.length > 0) showFrame(0);
+      updateNavState();
+      resetTimer();
+    }
+
+    function next(){
+      if (frames.length <= 1) return;
+      currentIndex = (currentIndex + 1) % frames.length;
+      showFrame(currentIndex);
+      resetTimer();
+    }
+
+    function prev(){
+      if (frames.length <= 1) return;
+      currentIndex = (currentIndex - 1 + frames.length) % frames.length;
+      showFrame(currentIndex);
+      resetTimer();
+    }
+
+    function startTimer(){
+      stopTimer();
+      if (frames.length <= 1) return;
+      interval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % frames.length;
+        showFrame(currentIndex);
+      }, ROTATE_MS);
+    }
+
+    function stopTimer(){
+      if (interval) clearInterval(interval);
+      interval = null;
+    }
+
+    function resetTimer(){
+      stopTimer();
+      startTimer();
+    }
+
+    // Controls
+    btnNext.addEventListener("click", next);
+    btnPrev.addEventListener("click", prev);
+
+    // Pause auto-rotate on hover
+    widget.addEventListener("mouseenter", stopTimer);
+    widget.addEventListener("mouseleave", startTimer);
+
+    // Market switching
+    select.addEventListener("change", () => buildIframes(select.value));
+
+    // Init
+    populateDropdown();
+    select.value = "White House (37188)";
+    buildIframes(select.value);
+  </script>
+</body>
+</html>
