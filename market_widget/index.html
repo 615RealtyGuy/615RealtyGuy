@@ -626,31 +626,58 @@ async function loadAndRender(){
   try{
     const result = await fetchSeries(activeKey);
 
-    el.rateValue.textContent = result.currentRate.toFixed(2) + "%";
+    const current = result.currentRate;
+    const history = (result.points || []).slice(-HISTORY_POINTS);
+
+    el.rateValue.textContent = current.toFixed(2) + "%";
     el.rateDate.textContent = "As of " + fmtDate(result.currentDate);
     setStatus(true, "Live");
 
-    chartState.points = (result.points || []).slice(-HISTORY_POINTS);
-    drawChart(chartState.points);
+    chartState.points = history;
+    drawChart(history);
+
+    if(history.length >= 2){
+      const lastWeek = history[history.length - 2].value;
+      const change = current - lastWeek;
+      const absChange = Math.abs(change).toFixed(2);
+
+      const arrow = change > 0 ? "↑" : change < 0 ? "↓" : "→";
+      const color = change > 0 ? "#3ddc97" : change < 0 ? "#d2b56c" : "#aaa";
+
+      const changeHTML = `
+        <div style="margin-top:6px;font-size:14px;font-weight:600;color:${color}">
+          ${arrow} ${absChange}% vs last week
+        </div>
+      `;
+
+      const vals = history.map(p => p.value);
+      const min = Math.min(...vals);
+      const max = Math.max(...vals);
+
+      el.rangeLabel.innerHTML = `
+        52-Week Range: ${min.toFixed(2)}% – ${max.toFixed(2)}%
+      `;
+
+      // Insert change display under big rate
+      const existing = document.getElementById("weeklyChange");
+      if(existing) existing.remove();
+
+      const wrapper = document.createElement("div");
+      wrapper.id = "weeklyChange";
+      wrapper.innerHTML = changeHTML;
+      el.rateValue.parentNode.insertBefore(wrapper, el.rateValue.nextSibling);
+
+    } else {
+      el.rangeLabel.textContent = "Range: —";
+    }
 
   } catch (e){
     console.error(e);
-    showError("Mortgage rate data is currently unavailable. Please refresh or try again later.");
+    showError("Mortgage rate data is currently unavailable.");
     drawChart([]);
   }
 }
 
-// Toggle handlers
-el.btn30.addEventListener("click", () => setActive("30"));
-el.btn15.addEventListener("click", () => setActive("15"));
-
-// Redraw chart on resize
-window.addEventListener("resize", () => {
-  drawChart(chartState.points || []);
-});
-
-// Initial load
-loadAndRender();
 
 
 /* ============================= */
