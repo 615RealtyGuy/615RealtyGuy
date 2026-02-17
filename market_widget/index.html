@@ -1,509 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/favicon.png">
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>615 Realty Guy - Market Stats</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
 
-  <style>
-    /* ===== Site base (matches your homepage) ===== */
-    body{
-      font-family: 'Futura', sans-serif;
-      background-color:#000;
-      color:#d2b56c;
-      margin:0;
-      padding:0;
-      text-align:center;
-      overflow-x:hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Stats | 615 Realty Guy</title>
 
-    /* Gold gradient headings */
-    h1,h2,h3,h4,h5,h6{
-      font-size:2.2rem;
-      font-weight:bold;
-      text-transform:uppercase;
-      background: linear-gradient(to right, #feee9f, #b18841);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      display:inline-block;
-      letter-spacing:1.5px;
-      padding:10px 20px;
-      margin: 18px 0 10px 0;
-    }
+<style>
 
-    /* Banner */
-    .banner{ background:black; padding:2px; }
-    .banner img{ max-width:100%; height:auto; display:block; margin:0 auto; }
+/* ============================= */
+/* GLOBAL SITE STYLES */
+/* ============================= */
 
-    /* Header */
+body {
+    font-family: 'Futura', sans-serif;
+    background-color: #000000;
+    color: #d2b56c;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Gold Gradient Headings */
+h1, h2 {
+    background: linear-gradient(to right, #feee9f, #b18841);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: black;
+    gap: 16px;
+}
+
+.logo img {
+    max-width: 100px;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #d2b56c;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #feee9f;
+}
+
+/* CTA Button */
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(210,181,108,0.35);
+    background: linear-gradient(180deg, rgba(210,181,108,0.22), rgba(210,181,108,0.08));
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: .2px;
+}
+
+.cta-btn:hover {
+    border-color: rgba(254,238,159,0.60);
+}
+
+.cta-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: #d2b56c;
+    box-shadow: 0 0 0 4px rgba(210,181,108,0.15);
+}
+
+/* ============================= */
+/* RATE CARD */
+/* ============================= */
+
+.rate-card {
+    max-width: 760px;
+    margin: 60px auto 30px auto;
+    padding: 26px;
+    background: linear-gradient(145deg, #0f0f12, #1a1a1f);
+    border: 1px solid rgba(210,181,108,0.25);
+    border-radius: 16px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+    text-align: left;
+}
+
+.rate-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.rate-title {
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin: 0;
+    text-align: left;
+}
+
+/* Segmented Toggle */
+.seg {
+    display: inline-flex;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.35);
+}
+
+.seg button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: rgba(255,255,255,0.65);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: .3px;
+}
+
+.seg button.active {
+    color: #feee9f;
+    background: linear-gradient(180deg, rgba(210,181,108,0.28), rgba(210,181,108,0.10));
+}
+
+.rate-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.rate-value {
+    font-size: 56px;
+    font-weight: bold;
+    background: linear-gradient(to right, #feee9f, #b18841);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.rate-meta {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.rate-date {
+    font-size: 13px;
+    color: #999;
+    margin: 0;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.70);
+    font-size: 12px;
+    justify-content: flex-end;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+    background: #3ddc97;
+    box-shadow: 0 0 0 4px rgba(61,220,151,0.14);
+}
+.status-dot.bad {
+    background: #ff5c5c;
+    box-shadow: 0 0 0 4px rgba(255,92,92,0.12);
+}
+
+.err {
+    color: rgba(255,255,255,0.90);
+    background: rgba(255,92,92,0.10);
+    border: 1px solid rgba(255,92,92,0.25);
+    padding: 10px 12px;
+    border-radius: 14px;
+    font-size: 13px;
+    display: none;
+    margin-top: 10px;
+}
+
+/* Chart */
+.chart-wrap {
+    margin-top: 14px;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 14px;
+    background: rgba(0,0,0,0.18);
+    overflow: hidden;
+}
+
+canvas { display: block; width: 100%; height: 220px; }
+
+.chart-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.60);
+    font-size: 12px;
+    flex-wrap: wrap;
+}
+
+/* ============================= */
+/* MARKET WIDGET */
+/* ============================= */
+
+.market-widget{
+    width: 800px;
+    margin: 0 auto 80px auto;
+    background: linear-gradient(145deg, #0f0f12, #1a1a1f);
+    border-radius:16px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.6);
+    overflow:hidden;
+}
+
+.widget-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 20px;
+    background: rgba(0,0,0,0.3);
+}
+
+#marketSelect{
+    background:#1e1e22;
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:8px;
+    padding:8px 12px;
+}
+
+.widget-indicator{
+    font-size:14px;
+    color:#b18841;
+}
+
+.widget-frame{
+    position:relative;
+    width:100%;
+    height:500px;
+    background:#000;
+}
+
+.widget-frame iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+    opacity:0;
+    transition: opacity .5s ease;
+}
+
+.widget-frame iframe.active{
+    opacity:1;
+}
+
+.nav{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background: rgba(0,0,0,0.6);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:20px;
+    border:1px solid rgba(255,255,255,0.2);
+}
+
+.nav.left{ left:15px; }
+.nav.right{ right:15px; }
+
+@media(max-width:900px){
     header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:10px;
-      background:black;
-      width:100%;
-      box-sizing:border-box;
+        padding: 15px 18px;
     }
-    .logo img{ max-width:100px; display:block; }
-
-    /* Navigation */
-    nav{ display:flex; align-items:center; gap:15px; }
-    nav a{
-      color:#d2b56c;
-      text-decoration:none;
-      font-size:16px;
-      font-weight:bold;
-      padding:10px 15px;
-      transition: color 0.3s;
+    .market-widget{
+        width:95%;
     }
-    nav a:hover{ color:#feee9f; }
-
-    /* Dropdown */
-    .dropdown{ position:relative; display:inline-block; }
-    .dropbtn{
-      background-color:black;
-      color:#d2b56c;
-      padding:10px 15px;
-      font-size:16px;
-      border:none;
-      cursor:pointer;
-      font-weight:bold;
-    }
-    .dropdown-content{
-      display:none;
-      position:absolute;
-      background-color:black;
-      min-width:180px;
-      box-shadow:0px 8px 16px rgba(0,0,0,0.2);
-      z-index:1000;
-      right:0;
-      border-radius:5px;
-      overflow:hidden;
-    }
-    .dropdown-content a{
-      color:#d2b56c;
-      padding:12px 16px;
-      text-decoration:none;
-      display:block;
-      white-space:nowrap;
-    }
-    .dropdown-content a:hover{
-      background: linear-gradient(to right, #feee9f, #b18841);
-      color:black !important;
-      box-shadow:0px 0px 10px rgba(210,181,108,0.7);
-    }
-    .dropdown:hover .dropdown-content{ display:block; }
-
-    /* Page container */
-    .page-wrap{
-      width:min(1100px, calc(100% - 32px));
-      margin: 0 auto;
-      padding: 10px 0 40px 0;
-      box-sizing:border-box;
-    }
-
-    /* ===== Mortgage rate card ===== */
     .rate-card{
-      width:100%;
-      margin: 24px auto 18px auto;
-      padding: 28px 22px;
-      border-radius: 22px;
-      background:
-        radial-gradient(120% 120% at 50% 0%, rgba(254,238,159,0.12), rgba(0,0,0,0) 55%),
-        linear-gradient(145deg, #0b0b0b, #121212);
-      border: 1px solid rgba(210,181,108,0.28);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
-      text-align:center;
-      box-sizing:border-box;
+        margin-top: 40px;
+        text-align: left;
     }
-    .rate-title{
-      font-size: 18px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-      background: linear-gradient(to right, #feee9f, #b18841);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display:inline-block;
-      font-weight: 800;
-    }
-    .rate-value{
-      font-size: clamp(44px, 6vw, 76px);
-      font-weight: 900;
-      line-height: 1.05;
-      margin: 6px 0 10px 0;
-      background: linear-gradient(to right, #feee9f, #b18841);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .rate-sub{
-      font-size: 14px;
-      color: rgba(210,181,108,0.78);
-    }
-    .rate-sub a{
-      color: rgba(254,238,159,0.9);
-      text-decoration: none;
-      border-bottom: 1px dotted rgba(254,238,159,0.55);
-    }
+}
 
-    /* ===== Market widget (restyled to match site) ===== */
-    .market-shell{
-      width:100%;
-      margin: 0 auto;
-      padding: 0;
-      box-sizing:border-box;
-      border-radius: 22px;
-      background:
-        radial-gradient(120% 120% at 50% 0%, rgba(254,238,159,0.10), rgba(0,0,0,0) 55%),
-        linear-gradient(145deg, #0b0b0b, #121212);
-      border: 1px solid rgba(210,181,108,0.28);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
-      overflow:hidden;
-    }
-
-    .widget-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding: 14px 14px;
-      gap: 12px;
-      background: rgba(0,0,0,0.20);
-      border-bottom: 1px solid rgba(210,181,108,0.18);
-    }
-
-    #marketSelect{
-      background:#000;
-      color:#feee9f;
-      border:1px solid rgba(210,181,108,0.35);
-      border-radius:12px;
-      padding:10px 12px;
-      font-size:14px;
-      outline:none;
-      max-width: 260px;
-      box-shadow: 0 0 0 0 rgba(210,181,108,0);
-      transition: box-shadow .15s ease, border-color .15s ease;
-    }
-    #marketSelect:focus{
-      border-color: rgba(254,238,159,0.85);
-      box-shadow: 0 0 0 4px rgba(210,181,108,0.18);
-    }
-
-    .widget-indicator{
-      font-size:14px;
-      color: rgba(210,181,108,0.85);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 420px;
-      text-align:right;
-      background: linear-gradient(to right, #feee9f, #b18841);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      font-weight: 800;
-      letter-spacing: 0.6px;
-    }
-
-    .widget-frame{
-      position:relative;
-      width:100%;
-      height: 720px; /* big enough for the embedded reports */
-      overflow:hidden;
-      background: #000;
-    }
-
-    .widget-frame iframe{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      border:0;
-      opacity:0;
-      transition: opacity .35s ease;
-      pointer-events:auto;
-      background:#fff; /* Realtracs content background */
-    }
-    .widget-frame iframe.active{ opacity:1; }
-
-    .nav{
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      width:42px;
-      height:42px;
-      border-radius:999px;
-      background: rgba(0,0,0,0.55);
-      border:1px solid rgba(210,181,108,0.35);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:22px;
-      color:#feee9f;
-      cursor:pointer;
-      user-select:none;
-      transition: .15s ease;
-      z-index:10;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.55);
-    }
-    .nav:hover{ background: rgba(254,238,159,0.12); }
-    .nav.left{ left:12px; }
-    .nav.right{ right:12px; }
-    .nav.disabled{ opacity:0.25; pointer-events:none; }
-
-    /* Small helper text */
-    .page-note{
-      color: rgba(210,181,108,0.75);
-      font-size: 14px;
-      margin: 6px 0 18px 0;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px){
-      .widget-indicator{ max-width: 220px; }
-      .widget-frame{ height: 640px; }
-    }
-    @media (max-width: 768px){
-      header{ flex-direction:column; text-align:center; }
-      nav{ flex-direction:column; gap:10px; }
-      .dropdown{ width:100%; }
-      .dropdown-content{ position:static; width:100%; text-align:center; }
-      #marketSelect{ max-width: 100%; width: 100%; }
-      .widget-header{ flex-direction:column; align-items:stretch; }
-      .widget-indicator{ text-align:center; max-width:100%; }
-      .nav{ width:38px; height:38px; font-size:20px; }
-      .widget-frame{ height: 620px; }
-    }
-  </style>
+</style>
 </head>
 
 <body>
-  <!-- Banner -->
-  <div class="banner">
-    <a href="https://sixonefive.homes" target="_blank" rel="noopener">
-      <img src="https://i.imgur.com/XLvCp6R.png" alt="Brokerage Banner">
+
+<header>
+  <div class="logo">
+    <a href="../index.html">
+      <img src="https://i.imgur.com/Mue4Nnr.png" alt="615 Logo">
     </a>
   </div>
 
-  <!-- Header (duplicated from homepage) -->
-  <header>
-    <div class="logo">
-      <a href="/" aria-label="Go to homepage">
-        <img src="https://i.imgur.com/Mue4Nnr.png" alt="Personal Logo">
-      </a>
-    </div>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about.html">About Me</a>
-      <a href="https://substack.com/@615realtyguy?utm_source=user-menu" target="_blank" rel="noopener">Blog</a>
+  <nav>
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="https://substack.com/@615realtyguy" target="_blank">Blog</a>
 
-      <!-- Market Stats button -->
-      <a href="/market_widget/" style="color:#feee9f;">Market Stats</a>
+    <!-- CTA -->
+    <!-- Change this link to your Calendly/contact page -->
+    <a class="cta-btn" href="https://sixonefive.homes" target="_blank" rel="noopener">
+      <span class="cta-dot" aria-hidden="true"></span>
+      Thinking about buying/selling? Let’s Talk
+    </a>
+  </nav>
+</header>
 
-      <div class="dropdown">
-        <button class="dropbtn">Contact</button>
-        <div class="dropdown-content">
-          <a href="https://calendly.com/615realtyguy" target="_blank" rel="noopener">Schedule a Consult</a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank" rel="noopener">Contact Form</a>
-          <a href="/downsizing-guide.html" target="_blank" rel="noopener" style="color:#c8a652;font-weight:600;">Downsizing Guide</a>
-          <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank" rel="noopener">Facebook</a>
-          <a href="https://www.instagram.com/615realtyguy/" target="_blank" rel="noopener">Instagram</a>
-        </div>
-      </div>
-    </nav>
-  </header>
+<!-- Mortgage Rate Card -->
+<div class="rate-card">
+  <div class="rate-header">
+    <div class="rate-title" id="mortgageTitle">30-Year Fixed Mortgage Rate</div>
 
-  <div class="page-wrap">
-    <h1>Market Stats</h1>
-    <div class="page-note">Local snapshots for White House (37188), Robertson County, and Sumner County.</div>
-
-    <!-- Mortgage Rate Card -->
-    <section class="rate-card" aria-live="polite">
-      <div class="rate-title">30-Year Fixed Mortgage Rate</div>
-      <div class="rate-value" id="mortgageRate">Loading…</div>
-      <div class="rate-sub" id="mortgageMeta">Source: FRED</div>
-    </section>
-
-    <!-- Market Widget Container -->
-    <div class="market-shell" id="widget">
-      <div class="widget-header">
-        <select id="marketSelect" aria-label="Choose market"></select>
-        <div class="widget-indicator" id="indicator">—</div>
-      </div>
-
-      <div class="widget-frame" id="frameHost">
-        <!-- iframes injected here -->
-        <div class="nav left" id="btnPrev" title="Previous">‹</div>
-        <div class="nav right" id="btnNext" title="Next">›</div>
-      </div>
+    <div class="seg" role="tablist" aria-label="Mortgage rate series">
+      <button id="btn30" class="active" role="tab" aria-selected="true">30YR</button>
+      <button id="btn15" role="tab" aria-selected="false">15YR</button>
     </div>
   </div>
 
-  <script>
-    // ===== 1) Mortgage rate (via your Cloudflare Worker) =====
-    async function loadMortgageRate(){
-      const rateEl = document.getElementById("mortgageRate");
-      const metaEl = document.getElementById("mortgageMeta");
+  <div class="rate-row">
+    <div class="rate-value" id="mortgageRate">--</div>
 
-      try{
-        // IMPORTANT: this path must match your worker route.
-        // Based on your test output, this should be correct:
-        const res = await fetch("https://fred-proxy.615realtyguy.workers.dev/mortgage", { cache: "no-store" });
-        if(!res.ok) throw new Error("HTTP " + res.status);
+    <div class="rate-meta">
+      <div class="status-pill" id="statusPill">
+        <span class="status-dot" id="statusDot" aria-hidden="true"></span>
+        <span id="statusText">Loading…</span>
+      </div>
+      <p class="rate-date" id="rateDate">—</p>
+    </div>
+  </div>
 
-        const data = await res.json();
-        if(!data.ok) throw new Error(data.error || "Bad response");
+  <div class="chart-wrap">
+    <canvas id="rateChart" width="1000" height="440"></canvas>
+    <div class="chart-footer">
+      <div id="rangeLabel">Range: —</div>
+      <div id="sourceLabel">Source: FRED</div>
+    </div>
+  </div>
 
-        const rate = Number(data.rate);
-        const date = data.date;
+  <div class="err" id="errBox"></div>
+</div>
 
-        rateEl.textContent = `${rate.toFixed(2)}%`;
-        metaEl.innerHTML = `Updated: ${date} • Source: <a href="https://fred.stlouisfed.org/series/MORTGAGE30US" target="_blank" rel="noopener">FRED (MORTGAGE30US)</a>`;
-      } catch(e){
-        rateEl.textContent = "Unavailable";
-        metaEl.textContent = "Could not load rate right now.";
-        console.error("Mortgage rate load failed:", e);
-      }
-    }
+<!-- Market Widget -->
+<div class="market-widget">
+  <div class="widget-header">
+      <select id="marketSelect"></select>
+      <div class="widget-indicator" id="indicator">—</div>
+  </div>
 
-    loadMortgageRate();
+  <div class="widget-frame" id="frameHost">
+      <div class="nav left" id="btnPrev">‹</div>
+      <div class="nav right" id="btnNext">›</div>
+  </div>
+</div>
+
+<script>
+/* ============================= */
+/* ✅ EDIT THESE WORKER ENDPOINTS */
+/* ============================= */
+/**
+ * You told me your worker returned:
+ * {"ok":true,"series":"MORTGAGE30US","rate":6.09,"date":"2026-02-12","source":"FRED"}
+ *
+ * Put your real endpoints here:
+ *  - One endpoint for 30-year
+ *  - One endpoint for 15-year
+ *
+ * If you only have ONE endpoint right now, set ENDPOINT_15 to the same URL
+ * and we’ll update the worker later.
+ */
+const ENDPOINT_30 = "https://fred-proxy.615realtyguy.workers.dev/mortgage?series=MORTGAGE30US";
+const ENDPOINT_15 = "https://fred-proxy.615realtyguy.workers.dev/mortgage?series=MORTGAGE15US";
+
+// If your worker supports history, we’ll use up to this many points
+const HISTORY_POINTS = 52;
+
+const SERIES = {
+  "30": { id: "MORTGAGE30US", name: "30-Year Fixed Mortgage Rate" },
+  "15": { id: "MORTGAGE15US", name: "15-Year Fixed Mortgage Rate" }
+};
+
+const el = {
+  title: document.getElementById("mortgageTitle"),
+  rateValue: document.getElementById("mortgageRate"),
+  rateDate: document.getElementById("rateDate"),
+  statusDot: document.getElementById("statusDot"),
+  statusText: document.getElementById("statusText"),
+  errBox: document.getElementById("errBox"),
+  btn30: document.getElementById("btn30"),
+  btn15: document.getElementById("btn15"),
+  canvas: document.getElementById("rateChart"),
+  rangeLabel: document.getElementById("rangeLabel")
+};
+
+let activeKey = "30";
+let chartState = { points: [] };
+
+function setStatus(ok, text){
+  el.statusText.textContent = text;
+  el.statusDot.classList.toggle("bad", !ok);
+}
+
+function showError(msg){
+  el.errBox.style.display = "block";
+  el.errBox.textContent = msg;
+  setStatus(false, "Unavailable");
+}
+
+function clearError(){
+  el.errBox.style.display = "none";
+  el.errBox.textContent = "";
+}
+
+function endpointFor(key){
+  return key === "30" ? ENDPOINT_30 : ENDPOINT_15;
+}
+
+async function fetchSeries(key){
+  const url = endpointFor(key);
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+
+  /**
+   * Supported payload shapes:
+   * A) Current-only:
+   *   { ok:true, series:"MORTGAGE30US", rate:6.09, date:"2026-02-12", source:"FRED" }
+   *
+   * B) With history:
+   *   { ok:true, series:"MORTGAGE30US", rate:6.09, date:"2026-02-12",
+   *     history:[{date:"2025-03-01", value:6.7}, ...] }
+   *
+   * C) Alternate:
+   *   { observations:[{date:"...", value:"6.09"}, ...] }
+   */
+  const out = { currentRate: null, currentDate: null, points: [] };
+
+  if (typeof data.rate === "number" && data.date){
+    out.currentRate = data.rate;
+    out.currentDate = data.date;
+  }
+
+  if (Array.isArray(data.history)){
+    out.points = data.history
+      .map(p => ({ date: p.date, value: Number(p.value) }))
+      .filter(p => Number.isFinite(p.value) && p.date);
+  } else if (Array.isArray(data.observations)){
+    out.points = data.observations
+      .map(p => ({ date: p.date, value: Number(p.value) }))
+      .filter(p => Number.isFinite(p.value) && p.date);
+  }
+
+  // If we have points but no currentRate, use last point
+  if (out.points.length && (out.currentRate === null || !out.currentDate)){
+    const last = out.points[out.points.length - 1];
+    out.currentRate = last.value;
+    out.currentDate = last.date;
+  }
+
+  if (out.currentRate === null || !out.currentDate){
+    throw new Error("Missing rate/date in response.");
+  }
+
+  return out;
+}
+
+function fmtDate(iso){
+  try{
+    const d = new Date(iso + "T00:00:00Z");
+    return d.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" });
+  }catch{
+    return iso;
+  }
+}
+
+function setActive(key){
+  activeKey = key;
+  el.btn30.classList.toggle("active", key === "30");
+  el.btn15.classList.toggle("active", key === "15");
+  el.btn30.setAttribute("aria-selected", key === "30" ? "true" : "false");
+  el.btn15.setAttribute("aria-selected", key === "15" ? "true" : "false");
+  el.title.textContent = SERIES[key].name;
+  loadAndRender();
+}
+
+function drawChart(points){
+  const canvas = el.canvas;
+  const ctx = canvas.getContext("2d");
+
+  // Handle DPR scaling
+  const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+  const cssW = canvas.clientWidth;
+  const cssH = canvas.clientHeight;
+  canvas.width = Math.floor(cssW * dpr);
+  canvas.height = Math.floor(cssH * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  ctx.clearRect(0,0,cssW,cssH);
+
+  const pad = { l: 14, r: 14, t: 14, b: 18 };
+  const W = cssW, H = cssH;
+  const innerW = W - pad.l - pad.r;
+  const innerH = H - pad.t - pad.b;
+
+  // Background grid
+  ctx.strokeStyle = "rgba(255,255,255,.08)";
+  ctx.lineWidth = 1;
+  const gridLines = 4;
+  for (let i=1; i<=gridLines; i++){
+    const y = pad.t + (innerH * i / (gridLines+1));
+    ctx.beginPath();
+    ctx.moveTo(pad.l, y);
+    ctx.lineTo(W - pad.r, y);
+    ctx.stroke();
+  }
+
+  if (!points || points.length < 2){
+    ctx.fillStyle = "rgba(255,255,255,.55)";
+    ctx.font = "600 13px ui-sans-serif, system-ui";
+    ctx.fillText("Not enough history to plot.", pad.l, pad.t + 18);
+    el.rangeLabel.textContent = "Range: —";
+    return;
+  }
+
+  const vals = points.map(p => p.value);
+  const min = Math.min(...vals);
+  const max = Math.max(...vals);
+
+  const yMin = min - 0.15;
+  const yMax = max + 0.15;
+
+  function xAt(i){
+    return pad.l + (innerW * (i / (points.length - 1)));
+  }
+  function yAt(v){
+    const t = (v - yMin) / (yMax - yMin || 1);
+    return pad.t + innerH - (innerH * t);
+  }
+
+  // Line (gold)
+  ctx.strokeStyle = "rgba(210,181,108,.95)";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let i=0; i<points.length; i++){
+    const x = xAt(i);
+    const y = yAt(points[i].value);
+    if (i === 0) ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+
+  // Fill under line
+  ctx.fillStyle = "rgba(210,181,108,.12)";
+  ctx.beginPath();
+  for (let i=0; i<points.length; i++){
+    const x = xAt(i);
+    const y = yAt(points[i].value);
+    if (i === 0) ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+  }
+  ctx.lineTo(xAt(points.length - 1), pad.t + innerH);
+  ctx.lineTo(xAt(0), pad.t + innerH);
+  ctx.closePath();
+  ctx.fill();
+
+  // Endpoint dot
+  const last = points[points.length - 1];
+  const lx = xAt(points.length - 1);
+  const ly = yAt(last.value);
+  ctx.fillStyle = "rgba(210,181,108,1)";
+  ctx.beginPath();
+  ctx.arc(lx, ly, 4.2, 0, Math.PI * 2);
+  ctx.fill();
+
+  el.rangeLabel.textContent = `Range: ${min.toFixed(2)}% – ${max.toFixed(2)}%`;
+}
+
+async function loadAndRender(){
+  clearError();
+  setStatus(true, "Loading…");
+  el.rateValue.textContent = "--";
+  el.rateDate.textContent = "—";
+
+  try{
+    const result = await fetchSeries(activeKey);
+
+    el.rateValue.textContent = result.currentRate.toFixed(2) + "%";
+    el.rateDate.textContent = "As of " + fmtDate(result.currentDate);
+    setStatus(true, "Live");
+
+    chartState.points = (result.points || []).slice(-HISTORY_POINTS);
+    drawChart(chartState.points);
+
+  } catch (e){
+    console.error(e);
+    showError("Mortgage rate data is currently unavailable. Please refresh or try again later.");
+    drawChart([]);
+  }
+}
+
+// Toggle handlers
+el.btn30.addEventListener("click", () => setActive("30"));
+el.btn15.addEventListener("click", () => setActive("15"));
+
+// Redraw chart on resize
+window.addEventListener("resize", () => {
+  drawChart(chartState.points || []);
+});
+
+// Initial load
+loadAndRender();
 
 
-    // ===== 2) Market widget (Realtracs iframes) =====
-    const markets = {
-      "White House (37188)": [
-        { label: "Pricing Trends",   url: "https://go.realtracs.com/1evji2y" },
-        { label: "Price per Sqft",   url: "https://go.realtracs.com/1evjUG3" },
-        { label: "DOM",              url: "https://go.realtracs.com/1evjb2g" },
-        { label: "Showings",         url: "https://go.realtracs.com/1evjhE7" },
-        { label: "Months Supply",    url: "https://go.realtracs.com/1evjm6O" },
-        { label: "Market Inventory", url: "https://go.realtracs.com/1evjo1D" }
-      ],
+/* ============================= */
+/* MARKET ROTATOR (unchanged) */
+/* ============================= */
 
-      "Robertson County": [
-        { label: "Pricing Trends",  url: "https://go.realtracs.com/1evlNAJ" },
-        { label: "Price per Sqft",  url: "https://go.realtracs.com/1evlX6f" },
-        { label: "DOM",             url: "https://go.realtracs.com/1evlTFp" },
-        { label: "Showings",        url: "https://go.realtracs.com/1evlcFx" }
-      ],
+const markets = {
+  "White House (37188)": [
+    { label:"Pricing Trends", url:"https://go.realtracs.com/1evji2y"},
+    { label:"Price per Sqft", url:"https://go.realtracs.com/1evjUG3"},
+    { label:"DOM", url:"https://go.realtracs.com/1evjb2g"},
+    { label:"Showings", url:"https://go.realtracs.com/1evjhE7"},
+    { label:"Months Supply", url:"https://go.realtracs.com/1evjm6O"},
+    { label:"Market Inventory", url:"https://go.realtracs.com/1evjo1D"},
+  ],
+  "Robertson County": [
+    { label:"Pricing Trends", url:"https://go.realtracs.com/1evlNAJ"},
+    { label:"Price per Sqft", url:"https://go.realtracs.com/1evlX6f"},
+    { label:"DOM", url:"https://go.realtracs.com/1evlTFp"},
+    { label:"Showings", url:"https://go.realtracs.com/1evlcFx"},
+  ],
+  "Sumner County": [
+    { label:"Pricing Trends", url:"https://go.realtracs.com/1evlq6b"},
+    { label:"Price per Sqft", url:"https://go.realtracs.com/1evlu8q"},
+    { label:"DOM", url:"https://go.realtracs.com/1evlhDS"},
+    { label:"Showings", url:"https://go.realtracs.com/1evle3V"},
+  ]
+};
 
-      "Sumner County": [
-        { label: "Pricing Trends",  url: "https://go.realtracs.com/1evlq6b" },
-        { label: "Price per Sqft",  url: "https://go.realtracs.com/1evlu8q" },
-        { label: "DOM",             url: "https://go.realtracs.com/1evlhDS" },
-        { label: "Showings",        url: "https://go.realtracs.com/1evle3V" }
-      ]
-    };
+const select = document.getElementById("marketSelect");
+const frameHost = document.getElementById("frameHost");
+const indicator = document.getElementById("indicator");
+const btnPrev = document.getElementById("btnPrev");
+const btnNext = document.getElementById("btnNext");
 
-    const ROTATE_MS = 10000;
+let frames = [];
+let currentIndex = 0;
+let currentMarket = null;
 
-    const widget = document.getElementById("widget");
-    const select = document.getElementById("marketSelect");
-    const indicator = document.getElementById("indicator");
-    const frameHost = document.getElementById("frameHost");
-
-    const btnPrev = document.getElementById("btnPrev");
-    const btnNext = document.getElementById("btnNext");
-
-    let frames = [];
-    let currentMarket = null;
-    let currentIndex = 0;
-    let interval = null;
-
-    function populateDropdown(){
-      select.innerHTML = "";
-      Object.keys(markets).forEach(name => {
-        const opt = document.createElement("option");
-        opt.value = name;
-        opt.textContent = name;
+function populateDropdown(){
+    Object.keys(markets).forEach(name=>{
+        const opt=document.createElement("option");
+        opt.value=name;
+        opt.textContent=name;
         select.appendChild(opt);
-      });
-    }
+    });
+}
 
-    function clearIframes(){
-      frames.forEach(f => f.remove());
-      frames = [];
-    }
-
-    function updateNavState(){
-      const disabled = frames.length <= 1;
-      btnPrev.classList.toggle("disabled", disabled);
-      btnNext.classList.toggle("disabled", disabled);
-    }
-
-    function showFrame(idx){
-      const charts = markets[currentMarket] || [];
-      frames.forEach((f, i) => f.classList.toggle("active", i === idx));
-      indicator.textContent = charts[idx]?.label ?? "—";
-    }
-
-    function buildIframes(marketName){
-      clearIframes();
-      currentMarket = marketName;
-
-      const charts = markets[marketName] || [];
-      charts.forEach(c => {
-        const iframe = document.createElement("iframe");
-        iframe.src = c.url;
-        frameHost.insertBefore(iframe, btnPrev); // keep nav on top
+function buildIframes(market){
+    frames.forEach(f=>f.remove());
+    frames=[];
+    currentMarket=market;
+    markets[market].forEach(chart=>{
+        const iframe=document.createElement("iframe");
+        iframe.src=chart.url;
+        frameHost.insertBefore(iframe, btnPrev);
         frames.push(iframe);
-      });
+    });
+    currentIndex=0;
+    showFrame(0);
+}
 
-      currentIndex = 0;
-      if(frames.length > 0) showFrame(0);
-      updateNavState();
-      resetTimer();
-    }
+function showFrame(idx){
+    frames.forEach((f,i)=>f.classList.toggle("active",i===idx));
+    indicator.textContent = markets[currentMarket][idx].label;
+}
 
-    function next(){
-      if(frames.length <= 1) return;
-      currentIndex = (currentIndex + 1) % frames.length;
-      showFrame(currentIndex);
-      resetTimer();
-    }
+btnNext.onclick=()=>{
+    currentIndex=(currentIndex+1)%frames.length;
+    showFrame(currentIndex);
+};
 
-    function prev(){
-      if(frames.length <= 1) return;
-      currentIndex = (currentIndex - 1 + frames.length) % frames.length;
-      showFrame(currentIndex);
-      resetTimer();
-    }
+btnPrev.onclick=()=>{
+    currentIndex=(currentIndex-1+frames.length)%frames.length;
+    showFrame(currentIndex);
+};
 
-    function startTimer(){
-      stopTimer();
-      if(frames.length <= 1) return;
-      interval = setInterval(() => {
-        currentIndex = (currentIndex + 1) % frames.length;
-        showFrame(currentIndex);
-      }, ROTATE_MS);
-    }
+select.addEventListener("change",()=>buildIframes(select.value));
 
-    function stopTimer(){
-      if(interval) clearInterval(interval);
-      interval = null;
-    }
+populateDropdown();
+select.value="White House (37188)";
+buildIframes(select.value);
 
-    function resetTimer(){
-      stopTimer();
-      startTimer();
-    }
+</script>
 
-    btnNext.addEventListener("click", next);
-    btnPrev.addEventListener("click", prev);
-
-    widget.addEventListener("mouseenter", stopTimer);
-    widget.addEventListener("mouseleave", startTimer);
-
-    select.addEventListener("change", () => buildIframes(select.value));
-
-    // Init
-    populateDropdown();
-    select.value = "White House (37188)";
-    buildIframes(select.value);
-  </script>
 </body>
 </html>
-
