@@ -163,6 +163,15 @@ nav a:hover {
     -webkit-text-fill-color: transparent;
 }
 
+/* ✅ Stable subline for weekly change */
+.rate-sub{
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .2px;
+  color: rgba(255,255,255,0.70);
+}
+
 .rate-meta {
     text-align: right;
     display: flex;
@@ -340,7 +349,6 @@ canvas { display: block; width: 100%; height: 220px; }
     <a href="https://substack.com/@615realtyguy" target="_blank">Blog</a>
 
     <!-- CTA -->
-    <!-- Change this link to your Calendly/contact page -->
     <a class="cta-btn" href="https://calendly.com/615realtyguy" target="_blank" rel="noopener">
       <span class="cta-dot" aria-hidden="true"></span>
       Thinking about buying/selling? Let’s Talk
@@ -360,7 +368,11 @@ canvas { display: block; width: 100%; height: 220px; }
   </div>
 
   <div class="rate-row">
-    <div class="rate-value" id="mortgageRate">--</div>
+    <!-- ✅ Wrap rate + weekly change together -->
+    <div>
+      <div class="rate-value" id="mortgageRate">--</div>
+      <div class="rate-sub" id="weeklyChange">—</div>
+    </div>
 
     <div class="rate-meta">
       <div class="status-pill" id="statusPill">
@@ -397,23 +409,11 @@ canvas { display: block; width: 100%; height: 220px; }
 
 <script>
 /* ============================= */
-/* ✅ EDIT THESE WORKER ENDPOINTS */
+/* ✅ WORKER ENDPOINTS */
 /* ============================= */
-/**
- * You told me your worker returned:
- * {"ok":true,"series":"MORTGAGE30US","rate":6.09,"date":"2026-02-12","source":"FRED"}
- *
- * Put your real endpoints here:
- *  - One endpoint for 30-year
- *  - One endpoint for 15-year
- *
- * If you only have ONE endpoint right now, set ENDPOINT_15 to the same URL
- * and we’ll update the worker later.
- */
 const ENDPOINT_30 = "https://fred-proxy.615realtyguy.workers.dev/mortgage?series=MORTGAGE30US";
 const ENDPOINT_15 = "https://fred-proxy.615realtyguy.workers.dev/mortgage?series=MORTGAGE15US";
 
-// If your worker supports history, we’ll use up to this many points
 const HISTORY_POINTS = 52;
 
 const SERIES = {
@@ -431,7 +431,8 @@ const el = {
   btn30: document.getElementById("btn30"),
   btn15: document.getElementById("btn15"),
   canvas: document.getElementById("rateChart"),
-  rangeLabel: document.getElementById("rangeLabel")
+  rangeLabel: document.getElementById("rangeLabel"),
+  weeklyChange: document.getElementById("weeklyChange")
 };
 
 let activeKey = "30";
@@ -463,18 +464,6 @@ async function fetchSeries(key){
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const data = await res.json();
 
-  /**
-   * Supported payload shapes:
-   * A) Current-only:
-   *   { ok:true, series:"MORTGAGE30US", rate:6.09, date:"2026-02-12", source:"FRED" }
-   *
-   * B) With history:
-   *   { ok:true, series:"MORTGAGE30US", rate:6.09, date:"2026-02-12",
-   *     history:[{date:"2025-03-01", value:6.7}, ...] }
-   *
-   * C) Alternate:
-   *   { observations:[{date:"...", value:"6.09"}, ...] }
-   */
   const out = { currentRate: null, currentDate: null, points: [] };
 
   if (typeof data.rate === "number" && data.date){
@@ -492,7 +481,6 @@ async function fetchSeries(key){
       .filter(p => Number.isFinite(p.value) && p.date);
   }
 
-  // If we have points but no currentRate, use last point
   if (out.points.length && (out.currentRate === null || !out.currentDate)){
     const last = out.points[out.points.length - 1];
     out.currentRate = last.value;
@@ -529,7 +517,6 @@ function drawChart(points){
   const canvas = el.canvas;
   const ctx = canvas.getContext("2d");
 
-  // Handle DPR scaling
   const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
   const cssW = canvas.clientWidth;
   const cssH = canvas.clientHeight;
@@ -544,7 +531,6 @@ function drawChart(points){
   const innerW = W - pad.l - pad.r;
   const innerH = H - pad.t - pad.b;
 
-  // Background grid
   ctx.strokeStyle = "rgba(255,255,255,.08)";
   ctx.lineWidth = 1;
   const gridLines = 4;
@@ -560,7 +546,7 @@ function drawChart(points){
     ctx.fillStyle = "rgba(255,255,255,.55)";
     ctx.font = "600 13px ui-sans-serif, system-ui";
     ctx.fillText("Not enough history to plot.", pad.l, pad.t + 18);
-    el.rangeLabel.textContent = "Range: —";
+    el.rangeLabel.textContent = "52-Week Range: —";
     return;
   }
 
@@ -579,7 +565,6 @@ function drawChart(points){
     return pad.t + innerH - (innerH * t);
   }
 
-  // Line (gold)
   ctx.strokeStyle = "rgba(210,181,108,.95)";
   ctx.lineWidth = 2;
   ctx.beginPath();
@@ -591,7 +576,6 @@ function drawChart(points){
   }
   ctx.stroke();
 
-  // Fill under line
   ctx.fillStyle = "rgba(210,181,108,.12)";
   ctx.beginPath();
   for (let i=0; i<points.length; i++){
@@ -605,7 +589,6 @@ function drawChart(points){
   ctx.closePath();
   ctx.fill();
 
-  // Endpoint dot
   const last = points[points.length - 1];
   const lx = xAt(points.length - 1);
   const ly = yAt(last.value);
@@ -614,7 +597,8 @@ function drawChart(points){
   ctx.arc(lx, ly, 4.2, 0, Math.PI * 2);
   ctx.fill();
 
-  el.rangeLabel.textContent = `Range: ${min.toFixed(2)}% – ${max.toFixed(2)}%`;
+  // Keep the footer as 52-week range (also set in loadAndRender)
+  el.rangeLabel.textContent = `52-Week Range: ${min.toFixed(2)}% – ${max.toFixed(2)}%`;
 }
 
 async function loadAndRender(){
@@ -622,6 +606,10 @@ async function loadAndRender(){
   setStatus(true, "Loading…");
   el.rateValue.textContent = "--";
   el.rateDate.textContent = "—";
+  if (el.weeklyChange) {
+    el.weeklyChange.textContent = "—";
+    el.weeklyChange.style.color = "rgba(255,255,255,0.70)";
+  }
 
   try{
     const result = await fetchSeries(activeKey);
@@ -639,45 +627,44 @@ async function loadAndRender(){
     if(history.length >= 2){
       const lastWeek = history[history.length - 2].value;
       const change = current - lastWeek;
-      const absChange = Math.abs(change).toFixed(2);
 
       const arrow = change > 0 ? "↑" : change < 0 ? "↓" : "→";
+      const absChange = Math.abs(change).toFixed(2);
+
+      // Up: green, Down: gold, Flat: gray
       const color = change > 0 ? "#3ddc97" : change < 0 ? "#d2b56c" : "#aaa";
 
-      const changeHTML = `
-        <div style="margin-top:6px;font-size:14px;font-weight:600;color:${color}">
-          ${arrow} ${absChange}% vs last week
-        </div>
-      `;
+      if (el.weeklyChange){
+        el.weeklyChange.textContent = `${arrow} ${absChange}% vs last week`;
+        el.weeklyChange.style.color = color;
+      }
 
       const vals = history.map(p => p.value);
       const min = Math.min(...vals);
       const max = Math.max(...vals);
-
-      el.rangeLabel.innerHTML = `
-        52-Week Range: ${min.toFixed(2)}% – ${max.toFixed(2)}%
-      `;
-
-      // Insert change display under big rate
-      const existing = document.getElementById("weeklyChange");
-      if(existing) existing.remove();
-
-      const wrapper = document.createElement("div");
-      wrapper.id = "weeklyChange";
-      wrapper.innerHTML = changeHTML;
-      el.rateValue.parentNode.insertBefore(wrapper, el.rateValue.nextSibling);
-
+      el.rangeLabel.textContent = `52-Week Range: ${min.toFixed(2)}% – ${max.toFixed(2)}%`;
     } else {
-      el.rangeLabel.textContent = "Range: —";
+      el.rangeLabel.textContent = "52-Week Range: —";
     }
 
   } catch (e){
     console.error(e);
-    showError("Mortgage rate data is currently unavailable.");
+    showError("Mortgage rate data is currently unavailable. Please refresh or try again later.");
     drawChart([]);
   }
 }
 
+// Toggle handlers
+el.btn30.addEventListener("click", () => setActive("30"));
+el.btn15.addEventListener("click", () => setActive("15"));
+
+// Redraw chart on resize
+window.addEventListener("resize", () => {
+  drawChart(chartState.points || []);
+});
+
+// Initial load
+loadAndRender();
 
 
 /* ============================= */
@@ -765,3 +752,4 @@ buildIframes(select.value);
 
 </body>
 </html>
+
