@@ -910,6 +910,24 @@ nav a:hover {
     }
 }
 
+/* Dropdown nav */
+.dropdown { position: relative; }
+.dropbtn {
+    background: none; border: none; color: #d2b56c; font-size: 0.85rem;
+    font-weight: 600; cursor: pointer; font-family: inherit; padding: 0;
+}
+.dropbtn:hover { color: #feee9f; }
+.dropdown-content {
+    display: none; position: absolute; right: 0; top: 100%;
+    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px;
+    min-width: 180px; z-index: 100; padding: 6px 0; margin-top: 6px;
+}
+.dropdown-content a {
+    display: block; padding: 8px 16px; font-size: 0.85rem; color: #ccc;
+}
+.dropdown-content a:hover { background: #2a2a2a; color: #feee9f; }
+.dropdown:hover .dropdown-content { display: block; }
+
 </style>
 </head>
 
@@ -926,6 +944,15 @@ nav a:hover {
     <a href="../index.html">Home</a>
     <a href="../about.html">About</a>
     <a href="https://substack.com/@615realtyguy" target="_blank">Blog</a>
+    <div class="dropdown">
+      <button class="dropbtn">Areas &#9662;</button>
+      <div class="dropdown-content">
+        <a href="/hendersonville-tn-real-estate.html">Hendersonville</a>
+        <a href="/gallatin-tn-real-estate.html">Gallatin</a>
+        <a href="/white-house-tn-real-estate.html">White House</a>
+        <a href="/portland-tn-real-estate.html">Portland</a>
+      </div>
+    </div>
   </nav>
 </header>
 
