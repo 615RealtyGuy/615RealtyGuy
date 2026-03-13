@@ -9,6 +9,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Market Stats | 615 Realty Guy</title>
 
+<!-- Chart.js for HPI line chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+
+<!-- Inter font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* ============================= */
@@ -230,7 +238,7 @@ nav a:hover {
     overflow: hidden;
 }
 
-canvas { display: block; width: 100%; height: 220px; }
+#rateChart { display: block; width: 100%; height: 220px; }
 
 .chart-footer {
     display: flex;
@@ -249,7 +257,8 @@ canvas { display: block; width: 100%; height: 220px; }
 
 .market-widget{
     width: 800px;
-    margin: 0 auto 80px auto;
+    max-width: 760px;
+    margin: 0 auto 50px auto;
     background: linear-gradient(145deg, #0f0f12, #1a1a1f);
     border-radius:16px;
     box-shadow:0 25px 60px rgba(0,0,0,0.6);
@@ -318,6 +327,316 @@ canvas { display: block; width: 100%; height: 220px; }
 .nav.left{ left:15px; }
 .nav.right{ right:15px; }
 
+/* ============================= */
+/* DASHBOARD SECTION */
+/* ============================= */
+
+.dash-container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 20px 60px 20px;
+    text-align: left;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Section divider / label — gold left border callout */
+.dash-section-label {
+    border-left: 3px solid #c9a84c;
+    background: #161616;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    border-radius: 0 6px 6px 0;
+}
+
+.dash-section-label span {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #666666;
+}
+
+/* ============================= */
+/* 615 SCORE HERO CARD */
+/* ============================= */
+
+.score-card {
+    background: #1a1a1a;
+    border: 2px solid #c9a84c;
+    border-radius: 10px;
+    padding: 30px 28px 24px 28px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+}
+
+.score-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #c9a84c, #feee9f, #c9a84c);
+}
+
+.score-top {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.score-gauge-wrap {
+    flex-shrink: 0;
+    width: 180px;
+    height: 120px;
+    position: relative;
+}
+
+.score-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+.score-brand {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #c9a84c;
+    margin: 0 0 4px 0;
+}
+
+.score-number-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.score-number {
+    font-size: 52px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.score-max {
+    font-size: 20px;
+    font-weight: 400;
+    color: #666666;
+}
+
+.score-condition {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.score-subtitle {
+    font-size: 12px;
+    font-style: italic;
+    color: #666666;
+    margin: 0 0 12px 0;
+    line-height: 1.4;
+}
+
+.score-methodology {
+    margin-top: 14px;
+}
+
+.score-methodology summary {
+    font-size: 12px;
+    color: #aaaaaa;
+    cursor: pointer;
+    user-select: none;
+}
+
+.score-methodology summary:hover {
+    color: #c9a84c;
+}
+
+.score-methodology p {
+    font-size: 12px;
+    color: #666666;
+    line-height: 1.5;
+    margin: 8px 0 0 0;
+}
+
+.score-attribution {
+    font-size: 11px;
+    color: #666666;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #2a2a2a;
+    text-align: center;
+}
+
+/* Loading skeleton */
+.score-loading {
+    text-align: center;
+    padding: 40px 0;
+    color: #666666;
+    font-size: 13px;
+}
+
+.score-loading .spinner {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #2a2a2a;
+    border-top-color: #c9a84c;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================= */
+/* STAT CARDS */
+/* ============================= */
+
+.dash-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 20px 22px;
+    position: relative;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.stat-card .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #666666;
+    margin: 0 0 10px 0;
+}
+
+.stat-card .stat-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 6px 0;
+    line-height: 1.2;
+}
+
+.stat-card .stat-trend {
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.stat-card .stat-date {
+    font-size: 11px;
+    color: #666666;
+    margin-top: 8px;
+}
+
+.stat-card .stat-source {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-size: 11px;
+    color: #666666;
+}
+
+.stat-card .stat-unavailable {
+    font-size: 14px;
+    color: #666666;
+    font-style: italic;
+}
+
+/* Skeleton loading for stat cards */
+.stat-card.loading .stat-value,
+.stat-card.loading .stat-trend {
+    background: #2a2a2a;
+    color: transparent;
+    border-radius: 4px;
+    animation: pulse 1.5s ease-in-out infinite;
+    display: inline-block;
+    min-width: 80px;
+    min-height: 20px;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+}
+
+/* ============================= */
+/* HPI CHART CARD */
+/* ============================= */
+
+.hpi-card {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 24px;
+}
+
+.hpi-card .stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #666666;
+    margin: 0 0 14px 0;
+}
+
+.hpi-chart-wrap {
+    position: relative;
+    height: 260px;
+}
+
+.hpi-chart-wrap canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.hpi-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 11px;
+    color: #666666;
+}
+
+/* ============================= */
+/* DATA NOTE */
+/* ============================= */
+
+.dash-note {
+    font-size: 12px;
+    font-style: italic;
+    color: #666666;
+    line-height: 1.5;
+    padding: 10px 0;
+}
+
+/* ============================= */
+/* RESPONSIVE */
+/* ============================= */
+
 @media(max-width:900px){
     header{
         padding: 15px 18px;
@@ -328,6 +647,29 @@ canvas { display: block; width: 100%; height: 220px; }
     .rate-card{
         margin-top: 40px;
         text-align: left;
+    }
+    .dash-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .score-top {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .score-info {
+        text-align: center;
+    }
+    .score-number-row {
+        justify-content: center;
+    }
+}
+
+@media(max-width:600px){
+    .dash-grid {
+        grid-template-columns: 1fr;
+    }
+    .dash-container {
+        padding: 0 14px 40px 14px;
     }
 }
 
@@ -351,7 +693,7 @@ canvas { display: block; width: 100%; height: 220px; }
     <!-- CTA -->
     <a class="cta-btn" href="https://calendly.com/615realtyguy" target="_blank" rel="noopener">
       <span class="cta-dot" aria-hidden="true"></span>
-      Thinking about buying/selling? Let’s Talk
+      Thinking about buying/selling? Let's Talk
     </a>
   </nav>
 </header>
@@ -368,7 +710,6 @@ canvas { display: block; width: 100%; height: 220px; }
   </div>
 
   <div class="rate-row">
-    <!-- ✅ Wrap rate + weekly change together -->
     <div>
       <div class="rate-value" id="mortgageRate">--</div>
       <div class="rate-sub" id="weeklyChange">—</div>
@@ -407,9 +748,141 @@ canvas { display: block; width: 100%; height: 220px; }
   </div>
 </div>
 
+
+<!-- ======================================================== -->
+<!-- NASHVILLE METRO MARKET INDICATORS DASHBOARD               -->
+<!-- ======================================================== -->
+
+<div class="dash-container" id="dashContainer">
+
+  <!-- Section Header -->
+  <div class="dash-section-label">
+    <span>Nashville Metro Market Indicators</span>
+  </div>
+
+  <!-- 615 Score Hero Card -->
+  <div class="score-card" id="scoreCard">
+    <div class="score-loading" id="scoreLoading">
+      <div class="spinner"></div>
+      <div>Calculating 615 Score…</div>
+    </div>
+    <div id="scoreContent" style="display:none;">
+      <div class="score-top">
+        <div class="score-gauge-wrap">
+          <svg id="scoreGauge" viewBox="0 0 180 120" width="180" height="120"></svg>
+        </div>
+        <div class="score-info">
+          <div class="score-brand">The 615 Score</div>
+          <div class="score-number-row">
+            <span class="score-number" id="scoreValue">--</span>
+            <span class="score-max">/100</span>
+          </div>
+          <div class="score-condition" id="scoreCondition">—</div>
+          <div class="score-subtitle">A composite index of Nashville metro housing and economic indicators</div>
+          <details class="score-methodology">
+            <summary>&#63; How is this calculated?</summary>
+            <p>The 615 Score combines active inventory, days on market, home price appreciation, unemployment, income growth, and inflation into a single market health index. Each metric is normalized against its trailing 24-month range and weighted by importance. Updated as new data is released.</p>
+          </details>
+        </div>
+      </div>
+      <div class="score-attribution">615 Score is a proprietary index calculated by SixOneFive Real Estate Advisors using Federal Reserve Economic Data (FRED).</div>
+    </div>
+  </div>
+
+  <!-- Housing Market Section -->
+  <div class="dash-section-label" style="margin-top:8px;">
+    <span>Housing Market — Nashville MSA</span>
+  </div>
+
+  <div class="dash-grid" id="housingGrid">
+    <!-- Active Listings -->
+    <div class="stat-card loading" id="card-listings">
+      <div class="stat-label">Active Listings</div>
+      <div class="stat-value">&nbsp;</div>
+      <div class="stat-trend">&nbsp;</div>
+      <div class="stat-source">Source: FRED</div>
+    </div>
+    <!-- Median Days on Market -->
+    <div class="stat-card loading" id="card-dom">
+      <div class="stat-label">Median Days on Market</div>
+      <div class="stat-value">&nbsp;</div>
+      <div class="stat-trend">&nbsp;</div>
+      <div class="stat-source">Source: FRED</div>
+    </div>
+    <!-- Median Price Per Sq Ft -->
+    <div class="stat-card loading" id="card-ppsf">
+      <div class="stat-label">Median List Price / Sq Ft</div>
+      <div class="stat-value">&nbsp;</div>
+      <div class="stat-trend">&nbsp;</div>
+      <div class="stat-source">Source: FRED</div>
+    </div>
+  </div>
+
+  <!-- HPI Chart -->
+  <div class="hpi-card" id="hpiCard">
+    <div class="stat-label">Nashville MSA House Price Index</div>
+    <div class="hpi-chart-wrap">
+      <canvas id="hpiChart"></canvas>
+    </div>
+    <div class="hpi-footer">
+      <span id="hpiDateRange">—</span>
+      <span>Source: FRED</span>
+    </div>
+  </div>
+
+  <!-- Economic Health Section -->
+  <div class="dash-section-label">
+    <span>Local Economic Health</span>
+  </div>
+
+  <div class="dash-grid" id="econGrid">
+    <!-- TN Unemployment -->
+    <div class="stat-card loading" id="card-unemployment">
+      <div class="stat-label">Tennessee Unemployment</div>
+      <div class="stat-value">&nbsp;</div>
+      <div class="stat-trend">&nbsp;</div>
+      <div class="stat-source">Source: FRED</div>
+    </div>
+    <!-- Nashville Per Capita Income -->
+    <div class="stat-card loading" id="card-income">
+      <div class="stat-label">Nashville Per Capita Income</div>
+      <div class="stat-value">&nbsp;</div>
+      <div class="stat-trend">&nbsp;</div>
+      <div class="stat-source">Source: FRED</div>
+    </div>
+  </div>
+
+  <!-- Affordability Section -->
+  <div class="dash-section-label">
+    <span>Affordability Context</span>
+  </div>
+
+  <div class="dash-grid" id="affordGrid">
+    <!-- CPI Inflation -->
+    <div class="stat-card loading" id="card-cpi">
+      <div class="stat-label">CPI Inflation (National)</div>
+      <div class="stat-value">&nbsp;</div>
+      <div class="stat-trend">&nbsp;</div>
+      <div class="stat-source">Source: FRED</div>
+    </div>
+  </div>
+
+  <!-- Data Note -->
+  <div class="dash-note">
+    Data sourced from Federal Reserve Economic Data (FRED). Updated as released by source agencies.
+  </div>
+
+</div><!-- end .dash-container -->
+
+
+<!-- ======================================================== -->
+<!-- SCRIPTS                                                    -->
+<!-- ======================================================== -->
+
 <script>
 /* ============================= */
-/* ✅ WORKER ENDPOINTS */
+/* MORTGAGE RATE WIDGET          */
+/* (existing — unchanged)        */
 /* ============================= */
 const ENDPOINT_30 = "https://fred-proxy.615realtyguy.workers.dev/mortgage?series=MORTGAGE30US";
 const ENDPOINT_15 = "https://fred-proxy.615realtyguy.workers.dev/mortgage?series=MORTGAGE15US";
@@ -458,7 +931,7 @@ function endpointFor(key){
   return key === "30" ? ENDPOINT_30 : ENDPOINT_15;
 }
 
-async function fetchSeries(key){
+async function fetchMortgageSeries(key){
   const url = endpointFor(key);
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -597,7 +1070,6 @@ function drawChart(points){
   ctx.arc(lx, ly, 4.2, 0, Math.PI * 2);
   ctx.fill();
 
-  // Keep the footer as 52-week range (also set in loadAndRender)
   el.rangeLabel.textContent = `52-Week Range: ${min.toFixed(2)}% – ${max.toFixed(2)}%`;
 }
 
@@ -612,7 +1084,7 @@ async function loadAndRender(){
   }
 
   try{
-    const result = await fetchSeries(activeKey);
+    const result = await fetchMortgageSeries(activeKey);
 
     const current = result.currentRate;
     const history = (result.points || []).slice(-HISTORY_POINTS);
@@ -631,7 +1103,6 @@ async function loadAndRender(){
       const arrow = change > 0 ? "↑" : change < 0 ? "↓" : "→";
       const absChange = Math.abs(change).toFixed(2);
 
-      // Up: green, Down: gold, Flat: gray
       const color = change > 0 ? "#3ddc97" : change < 0 ? "#d2b56c" : "#aaa";
 
       if (el.weeklyChange){
@@ -654,21 +1125,18 @@ async function loadAndRender(){
   }
 }
 
-// Toggle handlers
 el.btn30.addEventListener("click", () => setActive("30"));
 el.btn15.addEventListener("click", () => setActive("15"));
 
-// Redraw chart on resize
 window.addEventListener("resize", () => {
   drawChart(chartState.points || []);
 });
 
-// Initial load
 loadAndRender();
 
 
 /* ============================= */
-/* MARKET ROTATOR (unchanged) */
+/* MARKET ROTATOR (unchanged)    */
 /* ============================= */
 
 const markets = {
@@ -748,8 +1216,406 @@ populateDropdown();
 select.value="White House (37188)";
 buildIframes(select.value);
 
+
+/* ============================================================ */
+/* NASHVILLE MARKET DASHBOARD — FRED API                        */
+/* ============================================================ */
+
+/*
+ * ╔══════════════════════════════════════════════════════════════╗
+ * ║  FRED API KEY — Replace the value below with your key       ║
+ * ║  Get one free at: https://fred.stlouisfed.org/docs/api/     ║
+ * ╚══════════════════════════════════════════════════════════════╝
+ */
+const FRED_API_KEY = '34684a23adfe87cc951f21b8364a46a8';
+
+/* FRED series definitions */
+const FRED_SERIES = {
+  hpi:         { id: 'ATNHPIUS34980Q',          label: 'Nashville MSA House Price Index',   format: 'index' },
+  listings:    { id: 'ACTLISCOU34980',           label: 'Active Listing Count',              format: 'number' },
+  dom:         { id: 'MEDDAYONMAR34980',         label: 'Median Days on Market',             format: 'days' },
+  ppsf:        { id: 'MEDLISPRIPERSQUFEE34980',  label: 'Median List Price / Sq Ft',         format: 'currency' },
+  unemployment:{ id: 'TNUR',                     label: 'Tennessee Unemployment Rate',       format: 'percent' },
+  income:      { id: 'NASH947PCPI',              label: 'Nashville Per Capita Income',       format: 'currency_rounded' },
+  cpi:         { id: 'CPIAUCSL',                 label: 'CPI Inflation (National)',          format: 'index' },
+};
+
+/* Build FRED observation URL */
+function fredUrl(seriesId, limit) {
+  return `https://api.stlouisfed.org/fred/series/observations?series_id=${seriesId}&api_key=${FRED_API_KEY}&sort_order=desc&limit=${limit || 24}&file_type=json`;
+}
+
+/* Fetch a single FRED series, returning array of {date, value} (most recent first) */
+async function fetchFred(seriesId, limit) {
+  const res = await fetch(fredUrl(seriesId, limit));
+  if (!res.ok) throw new Error(`FRED ${seriesId}: HTTP ${res.status}`);
+  const json = await res.json();
+  if (!json.observations || !json.observations.length) throw new Error(`FRED ${seriesId}: no data`);
+  return json.observations
+    .map(o => ({ date: o.date, value: parseFloat(o.value) }))
+    .filter(o => Number.isFinite(o.value));
+}
+
+/* Format helpers */
+function formatStatValue(value, format) {
+  switch (format) {
+    case 'percent':         return value.toFixed(1) + '%';
+    case 'currency':        return '$' + value.toFixed(2);
+    case 'currency_rounded':return '$' + Math.round(value).toLocaleString();
+    case 'days':            return Math.round(value) + ' days';
+    case 'number':          return Math.round(value).toLocaleString();
+    case 'index':           return value.toFixed(1);
+    default:                return value.toString();
+  }
+}
+
+/* Determine trend arrow + color for a stat card
+ * "inverted" means lower is better (green for decrease)
+ * "appreciation" means higher is better and uses gold
+ */
+function getTrend(current, previous, direction) {
+  const change = current - previous;
+  if (Math.abs(change) < 0.001) return { arrow: '→', color: '#aaaaaa', change: 0, text: 'No change' };
+
+  const up = change > 0;
+  let color;
+  if (direction === 'inverted') {
+    color = up ? '#ef4444' : '#22c55e'; // lower is better
+  } else if (direction === 'appreciation') {
+    color = up ? '#c9a84c' : '#ef4444'; // higher is better, gold
+  } else {
+    color = up ? '#22c55e' : '#ef4444'; // normal: higher is good
+  }
+
+  const arrow = up ? '↑' : '↓';
+  const absChange = Math.abs(change);
+  return { arrow, color, change: absChange, text: '' };
+}
+
+/* Populate a stat card */
+function populateCard(cardId, data, format, direction) {
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  card.classList.remove('loading');
+
+  if (!data || data.length < 1) {
+    card.querySelector('.stat-value').textContent = '';
+    card.querySelector('.stat-trend').innerHTML = '<span class="stat-unavailable">Data unavailable</span>';
+    return;
+  }
+
+  const latest = data[0];
+  const value = latest.value;
+  card.querySelector('.stat-value').textContent = formatStatValue(value, format);
+
+  // Date
+  let dateEl = card.querySelector('.stat-date');
+  if (!dateEl) {
+    dateEl = document.createElement('div');
+    dateEl.className = 'stat-date';
+    card.querySelector('.stat-trend').after(dateEl);
+  }
+  dateEl.textContent = 'As of ' + fmtDate(latest.date);
+
+  // Trend
+  if (data.length >= 2) {
+    const prev = data[1];
+    const trend = getTrend(value, prev.value, direction);
+    const trendEl = card.querySelector('.stat-trend');
+    const changeFormatted = format === 'percent'
+      ? trend.change.toFixed(1) + '%'
+      : format === 'currency'
+        ? '$' + trend.change.toFixed(2)
+        : format === 'currency_rounded'
+          ? '$' + Math.round(trend.change).toLocaleString()
+          : format === 'days'
+            ? Math.round(trend.change) + ' days'
+            : trend.change.toFixed(1);
+    trendEl.innerHTML = `<span style="color:${trend.color}">${trend.arrow} ${changeFormatted}</span>`;
+  } else {
+    card.querySelector('.stat-trend').textContent = '';
+  }
+}
+
+/* Show error state for a card */
+function cardError(cardId) {
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  card.classList.remove('loading');
+  card.querySelector('.stat-value').textContent = '';
+  card.querySelector('.stat-trend').innerHTML = '<span class="stat-unavailable">Data unavailable</span>';
+}
+
+/* ============================= */
+/* 615 SCORE CALCULATION         */
+/* ============================= */
+
+function calculate615Score(seriesData) {
+  /*
+   * Weights & direction:
+   *   listings    25%  inverted  (lower = higher score)
+   *   dom         20%  inverted
+   *   hpi         20%  normal    (higher = higher score)
+   *   unemployment 15% inverted
+   *   income      10%  normal
+   *   cpi         10%  inverted
+   */
+  const components = [
+    { key: 'listings',     weight: 0.25, inverted: true  },
+    { key: 'dom',          weight: 0.20, inverted: true  },
+    { key: 'hpi',          weight: 0.20, inverted: false },
+    { key: 'unemployment', weight: 0.15, inverted: true  },
+    { key: 'income',       weight: 0.10, inverted: false },
+    { key: 'cpi',          weight: 0.10, inverted: true  },
+  ];
+
+  let totalWeight = 0;
+  let weightedSum = 0;
+
+  for (const comp of components) {
+    const data = seriesData[comp.key];
+    if (!data || data.length < 2) continue; // need at least current + some history
+
+    const values = data.map(d => d.value);
+    const current = values[0];
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const range = max - min;
+
+    if (range === 0) {
+      // No variation — assign neutral 50
+      weightedSum += 50 * comp.weight;
+      totalWeight += comp.weight;
+      continue;
+    }
+
+    // Normalize 0–100 within 24-month range
+    let normalized = ((current - min) / range) * 100;
+    // Invert if lower is better
+    if (comp.inverted) normalized = 100 - normalized;
+
+    weightedSum += normalized * comp.weight;
+    totalWeight += comp.weight;
+  }
+
+  if (totalWeight === 0) return null;
+  return Math.round(weightedSum / totalWeight);
+}
+
+function getScoreBand(score) {
+  if (score >= 75) return { emoji: '🔴', label: "Strong Seller's Market",   color: '#ef4444' };
+  if (score >= 55) return { emoji: '🟡', label: "Moderate Seller's Market", color: '#f59e0b' };
+  if (score >= 40) return { emoji: '⚪', label: 'Balanced Market',           color: '#aaaaaa' };
+  if (score >= 20) return { emoji: '🟢', label: "Moderate Buyer's Market",  color: '#22c55e' };
+  return                   { emoji: '🟢', label: "Strong Buyer's Market",    color: '#22c55e' };
+}
+
+/* SVG arc gauge */
+function drawScoreGauge(score) {
+  const svg = document.getElementById('scoreGauge');
+  if (!svg) return;
+
+  const band = getScoreBand(score);
+
+  // Arc parameters: center at (90, 95), radius 70, 180° arc from left to right
+  const cx = 90, cy = 95, r = 70;
+  const startAngle = Math.PI;       // left (180°)
+  const endAngle = 0;               // right (0°)
+  const totalArc = Math.PI;         // 180°
+
+  // Background arc
+  const bgStartX = cx + r * Math.cos(startAngle);
+  const bgStartY = cy - r * Math.sin(startAngle);
+  const bgEndX   = cx + r * Math.cos(endAngle);
+  const bgEndY   = cy - r * Math.sin(endAngle);
+
+  // Value arc — fraction of 180°
+  const fraction = Math.max(0, Math.min(score / 100, 1));
+  const valueAngle = startAngle - fraction * totalArc; // goes clockwise
+  const valEndX = cx + r * Math.cos(valueAngle);
+  const valEndY = cy - r * Math.sin(valueAngle);
+  const largeArc = fraction > 0.5 ? 1 : 0;
+
+  // Tick marks
+  let ticks = '';
+  const tickAngles = [0, 0.20, 0.40, 0.55, 0.75, 1.0];
+  for (const t of tickAngles) {
+    const a = startAngle - t * totalArc;
+    const ix = cx + (r - 10) * Math.cos(a);
+    const iy = cy - (r - 10) * Math.sin(a);
+    const ox = cx + (r + 2) * Math.cos(a);
+    const oy = cy - (r + 2) * Math.sin(a);
+    ticks += `<line x1="${ix}" y1="${iy}" x2="${ox}" y2="${oy}" stroke="#2a2a2a" stroke-width="1.5"/>`;
+  }
+
+  // Needle position
+  const needleAngle = startAngle - fraction * totalArc;
+  const needleLen = r - 16;
+  const nx = cx + needleLen * Math.cos(needleAngle);
+  const ny = cy - needleLen * Math.sin(needleAngle);
+
+  svg.innerHTML = `
+    <!-- Background arc -->
+    <path d="M ${bgStartX} ${bgStartY} A ${r} ${r} 0 0 1 ${bgEndX} ${bgEndY}"
+          fill="none" stroke="#2a2a2a" stroke-width="10" stroke-linecap="round"/>
+    <!-- Value arc -->
+    ${fraction > 0 ? `<path d="M ${bgStartX} ${bgStartY} A ${r} ${r} 0 ${largeArc} 1 ${valEndX} ${valEndY}"
+          fill="none" stroke="${band.color}" stroke-width="10" stroke-linecap="round"/>` : ''}
+    <!-- Ticks -->
+    ${ticks}
+    <!-- Needle -->
+    <line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="5" fill="#ffffff"/>
+    <!-- Score labels at ends -->
+    <text x="14" y="${cy + 16}" fill="#666666" font-size="10" font-family="Inter,system-ui">0</text>
+    <text x="158" y="${cy + 16}" fill="#666666" font-size="10" font-family="Inter,system-ui">100</text>
+  `;
+}
+
+function renderScore(score) {
+  document.getElementById('scoreLoading').style.display = 'none';
+  document.getElementById('scoreContent').style.display = 'block';
+
+  if (score === null) {
+    document.getElementById('scoreValue').textContent = '--';
+    document.getElementById('scoreCondition').textContent = 'Insufficient data';
+    document.getElementById('scoreCondition').style.color = '#666666';
+    return;
+  }
+
+  const band = getScoreBand(score);
+  document.getElementById('scoreValue').textContent = score;
+  document.getElementById('scoreCondition').textContent = band.emoji + ' ' + band.label;
+  document.getElementById('scoreCondition').style.color = band.color;
+  drawScoreGauge(score);
+}
+
+/* ============================= */
+/* HPI LINE CHART (Chart.js)     */
+/* ============================= */
+
+let hpiChartInstance = null;
+
+function renderHpiChart(data) {
+  if (!data || data.length < 2) {
+    document.getElementById('hpiDateRange').textContent = 'Insufficient data';
+    return;
+  }
+
+  // Data comes most-recent-first, reverse for chronological
+  const chronological = [...data].reverse();
+  const labels = chronological.map(d => {
+    const dt = new Date(d.date + 'T00:00:00Z');
+    return dt.toLocaleDateString(undefined, { year: '2-digit', month: 'short' });
+  });
+  const values = chronological.map(d => d.value);
+
+  // Date range label
+  const first = chronological[0];
+  const last = chronological[chronological.length - 1];
+  document.getElementById('hpiDateRange').textContent =
+    fmtDate(first.date) + ' — ' + fmtDate(last.date);
+
+  const ctx = document.getElementById('hpiChart').getContext('2d');
+  if (hpiChartInstance) hpiChartInstance.destroy();
+
+  hpiChartInstance = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        borderColor: 'rgba(201,168,76,0.95)',
+        backgroundColor: 'rgba(201,168,76,0.08)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        pointBackgroundColor: 'rgba(201,168,76,1)',
+        borderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1a1a',
+          titleColor: '#aaaaaa',
+          bodyColor: '#ffffff',
+          borderColor: '#2a2a2a',
+          borderWidth: 1,
+          padding: 10,
+          callbacks: {
+            label: ctx => 'HPI: ' + ctx.parsed.y.toFixed(1)
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#666666', font: { size: 10, family: 'Inter,system-ui' }, maxTicksLimit: 8 },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          border: { color: '#2a2a2a' }
+        },
+        y: {
+          ticks: { color: '#666666', font: { size: 10, family: 'Inter,system-ui' } },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          border: { color: '#2a2a2a' }
+        }
+      }
+    }
+  });
+}
+
+/* ============================= */
+/* MAIN DASHBOARD LOADER         */
+/* ============================= */
+
+async function loadDashboard() {
+  // Fetch all FRED series in parallel
+  const fetches = {};
+  for (const [key, series] of Object.entries(FRED_SERIES)) {
+    fetches[key] = fetchFred(series.id, 24).catch(err => {
+      console.warn(`Failed to fetch ${key} (${series.id}):`, err);
+      return null;
+    });
+  }
+
+  const results = {};
+  for (const [key, promise] of Object.entries(fetches)) {
+    results[key] = await promise;
+  }
+
+  // Populate stat cards
+  // Housing
+  populateCard('card-listings', results.listings, 'number', 'inverted');
+  populateCard('card-dom',      results.dom,      'days',   'inverted');
+  populateCard('card-ppsf',     results.ppsf,     'currency', 'appreciation');
+
+  // Economic
+  populateCard('card-unemployment', results.unemployment, 'percent', 'inverted');
+  populateCard('card-income',       results.income,       'currency_rounded', 'appreciation');
+
+  // Affordability
+  populateCard('card-cpi', results.cpi, 'index', 'inverted');
+
+  // HPI Chart
+  if (results.hpi) {
+    renderHpiChart(results.hpi);
+  } else {
+    document.getElementById('hpiDateRange').textContent = 'Data unavailable';
+  }
+
+  // 615 Score
+  const score = calculate615Score(results);
+  renderScore(score);
+}
+
+// Launch dashboard
+loadDashboard();
+
 </script>
 
 </body>
 </html>
-
