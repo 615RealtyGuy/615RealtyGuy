@@ -3,7 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Me — 615 Realty Guy</title>
+<title>About John Crowder — Nashville REALTOR® | 615 Realty Guy</title>
+<meta name="description" content="Meet John Crowder, a Nashville-area REALTOR® with SixOneFive Real Estate Advisors. Former ICU nurse turned data-driven real estate professional helping buyers and sellers across Middle Tennessee.">
+<link rel="canonical" href="https://615realtyguy.com/about.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="About John Crowder — Nashville REALTOR®">
+<meta property="og:description" content="Former ICU nurse turned data-driven real estate professional. Helping buyers and sellers across Nashville and Middle Tennessee.">
+<meta property="og:url" content="https://615realtyguy.com/about.html">
+<meta property="og:image" content="https://615realtyguy.com/market_widget/Headshot.png">
+<meta property="og:site_name" content="615 Realty Guy">
+<meta property="profile:first_name" content="John">
+<meta property="profile:last_name" content="Crowder">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="About John Crowder — Nashville REALTOR®">
+<meta name="twitter:description" content="Former ICU nurse turned data-driven real estate professional in Nashville.">
+
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -345,6 +363,45 @@ footer p {
         <a href="mailto:615realtyguy@gmail.com">615realtyguy@gmail.com</a>
     </div>
 </footer>
+
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": "https://615realtyguy.com/about.html",
+      "url": "https://615realtyguy.com/about.html",
+      "name": "About John Crowder — Nashville REALTOR®",
+      "isPartOf": { "@id": "https://615realtyguy.com/#website" },
+      "mainEntity": { "@id": "https://615realtyguy.com/#agent" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://615realtyguy.com/#person",
+      "name": "John Crowder",
+      "jobTitle": "REALTOR®",
+      "description": "Former ICU nurse turned data-driven real estate professional. Helping buyers and sellers across Nashville and Middle Tennessee.",
+      "image": "https://615realtyguy.com/market_widget/Headshot.png",
+      "url": "https://615realtyguy.com/about.html",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "SixOneFive Real Estate Advisors",
+        "url": "https://sixonefive.homes"
+      },
+      "knowsAbout": ["Nashville real estate", "Market analysis", "First-time home buyers", "Real estate investment"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://615realtyguy.com/" },
+        { "@type": "ListItem", "position": 2, "name": "About", "item": "https://615realtyguy.com/about.html" }
+      ]
+    }
+  ]
+}
+</script>
 
 <!-- Testimonial Carousel JS -->
 <script>

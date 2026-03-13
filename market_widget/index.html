@@ -7,7 +7,23 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Market Stats | 615 Realty Guy</title>
+<title>Nashville Market Stats &amp; 615 Score | 615 Realty Guy</title>
+<meta name="description" content="Live Nashville real estate market data powered by FRED. Track housing prices, mortgage rates, inventory, inflation, and the proprietary 615 Score — a composite market health index by John Crowder.">
+<link rel="canonical" href="https://615realtyguy.com/market_widget/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Nashville Market Stats & 615 Score">
+<meta property="og:description" content="Live Nashville real estate data: housing prices, mortgage rates, inventory, inflation, and the proprietary 615 Score composite index.">
+<meta property="og:url" content="https://615realtyguy.com/market_widget/">
+<meta property="og:image" content="https://615realtyguy.com/market_widget/Headshot.png">
+<meta property="og:site_name" content="615 Realty Guy">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nashville Market Stats & 615 Score">
+<meta name="twitter:description" content="Live Nashville real estate data and the proprietary 615 Score composite market health index.">
+<meta name="twitter:image" content="https://615realtyguy.com/market_widget/Headshot.png">
 
 <!-- Chart.js for HPI line chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
@@ -2059,6 +2075,51 @@ async function loadDashboard() {
 // Launch dashboard
 loadDashboard();
 
+</script>
+
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://615realtyguy.com/market_widget/",
+      "url": "https://615realtyguy.com/market_widget/",
+      "name": "Nashville Market Stats & 615 Score",
+      "description": "Live Nashville real estate market data powered by FRED. Housing prices, mortgage rates, inventory, inflation, and the proprietary 615 Score composite index.",
+      "isPartOf": { "@id": "https://615realtyguy.com/#website" },
+      "author": { "@id": "https://615realtyguy.com/#agent" }
+    },
+    {
+      "@type": "Dataset",
+      "name": "615 Score — Nashville Market Health Index",
+      "description": "A proprietary composite index created by John Crowder that normalizes six FRED economic indicators to measure Nashville real estate market health on a 0-100 scale.",
+      "creator": {
+        "@type": "Person",
+        "name": "John Crowder",
+        "url": "https://615realtyguy.com/about.html"
+      },
+      "spatialCoverage": { "@type": "Place", "name": "Nashville Metropolitan Statistical Area" },
+      "variableMeasured": [
+        "Nashville MSA House Price Index",
+        "30-Year Mortgage Rate",
+        "Housing Inventory",
+        "Annual Inflation Rate",
+        "Unemployment Rate",
+        "Per Capita Income"
+      ],
+      "license": "https://615realtyguy.com/market_widget/"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://615realtyguy.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Market Stats", "item": "https://615realtyguy.com/market_widget/" }
+      ]
+    }
+  ]
+}
 </script>
 
 </body>
