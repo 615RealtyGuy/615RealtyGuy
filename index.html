@@ -1,1400 +1,1209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>615 Realty Guy — Nashville Real Estate</title>
 
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="favicon.png">
 
+<!-- Inter font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>615 Realty Guy - Home</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Futura', sans-serif;
-            background-color: #000000;
-            color: #d2b56c;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            overflow-x: hidden; /* Fixes horizontal scrolling */
-        }
+<style>
+/* ============================= */
+/* RESET & GLOBALS               */
+/* ============================= */
 
-        /* Apply Gold Gradient to All Headings */
-        h1, h2, h3, h4, h5, h6 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            background: linear-gradient(to right, #feee9f, #b18841);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-            letter-spacing: 1.5px;
-            padding: 10px 20px;
-        }
+*, *::before, *::after { box-sizing: border-box; }
 
-        /* Banner Styling */
-        .banner {
-            background: black;
-            padding: 2px;
-        }
-        .banner img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
+body {
+    font-family: 'Inter', 'Futura', system-ui, sans-serif;
+    background-color: #000000;
+    color: #d2b56c;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
 
-        /* Header */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background: black;
-            width: 100%;
-        }
+img { max-width: 100%; height: auto; }
 
-        /* Logo */
-        .logo img {
-            max-width: 100px;
-            display: block;
-        }
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
-        /* Navigation */
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        nav a {
-            color: #d2b56c;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 10px 15px;
-            transition: color 0.3s;
-        }
-        nav a:hover {
-            color: #feee9f;
-        }
+/* Section divider */
+.section-divider {
+    max-width: 900px;
+    margin: 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #2a2a2a 20%, #2a2a2a 80%, transparent);
+}
 
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+/* Gold gradient text utility */
+.gold-text {
+    background: linear-gradient(to right, #feee9f, #b18841);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
 
-        /* Style for the dropdown button */
-        .dropbtn {
-            background-color: black;
-            color: #d2b56c;
-            padding: 10px 15px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
+/* Section heading style */
+.section-heading {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 10px 0;
+    margin: 0 0 8px 0;
+}
 
-        /* Style for the dropdown content */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: black;
-            min-width: 180px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            right: 0;
-            border-radius: 5px;
-        }
+.section-subtext {
+    font-size: 14px;
+    color: #999999;
+    margin: 0 0 24px 0;
+    line-height: 1.5;
+}
 
-        /* Style dropdown links */
-        .dropdown-content a {
-            color: #d2b56c;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            white-space: nowrap;
-        }
+/* ============================= */
+/* BANNER                        */
+/* ============================= */
 
-        /* Gold Glow Hover Effect */
-        .dropdown-content a:hover {
-            background: linear-gradient(to right, #feee9f, #b18841);
-            color: black !important;
-            box-shadow: 0px 0px 10px rgba(210, 181, 108, 0.7);
-        }
+.banner {
+    background: #000;
+    padding: 2px 0;
+}
 
-        /* Show dropdown on hover */
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
+.banner img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
 
-        /* Footer */
-        footer {
-            background: black;
-            padding: 20px;
-            color: #d2b56c;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
+/* ============================= */
+/* HEADER / NAV                  */
+/* ============================= */
 
-        /* Footer Text */
-        footer p {
-            margin: 0;
-            flex-grow: 1;
-            text-align: center;
-        }
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 24px;
+    background: #000;
+}
 
-        .footer-logo {
+.logo img {
+    max-width: 90px;
+    display: block;
+}
+
+nav {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Aligns the logo to the far left */
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
-.footer-logo img {
-    max-width: 80px; /* Adjust size to match the 615RealtyGuy logo */
-    height: auto; /* Maintains aspect ratio */
+nav a {
+    color: #d2b56c;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.2s;
 }
 
-        /* Social Media Icons */
-        .social-icons {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: flex-end;
-        }
-        .social-icons a {
-            display: inline-block;
-        }
-        .social-icons img {
-            width: 30px; /* Correct size */
-            height: 30px;
-        }
+nav a:hover {
+    color: #feee9f;
+}
 
-       /* Responsive Fixes */
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    color: #d2b56c;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+}
+
+.dropbtn:hover { color: #feee9f; }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    min-width: 200px;
+    z-index: 1000;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 16px;
+    color: #d2b56c;
+    text-decoration: none;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+
+.dropdown-content a:hover {
+    background: rgba(201,168,76,0.1);
+    color: #feee9f;
+}
+
+.dropdown:hover .dropdown-content { display: block; }
+
+/* ============================= */
+/* HERO SECTION                  */
+/* ============================= */
+
+.hero-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.hero-headshot {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid #c9a84c;
+    box-shadow: 0 0 0 4px rgba(201,168,76,0.12), 0 8px 24px rgba(0,0,0,0.5);
+    object-fit: cover;
+}
+
+.hero-info {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+}
+
+.hero-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 2px 0;
+}
+
+.hero-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #c9a84c;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 10px 0;
+}
+
+.hero-tagline {
+    font-size: 14px;
+    color: #999999;
+    margin: 0 0 16px 0;
+    line-height: 1.4;
+}
+
+.hero-contacts {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.hero-contacts a {
+    font-size: 13px;
+    color: #d2b56c;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+}
+
+.hero-contacts a:hover { color: #feee9f; }
+
+.hero-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+}
+
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid rgba(201,168,76,0.4);
+    background: linear-gradient(180deg, rgba(201,168,76,0.18), rgba(201,168,76,0.06));
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    font-weight: 700;
+    font-size: 13px;
+    color: #d2b56c;
+    text-decoration: none;
+    transition: border-color 0.2s;
+    white-space: nowrap;
+}
+
+.hero-cta:hover {
+    border-color: rgba(254,238,159,0.6);
+}
+
+.hero-cta .cta-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
+    flex-shrink: 0;
+}
+
+/* ============================= */
+/* SERVICES                      */
+/* ============================= */
+
+.services-section {
+    padding: 48px 20px;
+}
+
+.services-container {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.service-card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #2a2a2a;
+    background: #1a1a1a;
+}
+
+.service-link {
+    display: block;
+    text-decoration: none;
+}
+
+.service-card img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.service-card:hover img {
+    transform: scale(1.03);
+    opacity: 0.9;
+}
+
+.service-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    text-align: center;
+}
+
+.service-overlay span {
+    display: inline-block;
+    padding: 8px 24px;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 8px;
+    color: #d2b56c;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ============================= */
+/* CTA BANNER                    */
+/* ============================= */
+
+.cta-banner {
+    max-width: 900px;
+    margin: 0 auto 0;
+    padding: 24px 32px;
+    background: linear-gradient(135deg, #b18841, #feee9f, #b18841);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cta-banner-text {
+    color: #000;
+}
+
+.cta-banner-text h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: #000;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.cta-banner-text p {
+    font-size: 13px;
+    color: #333;
+    margin: 4px 0 0 0;
+}
+
+.cta-banner-btn {
+    display: inline-block;
+    padding: 10px 22px;
+    background: #000;
+    color: #feee9f;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.cta-banner-btn:hover {
+    background: #1a1a1a;
+}
+
+/* ============================= */
+/* TESTIMONIALS                  */
+/* ============================= */
+
+.testimonials-section {
+    padding: 48px 20px;
+}
+
+.testimonial-card {
+    max-width: 700px;
+    margin: 24px auto 0;
+    padding: 24px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    position: relative;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+}
+
+.testimonial-prev, .testimonial-next {
+    background: none;
+    border: none;
+    color: #d2b56c;
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 8px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+}
+
+.testimonial-prev:hover, .testimonial-next:hover { color: #feee9f; }
+
+.testimonial-content {
+    flex: 1;
+    overflow: hidden;
+}
+
+.testimonial {
+    display: none;
+    text-align: center;
+}
+
+.testimonial.active { display: block; }
+
+.testimonial p {
+    font-size: 15px;
+    color: #cccccc;
+    line-height: 1.6;
+    font-style: italic;
+    margin: 0 0 12px 0;
+}
+
+.testimonial h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #feee9f;
+    margin: 0 0 6px 0;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: #feee9f;
+    display: block;
+    text-transform: none;
+    letter-spacing: 0;
+    padding: 0;
+}
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    font-size: 1.2rem;
+    background: linear-gradient(to right, #feee9f, #b18841);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ============================= */
+/* MARKET REPORTS CAROUSEL       */
+/* ============================= */
+
+.mrw {
+    padding: 48px 20px;
+}
+
+.mrw-carousel {
+    position: relative;
+    max-width: 700px;
+    margin: 24px auto 0;
+}
+
+.mrw-viewport {
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid #2a2a2a;
+    background: #1a1a1a;
+}
+
+.mrw-track {
+    display: flex;
+    transition: transform 0.35s ease;
+    touch-action: pan-y;
+}
+
+.mrw-slide { min-width: 100%; }
+
+.mrw-card { background: #1a1a1a; display: flex; flex-direction: column; }
+.mrw-card img { width: 100%; height: 240px; object-fit: cover; display: block; }
+.mrw-card .body { padding: 16px; text-align: left; }
+.mrw-card h3 { margin: 0; font-size: 1.1rem; color: #ffffff; font-weight: 700; }
+.mrw-card .subt { font-size: 13px; color: #999999; margin-top: 4px; }
+
+.mrw-btn {
+    margin-top: 12px;
+    width: 100%;
+    border: 1px solid #d2b56c;
+    background: transparent;
+    color: #d2b56c;
+    padding: 10px 12px;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    text-transform: uppercase;
+    font-family: inherit;
+}
+
+.mrw-btn:hover {
+    background: linear-gradient(to right, #feee9f, #b18841);
+    color: #000;
+    border-color: transparent;
+}
+
+/* Carousel arrows */
+.mrw-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.8);
+    border: 1px solid #2a2a2a;
+    color: #d2b56c;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.4rem;
+    z-index: 5;
+    transition: border-color 0.2s;
+}
+
+.mrw-arrow:hover { border-color: #d2b56c; }
+.mrw-prev { left: -56px; }
+.mrw-next { right: -56px; }
+
+/* Dots */
+.mrw-dots { display: flex; gap: 6px; justify-content: center; margin-top: 14px; }
+.mrw-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #2a2a2a; border: 1px solid #444; cursor: pointer;
+    transition: background 0.2s;
+}
+.mrw-dot.active { background: #c9a84c; border-color: #c9a84c; }
+
+/* Modal */
+.mrw-modal-wrap {
+    position: fixed; inset: 0; display: none;
+    align-items: center; justify-content: center; z-index: 9999;
+    padding: 20px;
+}
+.mrw-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.7); }
+.mrw-modal {
+    position: relative; width: 100%; max-width: 480px;
+    background: #1a1a1a; border: 1px solid #2a2a2a;
+    border-radius: 12px; overflow: hidden; z-index: 1;
+}
+.mrw-hdr {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 18px; border-bottom: 1px solid #2a2a2a;
+}
+.mrw-hdr h3 { margin: 0; font-size: 15px; color: #ffffff; font-weight: 700; }
+.mrw-x {
+    background: none; border: none; color: #666; font-size: 1.4rem;
+    cursor: pointer; padding: 0;
+}
+.mrw-x:hover { color: #fff; }
+.mrw-frm { padding: 16px 18px 20px; text-align: left; }
+.mrw-frm label { display: block; font-size: 13px; color: #999; margin-top: 12px; }
+.mrw-frm input[type="text"], .mrw-frm input[type="email"] {
+    width: 100%; padding: 10px 12px; border: 1px solid #2a2a2a;
+    background: #0c0c0c; color: #fff; border-radius: 8px; margin-top: 6px;
+    font-family: inherit; font-size: 14px;
+}
+.mrw-frm input:focus { border-color: #c9a84c; outline: none; }
+.mrw-frm .consent { display: flex; align-items: flex-start; gap: 8px; margin-top: 14px; color: #999; font-size: 12px; line-height: 1.4; }
+.mrw-err { margin-top: 10px; background: #2a1010; color: #ffbaba; border: 1px solid #5a2020; padding: 8px 10px; border-radius: 8px; font-size: 13px; }
+.mrw-ok  { margin-top: 10px; background: #0a2a10; color: #dfffe7; border: 1px solid #1a5a2a; padding: 8px 10px; border-radius: 8px; font-size: 13px; }
+.mrw-submit {
+    margin-top: 16px; width: 100%; padding: 12px; font-weight: 700;
+    border-radius: 10px; border: none; cursor: pointer;
+    background: linear-gradient(to right, #feee9f, #b18841);
+    color: #000; text-transform: uppercase; font-family: inherit; font-size: 13px;
+}
+.mrw-submit:hover { opacity: 0.9; }
+
+/* ============================= */
+/* HOME VALUATION                */
+/* ============================= */
+
+.valuation-section {
+    padding: 48px 20px;
+}
+
+.valuation-container {
+    max-width: 420px;
+    margin: 24px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.valuation-image {
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #2a2a2a;
+}
+
+.toggle-form-button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(to right, #feee9f, #b18841);
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: inherit;
+    transition: opacity 0.2s;
+}
+
+.toggle-form-button:hover { opacity: 0.9; }
+
+.valuation-form {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.valuation-form input {
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid #2a2a2a;
+    background: #0c0c0c;
+    color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    font-family: inherit;
+}
+
+.valuation-form input:focus { border-color: #c9a84c; outline: none; }
+
+.valuation-form button {
+    padding: 12px;
+    background: linear-gradient(to right, #feee9f, #b18841);
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: inherit;
+    max-width: 200px;
+    margin: 0 auto;
+    transition: opacity 0.2s;
+}
+
+.valuation-form button:hover { opacity: 0.9; }
+
+/* ============================= */
+/* INSTAGRAM / BLOG / EMBEDS     */
+/* ============================= */
+
+.embed-section {
+    padding: 48px 20px;
+}
+
+.embed-section iframe {
+    max-width: 800px;
+    width: 100%;
+    border: none;
+}
+
+.embed-container {
+    max-width: 900px;
+    margin: 16px auto 0;
+}
+
+/* ============================= */
+/* SPOTIFY                       */
+/* ============================= */
+
+.spotify-section {
+    padding: 48px 20px;
+}
+
+.spotify-section iframe {
+    max-width: 800px;
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    margin-top: 16px;
+}
+
+/* ============================= */
+/* HOUSE PONG CALLOUT            */
+/* ============================= */
+
+.pong-callout {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 24px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+}
+
+.pong-emoji {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.pong-text {
+    flex: 1;
+}
+
+.pong-text p {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    color: #999;
+}
+
+.pong-link {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #d2b56c;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.pong-link:hover { color: #feee9f; }
+
+/* ============================= */
+/* FOOTER                        */
+/* ============================= */
+
+footer {
+    margin-top: 48px;
+    padding: 24px 20px;
+    border-top: 1px solid #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+footer .footer-logo img {
+    max-width: 60px;
+}
+
+footer p {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.social-icons a {
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.social-icons a:hover {
+    transform: scale(1.1);
+}
+
+.social-icons img {
+    width: 28px;
+    height: 28px;
+}
+
+.footer-contact {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-top: 4px;
+}
+
+.footer-contact a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-contact a:hover { color: #d2b56c; }
+
+/* ============================= */
+/* RESPONSIVE                    */
+/* ============================= */
+
+@media (max-width: 900px) {
+    header { padding: 12px 16px; }
+
+    .mrw-prev { left: 8px; }
+    .mrw-next { right: 8px; }
+
+    .services-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 @media (max-width: 768px) {
     header {
         flex-direction: column;
+        gap: 12px;
         text-align: center;
     }
+
     nav {
-        flex-direction: column;
-        gap: 10px;
+        justify-content: center;
     }
-    .dropdown {
-        width: 100%;
-    }
+
     .dropdown-content {
         position: static;
         width: 100%;
         text-align: center;
     }
+
+    .hero-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 32px 20px 24px;
+        gap: 20px;
+    }
+
+    .hero-info { text-align: center; }
+    .hero-contacts { justify-content: center; }
+    .hero-headshot { width: 100px; height: 100px; }
+
+    .section-heading { font-size: 1.3rem; }
+
+    .cta-banner {
+        flex-direction: column;
+        text-align: center;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .testimonial p { font-size: 14px; }
+
     footer {
         flex-direction: column;
         text-align: center;
     }
-    .social-icons {
-        justify-content: center;
-        margin-top: 10px;
-    }
 
-    /* ✅ Services Section Text Optimization */
-    .services-section h2 {
-        font-size: 1.6rem; /* Adjusts font size */
-        line-height: 1.3; /* Improves spacing between lines */
-        text-align: center;
-        max-width: 80%; /* Limits excessive line breaks */
-        margin: 0 auto; /* Centers text */
-        padding: 10px 0; /* Adds breathing room */
-    }
+    .social-icons { justify-content: center; }
 }
 
-.blog-section {
-    display: block !important;
-    text-align: center;
-    padding: 40px 20px;
-    background-color: #000000;
-    max-width: 100%;
-    min-height: 300px; /* Ensures enough space */
+@media (max-width: 480px) {
+    .service-card img { height: 200px; }
 }
 
-
-    </style>
+</style>
 </head>
+
 <body>
 
-    <!-- Banner -->
-    <div class="banner">
-        <a href="https://sixonefive.homes" target="_blank">
-            <img src="https://i.imgur.com/XLvCp6R.png" alt="Brokerage Banner">
-        </a>
-    </div>
-
-    <!-- Header -->
-<header>
-  <div class="logo">
-    <img src="https://i.imgur.com/Mue4Nnr.png" alt="Personal Logo">
-  </div>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="about.html">About Me</a>
-      <a href="/market_widget/">Market Stats</a>
-    <a href="https://substack.com/@615realtyguy?utm_source=user-menu" target="_blank">Blog</a>
-    <div class="dropdown">
-  <button class="dropbtn">Contact</button>
-  <div class="dropdown-content">
-    <a href="https://calendly.com/615realtyguy" target="_blank">Schedule a Consult</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank">Contact Form</a>
-    <a href="/downsizing-guide.html" target="_blank" style="color:#c8a652;font-weight:600;">Downsizing Guide</a>
-    <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">Facebook</a>
-    <a href="https://www.instagram.com/615realtyguy/" target="_blank">Instagram</a>
-  </div>
+<!-- ========== BROKERAGE BANNER ========== -->
+<div class="banner">
+    <a href="https://sixonefive.homes" target="_blank">
+        <img src="https://i.imgur.com/XLvCp6R.png" alt="SixOneFive Real Estate Advisors">
+    </a>
 </div>
-  </nav>
+
+<!-- ========== HEADER / NAV ========== -->
+<header>
+    <div class="logo">
+        <a href="index.html"><img src="https://i.imgur.com/Mue4Nnr.png" alt="615 Realty Guy"></a>
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="/market_widget/">Market Stats</a>
+        <a href="https://substack.com/@615realtyguy" target="_blank">Blog</a>
+        <div class="dropdown">
+            <button class="dropbtn">Contact &#9662;</button>
+            <div class="dropdown-content">
+                <a href="https://calendly.com/615realtyguy" target="_blank">Schedule a Consult</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank">Contact Form</a>
+                <a href="/downsizing-guide.html">Downsizing Guide</a>
+                <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">Facebook</a>
+                <a href="https://www.instagram.com/615realtyguy/" target="_blank">Instagram</a>
+            </div>
+        </div>
+    </nav>
 </header>
 
+<!-- ========== HERO SECTION ========== -->
+<div class="hero-section">
+    <img class="hero-headshot" src="market_widget/Headshot.png" alt="John Crowder">
+    <div class="hero-info">
+        <div class="hero-name">John Crowder</div>
+        <div class="hero-title">REALTOR&reg; | 615RealtyGuy</div>
+        <div class="hero-tagline">Your Nashville-area real estate advisor. Data-driven insights and personal service for buyers, sellers, and investors.</div>
+        <div class="hero-contacts">
+            <a href="tel:+16154911638">
+                <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                (615) 491-1638
+            </a>
+            <a href="mailto:615realtyguy@gmail.com">
+                <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                615realtyguy@gmail.com
+            </a>
+            <a class="hero-cta" href="https://calendly.com/615realtyguy" target="_blank" rel="noopener">
+                <span class="cta-dot" aria-hidden="true"></span>
+                Let's Talk
+            </a>
+        </div>
+    </div>
+</div>
+<div class="section-divider"></div>
 
-    <!-- Play House Pong Button -->
-<a href="/housepong.html" class="play-button">Play House Pong</a>
-
-
-<style>
-    /* Play House Pong Button */
-    .play-button {
-        display: inline-block;
-        font-size: 20px;
-        font-weight: bold;
-        text-transform: uppercase;
-        background: linear-gradient(to right, #feee9f, #b18841);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        padding: 12px 24px;
-        border: 2px solid #d2b56c;
-        border-radius: 5px;
-        text-decoration: none;
-        transition: all 0.3s ease-in-out;
-        margin-top: 20px;
-    }
-
-    .play-button:hover {
-        background: #feee9f;
-        -webkit-background-clip: unset;
-        -webkit-text-fill-color: black;
-        box-shadow: 0px 0px 10px rgba(210, 181, 108, 0.7);
-    }
-</style>
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Estate Services</title>
-    <style>
-        /* Styling for the services section */
-        .services-section {
-            text-align: center;
-            background-color: #000000; /* Brand Black */
-            color: #d2b56c; /* Brand Gold */
-            padding: 40px 20px;
-            font-family: 'Futura', sans-serif; /* Brand Typography */
-        }
-
-        .services-section h2 {
-            color: #d2b56c; /* Flat Gold */
-        }
-
-        .services-section p {
-            color: #feee9f; /* Lighter Gold for contrast */
-        }
-
-        .services-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .service-card {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .service-link {
-            display: block;
-            position: relative;
-            width: 100%;
-            text-decoration: none;
-        }
-
-        .service-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .service-card img:hover {
-            transform: scale(1.05);
-            opacity: 0.85;
-        }
-
-        /* Standardized button styles */
-        .button-overlay {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #d2b56c; /* Brand Gold */
-            width: 80%;
-            height: 50px; /* Set fixed height */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .service-link:hover .button-overlay {
-            background-color: rgba(0, 0, 0, 0.9);
-            transform: translateX(-50%) scale(1.1);
-        }
-    </style>
-
-
-
-<section class="cta-section">
-    <h2 class="gradient-title">Ready to Buy or Sell?</h2>
-    <p>Let’s make your real estate dreams a reality. Schedule a call today!</p>
-    <a href="https://calendly.com/615realtyguy" class="cta-button" target="_blank">Schedule a Call</a>
-</section>
-
-<style>
-/* CTA Section - Slim & Rectangular */
-.cta-section {
-    text-align: center;
-    background: linear-gradient(to right, #feee9f, #b18841); /* Gold gradient background */
-    padding: 20px 40px; /* Reduced padding for a slimmer look */
-    border-radius: 10px;
-    margin: 40px auto;
-    width: 90%;
-    max-width: 800px;
-    height: 120px; /* Defines a rectangular shape */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* CTA Title */
-.cta-section h2 {
-    font-size: 1.5rem; /* Slightly smaller title */
-    font-weight: bold;
-    text-transform: uppercase;
-    background: linear-gradient(to right, #231f20, #3a3a3a); /* Black gradient */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-    letter-spacing: 1.2px;
-    padding: 5px 15px;
-    margin: 0;
-}
-
-/* CTA Text */
-.cta-section p {
-    font-size: 1rem; /* Smaller text to fit the new shape */
-    color: #231f20;
-    margin: 5px 0 10px 0;
-}
-
-/* CTA Button */
-.cta-button {
-    background: #231f20;
-    color: #feee9f;
-    padding: 8px 18px; /* Adjusted for a sleek look */
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-    display: inline-block;
-}
-
-/* Hover Effect */
-.cta-button:hover {
-    background: #3a3a3a;
-    color: #fff;
-}
-
-/* Fix CTA Section Overflow */
-.cta-section {
-    text-align: center;
-    background: linear-gradient(to right, #feee9f, #b18841); /* Gold gradient */
-    padding: 20px 5%; /* Reduce padding to prevent overflow */
-    border-radius: 10px;
-    margin: 40px auto;
-    max-width: 90%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    overflow: hidden; /* Prevents any extra width */
-}
-
-/* Ensure the CTA title and text don't stretch beyond the container */
-.cta-section h2, .cta-section p {
-    max-width: 90%; /* Keeps text within bounds */
-    word-wrap: break-word; /* Ensures long words don't overflow */
-}
-
-/* CTA Button Fix */
-.cta-button {
-    background: #231f20;
-    color: #feee9f;
-    padding: 8px 18px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: 0.3s ease-in-out;
-    display: inline-block;
-    width: auto;
-    max-width: 100%;
-}
-
-/* CTA Section Fix for Mobile */
-@media (max-width: 768px) {
-    .cta-section {
-        padding: 15px 5%;
-        width: 90%;
-        max-width: 100%;
-    }
-
-    .cta-section h2 {
-        font-size: 1.2rem; /* Adjust for mobile */
-    }
-
-    .cta-section p {
-        font-size: 0.9rem; /* Keep text size readable */
-    }
-
-    .cta-button {
-        font-size: 0.9rem; /* Make button text smaller on mobile */
-    }
-}
-
-
-</style>
-
-
-
-
-
-<section class="spotify-section">
-    <h2>🎵 Home Shopping Playlist 🎵</h2>
-    <p>Luxury vibes while you find your dream home.</p>
-    <iframe style="border-radius:12px" 
-        src="https://open.spotify.com/embed/playlist/2mQWTXLUuvxEQUCswype44?utm_source=generator&theme=0" 
-        width="100%" height="352" frameBorder="0" allowfullscreen="" 
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-        loading="lazy">
-    </iframe>
-</section>
-
-<style>
-    .spotify-section {
-        text-align: center;
-        padding: 40px 0;
-        background-color: #000000; /* Matches your theme */
-    }
-
-    .spotify-section h2 {
-        font-size: 2rem;
-        color: #D2B56C; /* Gold text */
-        margin-bottom: 10px;
-    }
-
-    .spotify-section p {
-        font-size: 1.2rem;
-        color: #ccc;
-        margin-bottom: 20px;
-    }
-
-    .spotify-section iframe {
-        max-width: 800px;
-        width: 90%;
-        border: none;
-    }
-</style>
-
-
-
-</head>
-<body>
-
+<!-- ========== SERVICES ========== -->
 <section class="services-section">
-    <h2>One destination for expert Buyer and Seller services—your SixOneFive Real Estate Advisor</h2>
-    <p>I'll be there every step of the way to help you achieve your real estate goals with confidence!</p>
+    <h2 class="section-heading gold-text">Expert Buyer &amp; Seller Services</h2>
+    <p class="section-subtext">I'll be there every step of the way to help you achieve your real estate goals with confidence.</p>
     <div class="services-container">
         <div class="service-card">
             <a href="buyerservices.html" class="service-link">
                 <img src="https://i.imgur.com/VGRe0pu.jpeg" alt="Buyer Services">
-                <div class="button-overlay">Buyer Services</div>
+                <div class="service-overlay"><span>Buyer Services</span></div>
             </a>
         </div>
         <div class="service-card">
             <a href="sellerservices.html" class="service-link">
                 <img src="https://i.imgur.com/J9n81j1.jpeg" alt="Seller Services">
-                <div class="button-overlay">Seller Services</div>
+                <div class="service-overlay"><span>Seller Services</span></div>
             </a>
         </div>
     </div>
 </section>
+<div class="section-divider"></div>
 
-<!-- ========================= -->
-<!-- Market Reports Carousel Widget (FormSubmit passthrough) -->
-<!-- ========================= -->
-<style>
-  .mrw { background:#000; color:#d2b56c; padding:40px 20px; font-family:'Futura',sans-serif; text-align:center; }
-  .mrw h2 { font-size:2rem; text-transform:uppercase; background:linear-gradient(to right,#feee9f,#b18841);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:inline-block; letter-spacing:1.5px; }
-  .mrw p.sub { color:#feee9f; margin:8px 0 20px; }
-
-  /* Carousel */
-  .mrw-carousel { position:relative; max-width:760px; margin:16px auto 0; }
-  .mrw-viewport { overflow:hidden; border-radius:14px; border:2px solid transparent;
-    background:linear-gradient(#000,#000) padding-box, linear-gradient(to right,#b18841,#feee9f) border-box;
-    box-shadow:0 4px 10px rgba(210,181,108,.25); }
-  .mrw-track { display:flex; transition:transform .35s ease; touch-action:pan-y; }
-  .mrw-slide { min-width:100%; box-sizing:border-box; }
-  .mrw-card { background:#000; display:flex; flex-direction:column; }
-  .mrw-card img { width:100%; height:240px; object-fit:cover; display:block; }
-  .mrw-card .body { padding:14px; text-align:left; }
-  .mrw-card h3 { margin:0; font-size:1.2rem; color:#feee9f; }
-  .mrw-card .subt { font-size:.95rem; color:#d2b56c; opacity:.85; margin-top:6px; }
-  .mrw-btn { margin-top:12px; width:100%; border:2px solid #d2b56c; background:transparent; color:#d2b56c;
-    padding:10px 12px; font-weight:bold; border-radius:8px; cursor:pointer; transition:.25s; text-transform:uppercase; }
-  .mrw-btn:hover { background:linear-gradient(to right,#feee9f,#b18841); color:#000; box-shadow:0 0 10px rgba(210,181,108,.7); }
-
-  /* Arrows */
-  .mrw-arrow {
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    background:rgba(0,0,0,.75);
-    border:2px solid #d2b56c;
-    color:#d2b56c;
-    width:56px;
-    height:56px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    font-size:1.8rem;
-    z-index:5; /* sit above slides */
-    transition:background .25s;
-  }
-  .mrw-arrow:hover { background:rgba(0,0,0,.9); }
-  .mrw-prev { left:-70px; }
-  .mrw-next { right:-70px; }
-  @media (max-width: 900px){
-    .mrw-prev { left:-50px; }
-    .mrw-next { right:-50px; }
-  }
-  @media (max-width: 640px){
-    .mrw-prev { left:10px; }
-    .mrw-next { right:10px; }
-  }
-
-  /* Dots */
-  .mrw-dots { display:flex; gap:6px; justify-content:center; margin-top:12px; }
-  .mrw-dot { width:8px; height:8px; border-radius:50%; background:#3a3a3a; border:1px solid #d2b56c; cursor:pointer; }
-  .mrw-dot.active { background:#d2b56c; }
-
-  /* Modal */
-  .mrw-modal-wrap { position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:9999; }
-  .mrw-backdrop { position:absolute; inset:0; background:rgba(0,0,0,.6); }
-  .mrw-modal { position:relative; width:100%; max-width:520px; background:#000; border-radius:14px; overflow:hidden;
-    border:2px solid transparent; background:linear-gradient(#000,#000) padding-box, linear-gradient(to right,#b18841,#feee9f) border-box;
-    box-shadow:0 10px 30px rgba(0,0,0,.6); }
-  .mrw-hdr { display:flex; align-items:center; justify-content:space-between; padding:16px 18px; }
-  .mrw-hdr h3 { margin:0; font-size:1.2rem; color:#feee9f; }
-  .mrw-x { background:transparent; border:none; color:#d2b56c; font-size:1.4rem; cursor:pointer; }
-  .mrw-frm { padding:16px 18px 20px; text-align:left; }
-  .mrw-frm label { display:block; font-size:.9rem; color:#feee9f; margin-top:10px; }
-  .mrw-frm input[type="text"], .mrw-frm input[type="email"] {
-    width:100%; padding:10px 12px; border:2px solid #d2b56c; background:#000; color:#d2b56c; border-radius:8px; margin-top:6px;
-  }
-  .mrw-frm .consent { display:flex; align-items:flex-start; gap:8px; margin-top:12px; color:#d2b56c; font-size:.9rem; }
-  .mrw-err { margin-top:10px; background:#300; color:#ffbaba; border:1px solid #b33; padding:8px 10px; border-radius:8px; font-size:.9rem; }
-  .mrw-ok  { margin-top:10px; background:#083; color:#dfffe7; border:1px solid #0b5; padding:8px 10px; border-radius:8px; font-size:.9rem; }
-  .mrw-submit { margin-top:14px; width:100%; padding:12px; font-weight:bold; border-radius:10px; border:none; cursor:pointer;
-    background:linear-gradient(to right,#feee9f,#b18841); color:#000; text-transform:uppercase; }
-</style>
-
-
-<section id="market-reports" class="mrw">
-  <h2>Free Local Market Reports</h2>
-  <p class="sub">Pick your area & enter your info and receive the free report.</p>
-
-  <div class="mrw-carousel">
-    <button class="mrw-arrow mrw-prev" id="mrw-prev" aria-label="Previous area">‹</button>
-    <div class="mrw-viewport">
-      <div class="mrw-track" id="mrw-track"></div>
+<!-- ========== CTA BANNER ========== -->
+<section style="padding: 40px 20px;">
+    <div class="cta-banner">
+        <div class="cta-banner-text">
+            <h3>Ready to Buy or Sell?</h3>
+            <p>Let's make your real estate goals a reality. Schedule a call today.</p>
+        </div>
+        <a href="https://calendly.com/615realtyguy" class="cta-banner-btn" target="_blank">Schedule a Call</a>
     </div>
-    <button class="mrw-arrow mrw-next" id="mrw-next" aria-label="Next area">›</button>
-  </div>
+</section>
+<div class="section-divider"></div>
 
-  <div class="mrw-dots" id="mrw-dots"></div>
+<!-- ========== TESTIMONIALS ========== -->
+<section class="testimonials-section">
+    <h2 class="section-heading gold-text">What My Clients Say</h2>
+    <div class="testimonial-card">
+        <button class="testimonial-prev" onclick="moveSlide(-1)">&#10094;</button>
+        <div class="testimonial-content">
+            <div class="testimonial active">
+                <p>"John went above and beyond for us! He found the perfect home and made sure every step was seamless. Couldn't be happier!"</p>
+                <h4>- Tim M.</h4>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+            </div>
+            <div class="testimonial">
+                <p>"John was amazing throughout the entire process! His knowledge of the market and clear communication made buying my first home a breeze!"</p>
+                <h4>- Lacy C.</h4>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+            </div>
+            <div class="testimonial">
+                <p>"I highly recommend John for anyone looking to buy or sell a home. His professionalism and expertise made everything stress-free!"</p>
+                <h4>- Michael K.</h4>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+            </div>
+            <div class="testimonial">
+                <p>"John was incredibly helpful and made selling our home a smooth and successful experience. He truly cares about his clients!"</p>
+                <h4>- Mark H.</h4>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+            </div>
+            <div class="testimonial">
+                <p>"I've worked with a lot of realtors, and John stands out as one of the best. Highly knowledgeable and genuinely cares about his clients!"</p>
+                <h4>- Mike H.</h4>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+            </div>
+            <div class="testimonial">
+                <p>"We were nervous first-time home buyers, but John made the entire process easy and enjoyable. He's the best!"</p>
+                <h4>- Holly C.</h4>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+            </div>
+        </div>
+        <button class="testimonial-next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+</section>
+<div class="section-divider"></div>
+
+<!-- ========== MARKET REPORTS ========== -->
+<section class="mrw">
+    <h2 class="section-heading gold-text">Free Local Market Reports</h2>
+    <p class="section-subtext">Pick your area &amp; enter your info to receive the free report.</p>
+
+    <div class="mrw-carousel">
+        <button class="mrw-arrow mrw-prev" id="mrw-prev" aria-label="Previous">&#8249;</button>
+        <div class="mrw-viewport">
+            <div class="mrw-track" id="mrw-track"></div>
+        </div>
+        <button class="mrw-arrow mrw-next" id="mrw-next" aria-label="Next">&#8250;</button>
+    </div>
+    <div class="mrw-dots" id="mrw-dots"></div>
 </section>
 
-<!-- Modal -->
+<!-- Market Report Modal -->
 <div class="mrw-modal-wrap" id="mrw-modal" aria-hidden="true">
-  <div class="mrw-backdrop" data-mrw-close></div>
-  <div class="mrw-modal" role="dialog" aria-modal="true" aria-labelledby="mrw-title">
-    <div class="mrw-hdr">
-      <h3 id="mrw-title">Get the Market Report</h3>
-      <button class="mrw-x" title="Close" data-mrw-close>&times;</button>
+    <div class="mrw-backdrop" data-mrw-close></div>
+    <div class="mrw-modal" role="dialog" aria-modal="true" aria-labelledby="mrw-title">
+        <div class="mrw-hdr">
+            <h3 id="mrw-title">Get the Market Report</h3>
+            <button class="mrw-x" title="Close" data-mrw-close>&times;</button>
+        </div>
+        <form id="mrw-form" class="mrw-frm"
+              action="https://formsubmit.co/83702f691ccf936247e5971732f874a1" method="POST">
+            <input type="text" name="company" id="mrw-hp" style="display:none" tabindex="-1" autocomplete="off">
+            <input type="hidden" name="_next" id="mrw-next-url" value="">
+            <input type="hidden" name="_subject" value="New Market Report Request">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_autoresponse" value="Thanks for requesting a market report from 615 Realty Guy. Your link is on the next page — and I've emailed you a copy as well.">
+            <input type="hidden" name="widget_source" value="MarketReportCarousel">
+            <input type="hidden" name="report_link" id="mrw-report-link" value="">
+            <input type="hidden" name="area" id="mrw-area" value="">
+
+            <label>Full Name
+                <input type="text" name="name" id="mrw-name" required>
+            </label>
+            <label>Email
+                <input type="email" name="email" id="mrw-email" required>
+            </label>
+            <label>Phone (optional)
+                <input type="text" name="phone" id="mrw-phone">
+            </label>
+            <label class="consent">
+                <input type="checkbox" id="mrw-consent" required>
+                <span>I agree to receive the selected market report and occasional real-estate updates from 615 Realty Guy. I can unsubscribe anytime.</span>
+            </label>
+            <div id="mrw-msg"></div>
+            <button type="submit" class="mrw-submit">Send me the report</button>
+        </form>
     </div>
-
-    <!-- ✅ WIDGET FORM (FormSubmit) -->
-    <form id="mrw-form"
-          class="mrw-frm"
-          action="https://formsubmit.co/83702f691ccf936247e5971732f874a1"
-          method="POST">
-      <!-- Honeypot -->
-      <input type="text" name="company" id="mrw-hp" style="display:none" tabindex="-1" autocomplete="off">
-
-      <!-- ✅ FormSubmit redirect destination (set by JS before submit) -->
-      <input type="hidden" name="_next" id="mrw-next-url" value="">
-
-      <!-- Optional FormSubmit settings -->
-      <input type="hidden" name="_subject" value="New Market Report Request">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_autoresponse" value="Thanks for requesting a market report from 615 Realty Guy. Your link is on the next page — and I’ve emailed you a copy as well.">
-
-      <!-- Helpful fields in the email -->
-      <input type="hidden" name="widget_source" value="MarketReportCarousel">
-      <input type="hidden" name="report_link" id="mrw-report-link" value="">
-      <input type="hidden" name="area" id="mrw-area" value="">
-
-      <label>Full Name
-        <input type="text" name="name" id="mrw-name" required>
-      </label>
-
-      <label>Email
-        <input type="email" name="email" id="mrw-email" required>
-      </label>
-
-      <label>Phone (optional)
-        <input type="text" name="phone" id="mrw-phone">
-      </label>
-
-      <label class="consent">
-        <input type="checkbox" id="mrw-consent" required>
-        <span>I agree to receive the selected market report and occasional real-estate updates from 615 Realty Guy. I can unsubscribe anytime.</span>
-      </label>
-
-      <div id="mrw-msg"></div>
-      <!-- ✅ Submit button INSIDE the form -->
-      <button type="submit" class="mrw-submit">Send me the report</button>
-    </form>
-  </div>
 </div>
+<div class="section-divider"></div>
 
-
-<script>
-  // ---------- YOUR REPORTS (with slugs for on-site passthrough) ----------
-  const reports = [
-    {
-      slug: "cottontown-37048",
-      title: "Cottontown, TN 37048",
-      subtitle: "SFH • Market Snapshot",
-      coverImage: "https://i.imgur.com/7uIgbAw.jpeg",
-      reportUrl: "https://www.narrpr.com/reports-v2/e3260df1-534d-4d9c-a3e3-ff38a8f936ca/pdf"
-    },
-    {
-      slug: "sumner-county",
-      title: "Sumner County, TN",
-      subtitle: "SFH • Market Snapshot",
-      coverImage: "https://i.imgur.com/5r8xq4k.png",
-      reportUrl: "https://www.narrpr.com/reports-v2/e8b06656-db2e-4428-b237-c58428b9bbe5/pdf"
-    },
-     {
-     slug: "gallatin-37066",
-      title: "Gallatin Tn, 37066",
-      subtitle: "SFH • Market Snapshot",
-      coverImage: "https://i.imgur.com/cKDkiJ0.jpeg",
-      reportUrl: "https://www.narrpr.com/reports-v2/d92848d5-e6e7-4bfc-9790-acc8a316cab9/pdf"
-    },
-    {
-     slug: "robertson-county",
-      title: "Robertson County, TN",
-      subtitle: "SFH • Market Snapshot",
-      coverImage: "https://i.imgur.com/QfoFDXs.jpeg",
-      reportUrl: "https://www.narrpr.com/reports-v2/e921c015-b8d2-4b65-9e19-aa38cbc3e2f5/pdf"
-    },
-    {
-    slug: "springfield-37172",
-      title: "Springfield, TN 37172",
-      subtitle: "SFH • Market Snapshot",
-      coverImage: "https://i.imgur.com/O7Bwz9v.jpeg",
-      reportUrl: "https://www.narrpr.com/reports-v2/c3a6a649-cef9-4c41-bfd3-d3f617d1bb67/pdf"
-    },
-    {
-      slug: "portland-37148",
-      title: "Portland, TN 37148",
-      subtitle: "SFH • Market Snapshott",
-      coverImage: "https://i.imgur.com/l3Ma5Sf.jpeg",
-      reportUrl: "https://www.narrpr.com/reports-v2/4097cf74-7edd-4760-a3ec-50d0fb246ac8/pdf"
-    },
-    {
-      slug: "white-house-37188",
-      title: "White House, TN 37188",
-      subtitle: "SFH • Market Snapshot",
-      coverImage: "https://i.imgur.com/wfFlG7m.jpeg",
-      reportUrl: "https://www.narrpr.com/reports-v2/2b2f551d-b86d-412f-b98e-9ed74757ba3c/pdf"
-    }
-  ];
-  // ----------------------------------------------------------------------
-
-  // Carousel elements
-  const track = document.getElementById("mrw-track");
-  const dotsWrap = document.getElementById("mrw-dots");
-  const prevBtn = document.getElementById("mrw-prev");
-  const nextBtn = document.getElementById("mrw-next");
-
-  // Modal & form elements
-  const modalWrap = document.getElementById("mrw-modal");
-  const form = document.getElementById("mrw-form");
-  const hp = document.getElementById("mrw-hp");
-  const nameEl = document.getElementById("mrw-name");
-  const emailEl = document.getElementById("mrw-email");
-  const phoneEl = document.getElementById("mrw-phone");
-  const areaEl = document.getElementById("mrw-area");
-  const nextUrlEl = document.getElementById("mrw-next-url"); // <- renamed to avoid ID collision
-  const reportLinkEl = document.getElementById("mrw-report-link");
-  const consentEl = document.getElementById("mrw-consent");
-  const msg = document.getElementById("mrw-msg");
-
-  let index = 0;
-  let selectedReport = null;
-
-  // Build slides + dots
-  function buildCarousel() {
-    track.innerHTML = reports.map((r, i) => `
-      <div class="mrw-slide">
-        <article class="mrw-card">
-          <img src="${r.coverImage}" alt="${r.title}">
-          <div class="body">
-            <h3>${r.title}</h3>
-            ${r.subtitle ? `<div class="subt">${r.subtitle}</div>` : ""}
-            <button class="mrw-btn" data-open="${i}">Get report</button>
-          </div>
-        </article>
-      </div>
-    `).join("");
-
-    dotsWrap.innerHTML = reports.map((_, i) => `<button class="mrw-dot" data-dot="${i}" aria-label="Go to ${reports[i].title}"></button>`).join("");
-
-    // Wire open buttons
-    track.querySelectorAll("[data-open]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const r = reports[Number(btn.getAttribute("data-open"))];
-        openModal(r);
-      });
-    });
-
-    // Wire dots
-    dotsWrap.querySelectorAll("[data-dot]").forEach(dot => {
-      dot.addEventListener("click", () => goTo(Number(dot.getAttribute("data-dot"))));
-    });
-  }
-
-  function goTo(i) {
-    index = (i + reports.length) % reports.length;
-    track.style.transform = `translateX(-${index * 100}%)`;
-    dotsWrap.querySelectorAll(".mrw-dot").forEach((d, di) => d.classList.toggle("active", di === index));
-  }
-  function next() { goTo(index + 1); }
-  function prev() { goTo(index - 1); }
-
-  prevBtn.addEventListener("click", prev);
-  nextBtn.addEventListener("click", next);
-
-  // Keyboard arrows (not when modal is open)
-  document.addEventListener("keydown", (e) => {
-    if (modalWrap.style.display === "flex") return;
-    if (e.key === "ArrowLeft") prev();
-    if (e.key === "ArrowRight") next();
-  });
-
-  // Touch swipe
-  let startX = null;
-  track.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive:true });
-  track.addEventListener("touchmove", (e) => {
-    if (startX == null) return;
-    const dx = e.touches[0].clientX - startX;
-    if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); startX = null; }
-  }, { passive:true });
-  track.addEventListener("touchend", () => { startX = null; });
-
-  function openModal(report) {
-    selectedReport = report;
-    document.getElementById("mrw-title").textContent = `Get the ${report.title} Report`;
-    areaEl.value = report.title;
-
-    // Redirect to your on-site passthrough page: /reports/[slug].html
-  nextUrlEl.value = `https://615realtyguy.com/thankyou-report.html?slug=${encodeURIComponent(report.slug)}&title=${encodeURIComponent(report.title)}`;
-
-
-
-    // Include the live RPR link in the email you receive
-    reportLinkEl.value = report.reportUrl;
-
-    msg.innerHTML = "";
-    modalWrap.style.display = "flex";
-    nameEl.focus();
-  }
-
-  function closeModal() {
-    modalWrap.style.display = "none";
-    selectedReport = null;
-    form.reset();
-    areaEl.value = "";
-    msg.innerHTML = "";
-  }
-
-  // Close (overlay or X)
-  modalWrap.querySelectorAll("[data-mrw-close]").forEach(el => el.addEventListener("click", closeModal));
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modalWrap.style.display === "flex") closeModal(); });
-
-  // Validate + submit (FormSubmit handles POST + redirect)
-  form.addEventListener("submit", (e) => {
-    if (hp.value) { e.preventDefault(); return; } // honeypot
-    if (!nameEl.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
-      e.preventDefault();
-      msg.innerHTML = `<div class="mrw-err">Please enter your name and a valid email.</div>`;
-      return;
-    }
-    if (!consentEl.checked) {
-      e.preventDefault();
-      msg.innerHTML = `<div class="mrw-err">Please confirm consent to receive your report.</div>`;
-      return;
-    }
-    msg.innerHTML = `<div class="mrw-ok">Thanks! Sending you the report link now…</div>`;
-  });
-
-  // Init
-  buildCarousel();
-  goTo(0);
-</script>
-
-    
-
-
-<section id="home-valuation" class="valuation-section">
-    <h2>Get Your Free Home Valuation</h2>
-    <p>Click below & enter your info to receive a detailed estimate of your home's value.</p>
+<!-- ========== HOME VALUATION ========== -->
+<section class="valuation-section">
+    <h2 class="section-heading gold-text">Free Home Valuation</h2>
+    <p class="section-subtext">Enter your info to receive a detailed estimate of your home's value.</p>
     <div class="valuation-container">
         <img src="https://i.imgur.com/9Fkpeih.png" alt="Home Valuation" class="valuation-image">
         <button class="toggle-form-button" onclick="toggleForm()">Get My Home Value</button>
         <form action="https://formsubmit.co/83702f691ccf936247e5971732f874a1" method="POST" class="valuation-form" id="valuation-form">
             <input type="hidden" name="_next" value="https://615realtyguy.com/thankyou.html">
-            <input type="text" name="first_name" placeholder="Enter Your First Name" required>
-            <input type="text" name="last_name" placeholder="Enter Your Last Name" required>
-            <input type="text" name="address" placeholder="Enter Your Home Address" required>
-            <input type="email" name="email" placeholder="Enter Your Email" required>
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+            <input type="text" name="address" placeholder="Home Address" required>
+            <input type="email" name="email" placeholder="Email" required>
             <input type="hidden" name="_subject" value="New Home Valuation Request">
-            <div class="button-container">
-                <button type="submit">Submit</button>
-            </div>
+            <button type="submit">Submit</button>
         </form>
     </div>
 </section>
+<div class="section-divider"></div>
 
-    
-<style>
-    /* Styling for Home Valuation Section */
-    .valuation-section {
-        text-align: center;
-        background-color: #000000;
-        color: #d2b56c;
-        padding: 40px 20px;
-    }
-
-    .valuation-section h2 {
-        font-size: 2rem;
-        color: #d2b56c;
-    }
-
-    .valuation-section p {
-        font-size: 1.2rem;
-        color: #feee9f;
-    }
-
-    .valuation-container {
-        max-width: 400px;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .valuation-image {
-        width: 100%;
-        height: auto;
-        border-radius: 10px;
-    }
-
-    .toggle-form-button {
-        background: linear-gradient(to right, #feee9f, #b18841);
-        color: #000;
-        padding: 12px;
-        font-size: 1.1rem;
-        font-weight: bold;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-        width: 100%;
-    }
-
-    .toggle-form-button:hover {
-        background: #b18841;
-        color: white;
-    }
-
-    .valuation-form {
-        display: none;
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
-        max-width: 350px;
-    }
-
-    .valuation-form input {
-        padding: 12px;
-        font-size: 1rem;
-        border: 2px solid #d2b56c;
-        background-color: #000;
-        color: #d2b56c;
-        border-radius: 5px;
-        text-align: center;
-        width: 100%;
-    }
-
-    .button-container {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .valuation-form button {
-        background: linear-gradient(to right, #feee9f, #b18841);
-        color: #000;
-        padding: 12px;
-        font-size: 1.1rem;
-        font-weight: bold;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s ease-in-out;
-        width: 100%;
-        max-width: 200px;
-    }
-
-    .valuation-form button:hover {
-        background: #b18841;
-        color: white;
-    }
-</style>
-
-<script>
-    function toggleForm() {
-        var form = document.getElementById("valuation-form");
-        if (form.style.display === "none" || form.style.display === "") {
-            form.style.display = "flex";
-        } else {
-            form.style.display = "none";
-        }
-    }
-</script>
-    
-
-
-<section class="testimonials-section">
-    <h2 class="gradient-title">What My Clients Say</h2>
-    <div class="carousel-container">
-        <button class="prev" onclick="moveSlide(-1)">&#10094;</button> <!-- Left Arrow -->
-        <div class="testimonial-container">
-            <div class="testimonial active">
-                <p>"John went above and beyond for us! He found the perfect home and made sure every step was seamless. Couldn't be happier!"</p>
-                <h4>- Tim M.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
-            </div>
-            <div class="testimonial">
-                <p>"John was amazing throughout the entire process! His knowledge of the market and clear communication made buying my first home a breeze!"</p>
-                <h4>- Lacy C.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
-            </div>
-            <div class="testimonial">
-                <p>"I highly recommend John for anyone looking to buy or sell a home. His professionalism and expertise made everything stress-free!"</p>
-                <h4>- Michael K.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
-            </div>
-            <div class="testimonial">
-                <p>"John was incredibly helpful and made selling our home a smooth and successful experience. He truly cares about his clients!"</p>
-                <h4>- Mark H.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
-            </div>
-            <div class="testimonial">
-                <p>"I've worked with a lot of realtors, and John stands out as one of the best. Highly knowledgeable and genuinely cares about his clients!"</p>
-                <h4>- Mike H.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
-            </div>
-            <div class="testimonial">
-                <p>"We were nervous first-time home buyers, but John made the entire process easy and enjoyable. He's the best!"</p>
-                <h4>- Holly C.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
-            </div>
-        </div>
-        <button class="next" onclick="moveSlide(1)">&#10095;</button> <!-- Right Arrow -->
-    </div>
-</section>
-
-<style>
-    /* Testimonials Section */
-    .testimonials-section {
-        text-align: center;
-        padding: 50px 20px;
-        background-color: #000000; /* Matches your theme */
-    }
-
-    /* Gold Gradient Title */
-    .gradient-title {
-        font-size: 2.5rem;
-        text-align: center;
-        font-weight: bold;
-        text-transform: uppercase;
-        background: linear-gradient(to right, #feee9f, #b18841);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
-        letter-spacing: 1.5px;
-        padding: 10px 20px;
-    }
-
-    /* Thin Gold Border Around Carousel */
-    .carousel-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        max-width: 700px;
-        margin: auto;
-        padding: 20px;
-        border-radius: 12px;
-        border: 2px solid transparent; /* Thin border */
-        background: linear-gradient(#000, #000) padding-box, 
-                    linear-gradient(to right, #b18841, #feee9f) border-box; /* Gold border */
-        box-shadow: 0px 4px 10px rgba(210, 181, 108, 0.5); /* Soft glow */
-    }
-
-    /* Testimonial Box */
-    .testimonial-container {
-        overflow: hidden;
-        width: 80%;
-        max-width: 500px;
-        position: relative;
-        background-color: rgba(0, 0, 0, 0.85); /* Slightly transparent black */
-        padding: 20px;
-        border-radius: 10px;
-    }
-
-    .testimonial {
-        display: none;
-        font-size: 1.2rem;
-        color: #ccc;
-        text-align: center;
-    }
-
-    .testimonial.active {
-        display: block;
-    }
-
-    .testimonial h4 {
-        color: #feee9f; /* Light gold text */
-        margin-top: 10px;
-        font-size: 1.1rem;
-    }
-
-   /* Star Rating - Keep on One Line */
-    .star-rating {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.5rem;
-        color: transparent;
-        background: linear-gradient(to right, #feee9f, #b18841);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-top: 10px;
-        letter-spacing: 2px; /* Reduce spacing so stars fit */
-        white-space: nowrap; /* Prevent wrapping */
-        gap: 4px; /* Adjusts spacing between stars */
-
-    /* Carousel Navigation Buttons */
-    .prev, .next {
-        background-color: transparent;
-        border: none;
-        color: #D2B56C;
-        font-size: 2rem;
-        cursor: pointer;
-        padding: 10px;
-        transition: 0.3s;
-    }
-
-    .prev:hover, .next:hover {
-        color: #fff;
-    }
-
-   /* Responsive Design */
-
-
-
-@media (max-width: 768px) {
-    body {
-        text-align: center;
-        padding: 0;
-        overflow-x: hidden; /* Prevents horizontal scrolling */
-    }
-
-    html, body {
-        max-width: 100%;
-    }
-
-    header, .banner, .spotify-section, .instagram-section {
-        max-width: 100%;
-        text-align: center;
-        margin: 0 auto;
-    }
-
-    nav {
-        display: flex;
-        flex-wrap: wrap; /* Allows buttons to wrap if needed */
-        justify-content: center; /* Ensures buttons are centered */
-        align-items: center;
-        width: 100%;
-        gap: 10px; /* Prevents elements from stretching too far */
-    }
-
-    .logo img {
-        display: block;
-        margin: 0 auto;
-        max-width: 80px; /* Adjusts logo size for mobile */
-    }
-
-    .banner img {
-        width: 100%; /* Ensures banner fits within mobile screens */
-        height: auto;
-    }
-
-    .cta-section, .services-section, .blog-section {
-        width: 90%; /* Ensures sections fit inside the screen */
-        max-width: 600px; /* Prevents sections from being too wide */
-        margin: auto; /* Centers them */
-    }
-
-    .testimonial-container {
-        width: 90%;
-    }
-
-    .testimonial {
-        font-size: 1rem;
-        padding: 15px;
-    }
-
-    .prev, .next {
-        font-size: 1.5rem;
-    }
-
-    .instagram-container {
-        width: 90%;
-        margin: 0 auto;
-    }
-
-    .spotify-section iframe {
-        max-width: 100%;
-    }
-}
-
-
-
-
-
-
-</style>
-
-<script>
-    let currentSlide = 0;
-    const testimonials = document.querySelectorAll(".testimonial");
-
-    function moveSlide(step) {
-        testimonials[currentSlide].classList.remove("active");
-        currentSlide = (currentSlide + step + testimonials.length) % testimonials.length;
-        testimonials[currentSlide].classList.add("active");
-    }
-
-    function autoSlide() {
-        moveSlide(1); // Move to next testimonial
-    }
-
-    // Auto-rotate every 3 seconds
-    let slideInterval = setInterval(autoSlide, 3000);
-
-    // Pause auto-scroll when hovering over testimonials
-    document.querySelector(".testimonial-container").addEventListener("mouseenter", () => {
-        clearInterval(slideInterval);
-    });
-
-    // Resume auto-scroll when leaving
-    document.querySelector(".testimonial-container").addEventListener("mouseleave", () => {
-        slideInterval = setInterval(autoSlide, 3000);
-    });
-</script>
-
-
-
-
-
-
-
-<section class="instagram-section">
-    <h2 class="gradient-title">Follow me on IG!</h2>
-    <div class="instagram-container">
+<!-- ========== INSTAGRAM ========== -->
+<section class="embed-section">
+    <h2 class="section-heading gold-text">Follow Me on Instagram</h2>
+    <div class="embed-container">
         <div class="elfsight-app-8792f413-f9e4-4ad5-8920-5b5bce2c2abb" data-elfsight-app-lazy></div>
     </div>
 </section>
-
-<!-- Elfsight Instagram Feed -->
 <script src="https://static.elfsight.com/platform/platform.js" async></script>
+<div class="section-divider"></div>
 
-<style>
-    .instagram-section {
-        text-align: center;
-        padding: 40px 0;
-        background-color: #000000; /* Matches the Substack section */
-    }
-
-    /* Gold Gradient Title */
-    .instagram-section h2 {
-        font-size: 2rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        background: linear-gradient(to right, #feee9f, #b18841);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
-        letter-spacing: 1.5px;
-        padding: 10px 20px;
-    }
-
-    .instagram-container {
-        width: 90%; /* Makes the section nearly full width */
-        max-width: 1200px; /* Keeps it from getting too wide on large screens */
-        margin: 0 auto; /* Centers it */
-    }
-
-    .elfsight-app-8792f413-f9e4-4ad5-8920-5b5bce2c2abb {
-        width: 100% !important; /* Forces the widget to take the full width */
-    }
-
-/* Social Media Icons - Gold Glow Hover Effect */
-.social-icons a {
-    display: inline-block;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.social-icons a:hover {
-    transform: scale(1.1); /* Slightly enlarges the icon */
-    box-shadow: 0px 0px 15px rgba(210, 181, 108, 0.7); /* Gold glow effect */
-}
-
-
-</style>
-
-
-<section class="blog-section">
-    <h2>My Blog</h2>
-    <div id="substack-feed-embed"></div>
+<!-- ========== BLOG ========== -->
+<section class="embed-section">
+    <h2 class="section-heading gold-text">From the Blog</h2>
+    <div id="blog-feed" style="display:flex; flex-wrap:wrap; gap:16px; justify-content:center; padding:0 20px;"></div>
+    <div style="margin-top:20px;">
+        <a href="https://615realtyguy.substack.com" target="_blank" style="color:#c9a84c; text-decoration:none; font-size:14px;">View all posts on Substack &rarr;</a>
+    </div>
     <script>
-      window.SubstackFeedWidget = {
-        substackUrl: "615realtyguy.substack.com",
-        posts: 3,
-        layout: "right",
-        colors: {
-          primary: "#D2B56C",
-          secondary: "#626262",
-          background: "#000000",
-        }
-      };
+    (function() {
+        var feed = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2F615realtyguy.substack.com%2Ffeed';
+        fetch(feed).then(function(r){ return r.json(); }).then(function(data) {
+            var container = document.getElementById('blog-feed');
+            if (!data.items || !data.items.length) {
+                container.innerHTML = '<p style="color:#999;">No posts available.</p>';
+                return;
+            }
+            var posts = data.items.slice(0, 3);
+            posts.forEach(function(post) {
+                var thumb = post.thumbnail || '';
+                var date = new Date(post.pubDate).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+                var desc = post.description ? post.description.replace(/<[^>]*>/g,'').substring(0,120) + '...' : '';
+                var card = document.createElement('a');
+                card.href = post.link;
+                card.target = '_blank';
+                card.style.cssText = 'display:block; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:10px; width:260px; text-decoration:none; overflow:hidden; transition:border-color .2s;';
+                card.onmouseenter = function(){ this.style.borderColor='#c9a84c'; };
+                card.onmouseleave = function(){ this.style.borderColor='#2a2a2a'; };
+                var img = thumb ? '<img src="'+thumb+'" alt="" style="width:100%; height:140px; object-fit:cover;">' : '';
+                card.innerHTML = img +
+                    '<div style="padding:14px; text-align:left;">' +
+                        '<div style="font-size:11px; color:#999; margin-bottom:6px;">'+date+'</div>' +
+                        '<div style="font-size:15px; font-weight:600; color:#d2b56c; margin-bottom:6px; line-height:1.3;">'+post.title+'</div>' +
+                        '<div style="font-size:13px; color:#888; line-height:1.4;">'+desc+'</div>' +
+                    '</div>';
+                container.appendChild(card);
+            });
+        }).catch(function() {
+            document.getElementById('blog-feed').innerHTML = '<p style="color:#999;">Could not load posts. <a href="https://615realtyguy.substack.com" target="_blank" style="color:#c9a84c;">Visit the blog &rarr;</a></p>';
+        });
+    })();
     </script>
-    <script src="https://substackapi.com/embeds/feed.js" async></script>
+</section>
+<div class="section-divider"></div>
+
+<!-- ========== SPOTIFY ========== -->
+<section class="spotify-section">
+    <h2 class="section-heading gold-text">Home Shopping Playlist</h2>
+    <p class="section-subtext">Luxury vibes while you find your dream home.</p>
+    <iframe style="border-radius:12px"
+        src="https://open.spotify.com/embed/playlist/2mQWTXLUuvxEQUCswype44?utm_source=generator&theme=0"
+        width="100%" height="352" frameBorder="0" allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+    </iframe>
+</section>
+<div class="section-divider"></div>
+
+<!-- ========== HOUSE PONG ========== -->
+<section style="padding: 32px 20px;">
+    <div class="pong-callout">
+        <div class="pong-emoji">&#127955;</div>
+        <div class="pong-text">
+            <p>Need a break from house hunting?</p>
+            <a href="/housepong.html" class="pong-link">Play House Pong &rarr;</a>
+        </div>
+    </div>
 </section>
 
-
-    <section class="mortgage-calculator">
-        <script src="https://static.elfsight.com/platform/platform.js" async></script>
+<!-- ========== MORTGAGE CALCULATOR ========== -->
+<section class="embed-section">
+    <div class="embed-container">
         <div class="elfsight-app-d097dce5-b120-4984-b485-6395c97adfc1" data-elfsight-app-lazy></div>
-    </section>
+    </div>
+</section>
 
-<!-- Footer (ONLY ONE INSTANCE) -->
+<!-- ========== FOOTER ========== -->
 <footer>
-
-<div class="footer-logo">
-    <img src="https://i.imgur.com/Mue4Nnr.png" alt="Company Logo">
-</div>
-    
-    <p>&copy; 2025 615Realtyguy.com - Your Trusted Real Estate Partner</p>
+    <div class="footer-logo">
+        <img src="https://i.imgur.com/Mue4Nnr.png" alt="615 Realty Guy">
+    </div>
+    <p>&copy; 2026 615RealtyGuy.com — Your Nashville Real Estate Advisor</p>
     <div class="social-icons">
         <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">
             <img src="https://i.imgur.com/pXurSVm.png" alt="Facebook">
@@ -1403,20 +1212,164 @@
             <img src="https://i.imgur.com/v2vc2NV.png" alt="Instagram">
         </a>
     </div>
+    <div class="footer-contact">
+        <a href="tel:+16154911638">(615) 491-1638</a> &middot;
+        <a href="mailto:615realtyguy@gmail.com">615realtyguy@gmail.com</a>
+    </div>
 </footer>
 
+<!-- ========== SCRIPTS ========== -->
+
+<!-- Testimonials Carousel -->
+<script>
+let currentSlide = 0;
+const testimonials = document.querySelectorAll(".testimonial");
+
+function moveSlide(step) {
+    testimonials[currentSlide].classList.remove("active");
+    currentSlide = (currentSlide + step + testimonials.length) % testimonials.length;
+    testimonials[currentSlide].classList.add("active");
+}
+
+let slideInterval = setInterval(() => moveSlide(1), 4000);
+
+document.querySelector(".testimonial-content").addEventListener("mouseenter", () => {
+    clearInterval(slideInterval);
+});
+document.querySelector(".testimonial-content").addEventListener("mouseleave", () => {
+    slideInterval = setInterval(() => moveSlide(1), 4000);
+});
+</script>
+
+<!-- Market Reports Carousel -->
+<script>
+const reports = [
+    { slug:"cottontown-37048", title:"Cottontown, TN 37048", subtitle:"SFH \u2022 Market Snapshot", coverImage:"https://i.imgur.com/7uIgbAw.jpeg", reportUrl:"https://www.narrpr.com/reports-v2/e3260df1-534d-4d9c-a3e3-ff38a8f936ca/pdf" },
+    { slug:"sumner-county", title:"Sumner County, TN", subtitle:"SFH \u2022 Market Snapshot", coverImage:"https://i.imgur.com/5r8xq4k.png", reportUrl:"https://www.narrpr.com/reports-v2/e8b06656-db2e-4428-b237-c58428b9bbe5/pdf" },
+    { slug:"gallatin-37066", title:"Gallatin, TN 37066", subtitle:"SFH \u2022 Market Snapshot", coverImage:"https://i.imgur.com/cKDkiJ0.jpeg", reportUrl:"https://www.narrpr.com/reports-v2/d92848d5-e6e7-4bfc-9790-acc8a316cab9/pdf" },
+    { slug:"robertson-county", title:"Robertson County, TN", subtitle:"SFH \u2022 Market Snapshot", coverImage:"https://i.imgur.com/QfoFDXs.jpeg", reportUrl:"https://www.narrpr.com/reports-v2/e921c015-b8d2-4b65-9e19-aa38cbc3e2f5/pdf" },
+    { slug:"springfield-37172", title:"Springfield, TN 37172", subtitle:"SFH \u2022 Market Snapshot", coverImage:"https://i.imgur.com/O7Bwz9v.jpeg", reportUrl:"https://www.narrpr.com/reports-v2/c3a6a649-cef9-4c41-bfd3-d3f617d1bb67/pdf" },
+    { slug:"portland-37148", title:"Portland, TN 37148", subtitle:"SFH \u2022 Market Snapshot", coverImage:"https://i.imgur.com/l3Ma5Sf.jpeg", reportUrl:"https://www.narrpr.com/reports-v2/4097cf74-7edd-4760-a3ec-50d0fb246ac8/pdf" },
+    { slug:"white-house-37188", title:"White House, TN 37188", subtitle:"SFH \u2022 Market Snapshot", coverImage:"https://i.imgur.com/wfFlG7m.jpeg", reportUrl:"https://www.narrpr.com/reports-v2/2b2f551d-b86d-412f-b98e-9ed74757ba3c/pdf" }
+];
+
+const track = document.getElementById("mrw-track");
+const dotsWrap = document.getElementById("mrw-dots");
+const prevBtn = document.getElementById("mrw-prev");
+const nextBtn = document.getElementById("mrw-next");
+const modalWrap = document.getElementById("mrw-modal");
+const form = document.getElementById("mrw-form");
+const hp = document.getElementById("mrw-hp");
+const nameEl = document.getElementById("mrw-name");
+const emailEl = document.getElementById("mrw-email");
+const phoneEl = document.getElementById("mrw-phone");
+const areaEl = document.getElementById("mrw-area");
+const nextUrlEl = document.getElementById("mrw-next-url");
+const reportLinkEl = document.getElementById("mrw-report-link");
+const consentEl = document.getElementById("mrw-consent");
+const msg = document.getElementById("mrw-msg");
+
+let mrwIndex = 0;
+let selectedReport = null;
+
+function buildCarousel() {
+    track.innerHTML = reports.map((r, i) => `
+        <div class="mrw-slide">
+            <article class="mrw-card">
+                <img src="${r.coverImage}" alt="${r.title}">
+                <div class="body">
+                    <h3>${r.title}</h3>
+                    ${r.subtitle ? `<div class="subt">${r.subtitle}</div>` : ""}
+                    <button class="mrw-btn" data-open="${i}">Get Report</button>
+                </div>
+            </article>
+        </div>
+    `).join("");
+
+    dotsWrap.innerHTML = reports.map((_, i) =>
+        `<button class="mrw-dot" data-dot="${i}" aria-label="Go to ${reports[i].title}"></button>`
+    ).join("");
+
+    track.querySelectorAll("[data-open]").forEach(btn => {
+        btn.addEventListener("click", () => openModal(reports[Number(btn.dataset.open)]));
+    });
+    dotsWrap.querySelectorAll("[data-dot]").forEach(dot => {
+        dot.addEventListener("click", () => goTo(Number(dot.dataset.dot)));
+    });
+}
+
+function goTo(i) {
+    mrwIndex = (i + reports.length) % reports.length;
+    track.style.transform = `translateX(-${mrwIndex * 100}%)`;
+    dotsWrap.querySelectorAll(".mrw-dot").forEach((d, di) => d.classList.toggle("active", di === mrwIndex));
+}
+
+prevBtn.addEventListener("click", () => goTo(mrwIndex - 1));
+nextBtn.addEventListener("click", () => goTo(mrwIndex + 1));
+
+document.addEventListener("keydown", (e) => {
+    if (modalWrap.style.display === "flex") return;
+    if (e.key === "ArrowLeft") goTo(mrwIndex - 1);
+    if (e.key === "ArrowRight") goTo(mrwIndex + 1);
+});
+
+let startX = null;
+track.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
+track.addEventListener("touchmove", (e) => {
+    if (startX == null) return;
+    const dx = e.touches[0].clientX - startX;
+    if (Math.abs(dx) > 50) { dx < 0 ? goTo(mrwIndex + 1) : goTo(mrwIndex - 1); startX = null; }
+}, { passive: true });
+track.addEventListener("touchend", () => { startX = null; });
+
+function openModal(report) {
+    selectedReport = report;
+    document.getElementById("mrw-title").textContent = `Get the ${report.title} Report`;
+    areaEl.value = report.title;
+    nextUrlEl.value = `https://615realtyguy.com/thankyou-report.html?slug=${encodeURIComponent(report.slug)}&title=${encodeURIComponent(report.title)}`;
+    reportLinkEl.value = report.reportUrl;
+    msg.innerHTML = "";
+    modalWrap.style.display = "flex";
+    nameEl.focus();
+}
+
+function closeModal() {
+    modalWrap.style.display = "none";
+    selectedReport = null;
+    form.reset();
+    areaEl.value = "";
+    msg.innerHTML = "";
+}
+
+modalWrap.querySelectorAll("[data-mrw-close]").forEach(el => el.addEventListener("click", closeModal));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modalWrap.style.display === "flex") closeModal(); });
+
+form.addEventListener("submit", (e) => {
+    if (hp.value) { e.preventDefault(); return; }
+    if (!nameEl.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+        e.preventDefault();
+        msg.innerHTML = `<div class="mrw-err">Please enter your name and a valid email.</div>`;
+        return;
+    }
+    if (!consentEl.checked) {
+        e.preventDefault();
+        msg.innerHTML = `<div class="mrw-err">Please confirm consent to receive your report.</div>`;
+        return;
+    }
+    msg.innerHTML = `<div class="mrw-ok">Thanks! Sending you the report link now\u2026</div>`;
+});
+
+buildCarousel();
+goTo(0);
+</script>
+
+<!-- Home Valuation Toggle -->
+<script>
+function toggleForm() {
+    const form = document.getElementById("valuation-form");
+    form.style.display = (form.style.display === "none" || form.style.display === "") ? "flex" : "none";
+}
+</script>
+
 </body>
 </html>
-
-  
-</body>
-</html>
-
-
-
-
-
-
-
-
-
