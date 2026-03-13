@@ -1,541 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me - 615 Realty Guy</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
-    <style>
-        /* General Page Styles */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #000000; /* Matches your theme */
-            color: #D2B56C; /* Gold text color */
-        }
-
-        /* Navigation Bar */
-        nav {
-            background-color: #000;
-            padding: 15px 0;
-            text-align: center;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            color: #D2B56C;
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        nav ul li a:hover {
-            color: #fff;
-        }
-
-        /* Contact Dropdown */
-        .dropdown {
-            display: inline-block;
-            position: relative;
-        }
-
-        .dropbtn {
-            background-color: transparent;
-            border: none;
-            color: #D2B56C;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 8px;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #333;
-            min-width: 200px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-            z-index: 1;
-            text-align: left;
-        }
-
-        .dropdown-content a {
-            display: block;
-            color: #D2B56C;
-            padding: 10px;
-            text-decoration: none;
-            font-size: 1rem;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #444;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        /* About Section */
-        .about-section {
-            text-align: center;
-            padding: 50px;
-            max-width: 900px;
-            margin: auto;
-        }
-
-        .about-section h1 {
-            font-size: 2.5rem;
-        }
-
-        /* About Me Text */
-        .about-text {
-            text-align: center;
-            max-width: 800px;
-            margin: auto;
-            padding: 40px 20px;
-        }
-
-        .about-text p {
-            font-size: 1.2rem;
-            color: #ccc;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        /* Image & Checkmark List Layout */
-        .about-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 40px; /* Space between sections */
-            margin-top: 30px;
-            max-width: 900px;
-            margin: auto;
-        }
-
-        .about-image {
-            width: 250px;
-            height: auto;
-            border-radius: 50%;
-            border: 3px solid #D2B56C;
-            flex-shrink: 0;
-        }
-
-  .about-list {
-    text-align: left;
-    flex: 1;
-}
-
-.about-list h2 {
-    font-size: 1.8rem;
-    color: #D2B56C;
-    margin-bottom: 10px;
-}
-
-.about-list ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.about-list ul li {
-    display: flex; /* Align checkbox & text in a row */
-    align-items: center; /* Align them vertically */
-    gap: 10px; /* Add spacing between checkbox and text */
-    font-size: 1.2rem;
-    color: #D2B56C;
-    margin-bottom: 10px;
-    flex-wrap: nowrap; /* Prevents text from wrapping under the checkbox */
-}
-
-/* If you're using an <img> tag for checkboxes */
-.about-list ul li img {
-    flex-shrink: 0; /* Prevents the checkbox from resizing */
-    width: 24px; /* Adjust checkbox size if needed */
-    height: 24px;
-}
-
-
-        /* Contact Button */
-        .contact-button {
-            display: inline-block;
-            padding: 12px 24px;
-            margin-top: 30px;
-            background-color: #D2B56C;
-            color: #000;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            font-size: 1.2rem;
-            transition: 0.3s;
-        }
-
-        .contact-button:hover {
-            background-color: #c19a5c;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .about-container {
-                flex-direction: column; /* Stacks elements vertically on mobile */
-                align-items: center;
-                text-align: center;
-            }
-
-            .about-list {
-                text-align: center;
-            }
-        }
-
- /* Footer */
-        footer {
-            background: black;
-            padding: 20px;
-            color: #d2b56c;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        /* Footer Text with Gold Gradient */
-footer p {
-    font-size: 1rem; /* Adjust as needed */
-    font-weight: bold;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Me — 615 Realty Guy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* RESET & GLOBALS */
+*, *::before, *::after { box-sizing: border-box; }
+body {
+    font-family: 'Inter', 'Futura', system-ui, sans-serif;
+    background-color: #000000;
+    color: #d2b56c;
+    margin: 0; padding: 0;
     text-align: center;
-    background: linear-gradient(to right, #feee9f, #b18841); /* Gold Gradient */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 1px;
-    padding: 5px 10px;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; }
+a { color: #d2b56c; text-decoration: none; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+.section-divider {
+    max-width: 900px; margin: 0 auto; height: 1px;
+    background: linear-gradient(90deg, transparent, #2a2a2a 20%, #2a2a2a 80%, transparent);
+}
+.gold-text {
+    background: linear-gradient(to right, #feee9f, #b18841);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+.section-heading {
+    font-size: 1.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 10px;
+}
+.section-subtext { color: #999; font-size: 0.95rem; margin-bottom: 30px; }
+
+/* BANNER */
+.banner { text-align: center; padding: 16px 10px 10px; }
+.banner img { max-width: 380px; }
+
+/* HEADER / NAV */
+header {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 900px; margin: 0 auto; padding: 10px 20px 20px;
+    flex-wrap: wrap;
+}
+header .logo img { height: 50px; }
+nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+nav a { color: #d2b56c; font-size: 0.9rem; font-weight: 600; transition: color 0.2s; }
+nav a:hover { color: #feee9f; }
+.dropdown { position: relative; }
+.dropbtn {
+    background: none; border: none; color: #d2b56c; font-size: 0.9rem;
+    font-weight: 600; cursor: pointer; font-family: inherit; padding: 0;
+}
+.dropbtn:hover { color: #feee9f; }
+.dropdown-content {
+    display: none; position: absolute; right: 0; top: 100%;
+    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px;
+    min-width: 180px; z-index: 100; padding: 6px 0; margin-top: 6px;
+}
+.dropdown-content a {
+    display: block; padding: 8px 16px; font-size: 0.85rem; color: #ccc;
+}
+.dropdown-content a:hover { background: #2a2a2a; color: #feee9f; }
+.dropdown:hover .dropdown-content { display: block; }
+
+/* PAGE HERO */
+.page-hero { padding: 50px 20px 30px; }
+.page-hero h1 {
+    font-size: 2.2rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 1.5px; line-height: 1.2; margin: 0 0 16px;
 }
 
+/* BIO SECTION */
+.bio-section { padding: 40px 20px 50px; }
+.bio-layout {
+    max-width: 800px; margin: 0 auto;
+    display: flex; gap: 36px; align-items: flex-start; text-align: left;
+}
+.bio-photo {
+    flex-shrink: 0; width: 200px; height: 200px; border-radius: 50%;
+    border: 3px solid #c9a84c; object-fit: cover; object-position: top;
+}
+.bio-text p {
+    color: #bbb; font-size: 0.95rem; line-height: 1.7; margin: 0 0 16px;
+}
+.bio-text p:last-child { margin-bottom: 0; }
+.bio-text strong { color: #d2b56c; }
 
-.footer-logo {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Aligns the logo to the far left */
+/* WHY WORK WITH ME */
+.why-section { padding: 40px 20px 50px; }
+.why-grid {
+    max-width: 800px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.why-card {
+    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px;
+    padding: 22px 20px; text-align: left; transition: border-color 0.2s;
+}
+.why-card:hover { border-color: #c9a84c; }
+.why-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: linear-gradient(135deg, #feee9f, #b18841);
+    color: #000; font-weight: 700; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+}
+.why-card h3 { margin: 0 0 6px; font-size: 0.95rem; color: #fff; font-weight: 600; }
+.why-card p { margin: 0; font-size: 0.85rem; color: #999; line-height: 1.5; }
+
+/* TESTIMONIALS */
+.testimonials-section { padding: 40px 20px 50px; }
+.testimonial-card {
+    max-width: 650px; margin: 0 auto;
+    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 14px;
+    padding: 28px 24px; position: relative;
+    display: flex; align-items: center; gap: 16px;
+}
+.testimonial-prev, .testimonial-next {
+    background: none; border: none; color: #d2b56c; font-size: 1.6rem;
+    cursor: pointer; padding: 6px; transition: color 0.2s; flex-shrink: 0;
+}
+.testimonial-prev:hover, .testimonial-next:hover { color: #feee9f; }
+.testimonial-content { flex: 1; min-width: 0; }
+.testimonial { display: none; }
+.testimonial.active { display: block; }
+.testimonial p {
+    font-size: 0.95rem; color: #ccc; font-style: italic; line-height: 1.6;
+    margin: 0 0 10px;
+}
+.testimonial h4 { color: #d2b56c; font-size: 0.9rem; margin: 0 0 4px; }
+.star-rating {
+    color: #c9a84c; font-size: 1rem; letter-spacing: 2px;
 }
 
-.footer-logo img {
-    max-width: 80px; /* Adjust size to match the 615RealtyGuy logo */
-    height: auto; /* Maintains aspect ratio */
+/* CTA BAND */
+.cta-band {
+    padding: 50px 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
 }
+.cta-band p { color: #999; font-size: 0.95rem; margin: 0; }
+.cta-btn {
+    display: inline-block; padding: 14px 32px; font-weight: 700; font-size: 0.95rem;
+    color: #000; background: linear-gradient(to right, #feee9f, #b18841);
+    border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    transition: opacity 0.2s;
+}
+.cta-btn:hover { opacity: 0.85; }
 
+/* FOOTER */
+footer {
+    max-width: 900px; margin: 0 auto; padding: 40px 20px 30px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 14px;
+}
+footer .footer-logo img { height: 44px; opacity: 0.7; }
+footer p {
+    font-size: 0.8rem; color: #555; margin: 0; flex: 1; text-align: center;
+}
+.social-icons { display: flex; gap: 10px; }
+.social-icons a { opacity: 0.6; transition: opacity 0.2s; }
+.social-icons a:hover { opacity: 1; }
+.social-icons img { width: 26px; height: 26px; }
+.footer-contact { width: 100%; text-align: center; margin-top: 4px; }
+.footer-contact a { color: #555; font-size: 0.8rem; transition: color 0.2s; }
+.footer-contact a:hover { color: #d2b56c; }
 
-
-        /* Social Media Icons */
-        .social-icons {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: flex-end;
-        }
-        .social-icons a {
-            display: inline-block;
-        }
-        .social-icons img {
-            width: 30px; /* Correct size */
-            height: 30px;
-        }
-
+/* RESPONSIVE */
 @media (max-width: 768px) {
-    footer {
-        flex-direction: column; /* Stack elements vertically */
-        align-items: center; /* Center all elements */
-        text-align: center;
-    }
-
-    .footer-logo {
-        justify-content: center; /* Center the logo */
-        margin-bottom: 10px; /* Add spacing below */
-    }
-
-    .social-icons {
-        justify-content: center; /* Center social media icons */
-        margin-top: 10px;
-    }
+    header { justify-content: center; text-align: center; }
+    nav { justify-content: center; gap: 14px; }
+    .banner img { max-width: 280px; }
+    .page-hero h1 { font-size: 1.6rem; }
+    .bio-layout { flex-direction: column; align-items: center; text-align: center; }
+    .bio-photo { width: 160px; height: 160px; }
+    .why-grid { grid-template-columns: 1fr; }
+    .testimonial p { font-size: 0.9rem; }
+    footer { justify-content: center; text-align: center; }
+    footer p { flex: unset; }
+    .social-icons { justify-content: center; }
 }
-
-        
-        
-    </style>
+</style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
+<!-- BANNER -->
+<div class="banner">
+    <a href="https://sixonefive.homes" target="_blank">
+        <img src="https://i.imgur.com/XLvCp6R.png" alt="SixOneFive Real Estate Advisors">
+    </a>
+</div>
+
+<!-- HEADER / NAV -->
+<header>
+    <div class="logo">
+        <a href="index.html"><img src="https://i.imgur.com/Mue4Nnr.png" alt="615 Realty Guy"></a>
+    </div>
     <nav>
-        <ul>
-            <li><a href="https://615realtyguy.com">Home</a></li>
-            <li><a href="about.html">About Me</a></li>
-            <li><a href="services.html">Services</a></li>
-
-            <!-- Contact Dropdown -->
-            <li class="dropdown">
-                <button class="dropbtn">Contact</button>
-                <div class="dropdown-content">
-                    <a href="https://calendly.com/615realtyguy" target="_blank">Schedule a Consult</a>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank">Contact Form</a>
-                    <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">Facebook</a>
-                    <a href="https://www.instagram.com/615realtyguy/" target="_blank">Instagram</a>
-                </div>
-            </li>
-        </ul>
-    </nav>
-
-    <!-- About Me Section -->
-    <section class="about-section">
-        <h1>About Me</h1>
-
-        <!-- About Me Text -->
-        <div class="about-text">
-            <p>Before stepping into the world of real estate, I dedicated my career to serving others as an ICU nurse. In that role, I learned the importance of precision, care, and unwavering commitment—qualities that I now bring to my work in real estate.</p>
-
-            <p>Buying or selling a home is one of the most significant decisions a person can make, and just like in healthcare, every situation is unique and requires a personalized approach. I take my role as your real estate professional seriously, providing you with the best resources, market insights, and guidance to make informed decisions with confidence.</p>
-
-            <p>My mission is simple: <strong>to help people.</strong> Whether it was in the ICU or now in real estate, my goal has always been to offer support, expertise, and peace of mind when it matters most. I strive to make every transaction as smooth and stress-free as possible, ensuring my clients feel empowered every step of the way.</p>
-
-            <p>With my background in high-pressure, detail-oriented work, you can trust that I will handle your real estate needs with the same level of dedication and care.</p>
-
-            <p>Let’s work together to achieve your real estate goals.</p>
-        </div>
-
-        <!-- Image on the Left, Checkmark List on the Right -->
-        <div class="about-container">
-            <img src="https://i.imgur.com/iBz1fy4.jpeg" alt="John Crowder - 615RealtyGuy" class="about-image">
-
-            <div class="about-list">
-                <h2>Why Work With Me?</h2>
-                <ul>
-                    <li>✅ Expert in local market trends & macroeconomics - I'm a data nerd</li>
-                    <li>✅ Professional & clear communication</li>
-                    <li>✅ Utilize all the latest tech to serve you</li>
-                    <li>✅ Passionate about finding the right home for you</li>
-                </ul>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="/market_widget/">Market Stats</a>
+        <a href="https://substack.com/@615realtyguy" target="_blank">Blog</a>
+        <div class="dropdown">
+            <button class="dropbtn">Contact &#9662;</button>
+            <div class="dropdown-content">
+                <a href="https://calendly.com/615realtyguy" target="_blank">Schedule a Consult</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank">Contact Form</a>
+                <a href="/downsizing-guide.html">Downsizing Guide</a>
+                <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">Facebook</a>
+                <a href="https://www.instagram.com/615realtyguy/" target="_blank">Instagram</a>
             </div>
         </div>
+    </nav>
+</header>
 
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank" class="contact-button">Get in Touch</a>
-    </section>
+<!-- PAGE HERO -->
+<section class="page-hero">
+    <h1 class="gold-text">About Me</h1>
+</section>
+<div class="section-divider"></div>
 
-</body>
-</html>
+<!-- BIO -->
+<section class="bio-section">
+    <div class="bio-layout">
+        <img src="https://i.imgur.com/iBz1fy4.jpeg" alt="John Crowder — 615RealtyGuy" class="bio-photo">
+        <div class="bio-text">
+            <p>Before stepping into real estate, I dedicated my career to serving others as an ICU nurse. In that role, I learned the importance of precision, care, and unwavering commitment &mdash; qualities I now bring to every real estate transaction.</p>
+            <p>Buying or selling a home is one of the most significant decisions a person can make, and just like in healthcare, every situation is unique and requires a personalized approach. I take my role as your real estate professional seriously, providing the best resources, market insights, and guidance to help you make informed decisions with confidence.</p>
+            <p>My mission is simple: <strong>to help people.</strong> Whether it was in the ICU or now in real estate, my goal has always been to offer support, expertise, and peace of mind when it matters most.</p>
+            <p>With my background in high-pressure, detail-oriented work, you can trust that I will handle your real estate needs with the same level of dedication and care.</p>
+        </div>
+    </div>
+</section>
+<div class="section-divider"></div>
 
+<!-- WHY WORK WITH ME -->
+<section class="why-section">
+    <h2 class="section-heading gold-text">Why Work With Me</h2>
+    <p class="section-subtext">What sets my approach apart.</p>
+    <div class="why-grid">
+        <div class="why-card">
+            <div class="why-icon">
+                <svg width="18" height="18" fill="none" stroke="#000" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 17l4-8 4 4 5-9"/></svg>
+            </div>
+            <h3>Data-Driven Market Insight</h3>
+            <p>Expert in local market trends and macroeconomics. I track the numbers so you don't have to.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">
+                <svg width="18" height="18" fill="none" stroke="#000" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <h3>Clear Communication</h3>
+            <p>Professional, transparent, and responsive. You'll always know where things stand.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">
+                <svg width="18" height="18" fill="none" stroke="#000" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </div>
+            <h3>Modern Technology</h3>
+            <p>I leverage the latest tools and platforms to give you a competitive edge in today's market.</p>
+        </div>
+        <div class="why-card">
+            <div class="why-icon">
+                <svg width="18" height="18" fill="none" stroke="#000" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </div>
+            <h3>Genuine Passion</h3>
+            <p>Real estate isn't just my job &mdash; I'm passionate about helping people find the right home.</p>
+        </div>
+    </div>
+</section>
+<div class="section-divider"></div>
+
+<!-- TESTIMONIALS -->
 <section class="testimonials-section">
-    <h2 class="gradient-title">What My Clients Say</h2>
-    <div class="carousel-container">
-        <button class="prev" onclick="moveSlide(-1)">&#10094;</button> <!-- Left Arrow -->
-        <div class="testimonial-container">
+    <h2 class="section-heading gold-text">What My Clients Say</h2>
+    <p class="section-subtext">Real reviews from real clients.</p>
+    <div class="testimonial-card">
+        <button class="testimonial-prev" onclick="moveSlide(-1)">&#10094;</button>
+        <div class="testimonial-content">
             <div class="testimonial active">
                 <p>"John went above and beyond for us! He found the perfect home and made sure every step was seamless. Couldn't be happier!"</p>
                 <h4>- Tim M.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
             </div>
             <div class="testimonial">
                 <p>"John was amazing throughout the entire process! His knowledge of the market and clear communication made buying my first home a breeze!"</p>
-                <h4>- Emily R.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
+                <h4>- Lacy C.</h4>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
             </div>
             <div class="testimonial">
                 <p>"I highly recommend John for anyone looking to buy or sell a home. His professionalism and expertise made everything stress-free!"</p>
                 <h4>- Michael B.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
             </div>
             <div class="testimonial">
                 <p>"John was incredibly helpful and made selling our home a smooth and successful experience. He truly cares about his clients!"</p>
                 <h4>- Sarah L.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
             </div>
             <div class="testimonial">
                 <p>"I've worked with a lot of realtors, and John stands out as one of the best. Highly knowledgeable and genuinely cares about his clients!"</p>
                 <h4>- Mike H.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
             </div>
             <div class="testimonial">
                 <p>"We were nervous first-time home buyers, but John made the entire process easy and enjoyable. He's the best!"</p>
                 <h4>- Holly C.</h4>
-                <div class="star-rating">
-                    ★ ★ ★ ★ ★
-                </div>
+                <div class="star-rating">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
             </div>
         </div>
-        <button class="next" onclick="moveSlide(1)">&#10095;</button> <!-- Right Arrow -->
+        <button class="testimonial-next" onclick="moveSlide(1)">&#10095;</button>
     </div>
 </section>
+<div class="section-divider"></div>
 
-<style>
-    /* Testimonials Section */
-    .testimonials-section {
-        text-align: center;
-        padding: 50px 20px;
-        background-color: #000000; /* Matches your theme */
-    }
+<!-- CTA -->
+<section class="cta-band">
+    <h2 class="section-heading gold-text">Let's Work Together</h2>
+    <p>Ready to achieve your real estate goals? Get in touch.</p>
+    <a href="https://calendly.com/615realtyguy" target="_blank" class="cta-btn">Schedule a Consultation</a>
+</section>
 
-    /* Gold Gradient Title */
-    .gradient-title {
-        font-size: 2.5rem;
-        text-align: center;
-        font-weight: bold;
-        text-transform: uppercase;
-        background: linear-gradient(to right, #feee9f, #b18841);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
-        letter-spacing: 1.5px;
-        padding: 10px 20px;
-    }
-
-    /* Thin Gold Border Around Carousel */
-    .carousel-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        max-width: 700px;
-        margin: auto;
-        padding: 20px;
-        border-radius: 12px;
-        border: 2px solid transparent; /* Thin border */
-        background: linear-gradient(#000, #000) padding-box, 
-                    linear-gradient(to right, #b18841, #feee9f) border-box; /* Gold border */
-        box-shadow: 0px 4px 10px rgba(210, 181, 108, 0.5); /* Soft glow */
-    }
-
-    /* Testimonial Box */
-    .testimonial-container {
-        overflow: hidden;
-        width: 80%;
-        max-width: 500px;
-        position: relative;
-        background-color: rgba(0, 0, 0, 0.85); /* Slightly transparent black */
-        padding: 20px;
-        border-radius: 10px;
-    }
-
-    .testimonial {
-        display: none;
-        font-size: 1.2rem;
-        color: #ccc;
-        text-align: center;
-    }
-
-    .testimonial.active {
-        display: block;
-    }
-
-    .testimonial h4 {
-        color: #feee9f; /* Light gold text */
-        margin-top: 10px;
-        font-size: 1.1rem;
-    }
-
-    .star-rating {
-    display: flex; /* Makes sure all stars stay on one line */
-    justify-content: center; /* Centers the stars */
-    align-items: center; /* Ensures vertical alignment */
-    font-size: 1.5rem;
-    color: transparent;
-    background: linear-gradient(to right, #feee9f, #b18841);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-top: 10px;
-    letter-spacing: 2px; /* Reduces spacing to prevent wrapping */
-    white-space: nowrap; /* Prevents stars from breaking to a new line */
-    gap: 4px; /* Ensures spacing is uniform */
-}
-
-
-    /* Carousel Navigation Buttons */
-    .prev, .next {
-        background-color: transparent;
-        border: none;
-        color: #D2B56C;
-        font-size: 2rem;
-        cursor: pointer;
-        padding: 10px;
-        transition: 0.3s;
-    }
-
-    .prev:hover, .next:hover {
-        color: #fff;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .testimonial-container {
-            width: 90%;
-        }
-
-        .testimonial {
-            font-size: 1rem;
-            padding: 15px;
-        }
-
-        .prev, .next {
-            font-size: 1.5rem;
-        }
-    }
-</style>
-
-<script>
-    let currentSlide = 0;
-    const testimonials = document.querySelectorAll(".testimonial");
-
-    function moveSlide(step) {
-        testimonials[currentSlide].classList.remove("active");
-        currentSlide = (currentSlide + step + testimonials.length) % testimonials.length;
-        testimonials[currentSlide].classList.add("active");
-    }
-
-    function autoSlide() {
-        moveSlide(1); // Move to next testimonial
-    }
-
-    // Auto-rotate every 3 seconds
-    let slideInterval = setInterval(autoSlide, 3000);
-
-    // Pause auto-scroll when hovering over testimonials
-    document.querySelector(".testimonial-container").addEventListener("mouseenter", () => {
-        clearInterval(slideInterval);
-    });
-
-    // Resume auto-scroll when leaving
-    document.querySelector(".testimonial-container").addEventListener("mouseleave", () => {
-        slideInterval = setInterval(autoSlide, 3000);
-    });
-</script>
-
-
-<!-- Footer (ONLY ONE INSTANCE) -->
+<!-- FOOTER -->
 <footer>
-
-<div class="footer-logo">
-    <img src="https://i.imgur.com/Mue4Nnr.png" alt="Company Logo">
-</div>
-
-
-    <p>&copy; 2025 615Realtyguy - Your Trusted Real Estate Partner</p>
+    <div class="footer-logo">
+        <img src="https://i.imgur.com/Mue4Nnr.png" alt="615 Realty Guy">
+    </div>
+    <p>&copy; 2026 615RealtyGuy.com &mdash; Your Nashville Real Estate Advisor</p>
     <div class="social-icons">
         <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">
             <img src="https://i.imgur.com/pXurSVm.png" alt="Facebook">
@@ -544,4 +340,25 @@ footer p {
             <img src="https://i.imgur.com/v2vc2NV.png" alt="Instagram">
         </a>
     </div>
+    <div class="footer-contact">
+        <a href="tel:+16154911638">(615) 491-1638</a> &middot;
+        <a href="mailto:615realtyguy@gmail.com">615realtyguy@gmail.com</a>
+    </div>
 </footer>
+
+<!-- Testimonial Carousel JS -->
+<script>
+let currentSlide = 0;
+const testimonials = document.querySelectorAll(".testimonial");
+function moveSlide(step) {
+    testimonials[currentSlide].classList.remove("active");
+    currentSlide = (currentSlide + step + testimonials.length) % testimonials.length;
+    testimonials[currentSlide].classList.add("active");
+}
+let slideInterval = setInterval(() => moveSlide(1), 4000);
+document.querySelector(".testimonial-content").addEventListener("mouseenter", () => clearInterval(slideInterval));
+document.querySelector(".testimonial-content").addEventListener("mouseleave", () => { slideInterval = setInterval(() => moveSlide(1), 4000); });
+</script>
+
+</body>
+</html>
