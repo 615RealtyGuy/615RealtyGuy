@@ -1222,12 +1222,11 @@ buildIframes(select.value);
 /* ============================================================ */
 
 /*
- * ╔══════════════════════════════════════════════════════════════╗
- * ║  FRED API KEY — Replace the value below with your key       ║
- * ║  Get one free at: https://fred.stlouisfed.org/docs/api/     ║
- * ╚══════════════════════════════════════════════════════════════╝
+ * FRED data is fetched through the Cloudflare Worker proxy at:
+ *   fred-proxy.615realtyguy.workers.dev/series?id={SERIES_ID}&limit={N}
+ * This avoids CORS issues with the FRED API.
  */
-const FRED_API_KEY = '34684a23adfe87cc951f21b8364a46a8';
+const FRED_PROXY = 'https://fred-proxy.615realtyguy.workers.dev/series';
 
 /* FRED series definitions */
 const FRED_SERIES = {
@@ -1240,17 +1239,12 @@ const FRED_SERIES = {
   cpi:         { id: 'CPIAUCSL',                 label: 'CPI Inflation (National)',          format: 'index' },
 };
 
-/* Build FRED observation URL */
-function fredUrl(seriesId, limit) {
-  return `https://api.stlouisfed.org/fred/series/observations?series_id=${seriesId}&api_key=${FRED_API_KEY}&sort_order=desc&limit=${limit || 24}&file_type=json`;
-}
-
-/* Fetch a single FRED series, returning array of {date, value} (most recent first) */
+/* Fetch a single FRED series via proxy, returning array of {date, value} (most recent first) */
 async function fetchFred(seriesId, limit) {
-  const res = await fetch(fredUrl(seriesId, limit));
+  const res = await fetch(`${FRED_PROXY}?id=${seriesId}&limit=${limit || 24}`);
   if (!res.ok) throw new Error(`FRED ${seriesId}: HTTP ${res.status}`);
   const json = await res.json();
-  if (!json.observations || !json.observations.length) throw new Error(`FRED ${seriesId}: no data`);
+  if (!json.ok || !json.observations || !json.observations.length) throw new Error(`FRED ${seriesId}: no data`);
   return json.observations
     .map(o => ({ date: o.date, value: parseFloat(o.value) }))
     .filter(o => Number.isFinite(o.value));
