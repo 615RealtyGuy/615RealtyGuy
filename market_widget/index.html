@@ -647,6 +647,80 @@ nav a:hover {
 }
 
 /* ============================= */
+/* EXPANDED CHART MODAL */
+/* ============================= */
+
+.stat-card { cursor: pointer; transition: border-color 0.2s; }
+.stat-card:hover { border-color: #444444; }
+
+.chart-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.chart-modal-overlay.open {
+    display: flex;
+}
+
+.chart-modal {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 24px;
+    width: 100%;
+    max-width: 700px;
+    position: relative;
+}
+
+.chart-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #666666;
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+}
+
+.chart-modal-close:hover { color: #ffffff; }
+
+.chart-modal-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #c9a84c;
+    margin-bottom: 16px;
+}
+
+.chart-modal-chart {
+    position: relative;
+    height: 300px;
+}
+
+.chart-modal-chart canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.chart-modal-footer {
+    margin-top: 10px;
+    font-size: 11px;
+    color: #666666;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ============================= */
 /* RESPONSIVE */
 /* ============================= */
 
@@ -878,7 +952,7 @@ nav a:hover {
   <div class="dash-grid" id="affordGrid">
     <!-- CPI Inflation -->
     <div class="stat-card loading" id="card-cpi">
-      <div class="stat-label">CPI Inflation (National)</div>
+      <div class="stat-label">Annual Inflation Rate</div>
       <div class="stat-value">&nbsp;</div>
       <div class="stat-trend">&nbsp;</div>
       <div class="stat-sparkline"></div>
@@ -892,6 +966,18 @@ nav a:hover {
   </div>
 
 </div><!-- end .dash-container -->
+
+<!-- Expanded chart modal -->
+<div class="chart-modal-overlay" id="chartModal">
+  <div class="chart-modal">
+    <button class="chart-modal-close" id="chartModalClose">&times;</button>
+    <div class="chart-modal-title" id="chartModalTitle"></div>
+    <div class="chart-modal-chart">
+      <canvas id="chartModalCanvas"></canvas>
+    </div>
+    <div class="chart-modal-footer" id="chartModalFooter"></div>
+  </div>
+</div>
 
 
 <!-- ======================================================== -->
@@ -1255,7 +1341,7 @@ const FRED_SERIES = {
   ppsf:        { id: 'MEDLISPRIPERSQUFEE34980',  label: 'Median List Price / Sq Ft',         format: 'currency' },
   unemployment:{ id: 'TNUR',                     label: 'Tennessee Unemployment Rate',       format: 'percent' },
   income:      { id: 'NASH947PCPI',              label: 'Nashville Per Capita Income',       format: 'currency_rounded' },
-  cpi:         { id: 'CPIAUCSL',                 label: 'CPI Inflation (National)',          format: 'index' },
+  cpi:         { id: 'CPIAUCSL',                 label: 'Annual Inflation Rate',             format: 'percent' },
 };
 
 /* Fetch a single FRED series via proxy, returning array of {date, value} (most recent first) */
@@ -1388,11 +1474,18 @@ function populateCard(cardId, data, format, direction) {
   }
 
   // Sparkline — use full data array, color matches trend direction
+  const sparkColor = direction === 'appreciation' ? '#c9a84c' : '#8b8b8b';
   const sparkContainer = card.querySelector('.stat-sparkline');
   if (sparkContainer && data.length >= 3) {
-    const sparkColor = direction === 'appreciation' ? '#c9a84c' : '#8b8b8b';
     drawSparkline(sparkContainer, data, sparkColor);
   }
+
+  // Store data for click-to-expand modal
+  card._chartData = data;
+  card._chartFormat = format;
+  card._chartColor = sparkColor;
+  card._chartTitle = card.querySelector('.stat-label').textContent;
+  card.onclick = () => openChartModal(card._chartTitle, card._chartData, card._chartFormat, card._chartColor);
 }
 
 /* Show error state for a card */
@@ -1552,6 +1645,28 @@ function renderScore(score) {
 /* HPI LINE CHART (Chart.js)     */
 /* ============================= */
 
+/* Vertical crosshair line plugin for Chart.js */
+const verticalLinePlugin = {
+  id: 'crosshair',
+  afterDraw(chart) {
+    if (chart.tooltip && chart.tooltip._active && chart.tooltip._active.length) {
+      const activePoint = chart.tooltip._active[0];
+      const ctx = chart.ctx;
+      const x = activePoint.element.x;
+      const topY = chart.scales.y.top;
+      const bottomY = chart.scales.y.bottom;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(x, topY);
+      ctx.lineTo(x, bottomY);
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = 'rgba(201,168,76,0.4)';
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+};
+
 let hpiChartInstance = null;
 
 function renderHpiChart(data) {
@@ -1596,19 +1711,26 @@ function renderHpiChart(data) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false,
+      },
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: '#1a1a1a',
+          backgroundColor: '#0c0c0c',
           titleColor: '#aaaaaa',
           bodyColor: '#ffffff',
           borderColor: '#2a2a2a',
           borderWidth: 1,
-          padding: 10,
+          padding: 12,
+          displayColors: false,
           callbacks: {
             label: ctx => 'HPI: ' + ctx.parsed.y.toFixed(1)
           }
-        }
+        },
+        // Vertical crosshair line
+        crosshair: {}
       },
       scales: {
         x: {
@@ -1622,9 +1744,105 @@ function renderHpiChart(data) {
           border: { color: '#2a2a2a' }
         }
       }
-    }
+    },
+    plugins: [verticalLinePlugin]
   });
 }
+
+/* ============================= */
+/* EXPANDED CHART MODAL           */
+/* ============================= */
+
+let modalChartInstance = null;
+
+function openChartModal(title, data, format, color) {
+  const overlay = document.getElementById('chartModal');
+  const titleEl = document.getElementById('chartModalTitle');
+  const footerEl = document.getElementById('chartModalFooter');
+  const canvas = document.getElementById('chartModalCanvas');
+
+  // Chronological order
+  const pts = [...data].reverse();
+  const labels = pts.map(d => {
+    const dt = new Date(d.date + 'T00:00:00Z');
+    return dt.toLocaleDateString(undefined, { year: '2-digit', month: 'short' });
+  });
+  const values = pts.map(d => d.value);
+
+  titleEl.textContent = title;
+  footerEl.innerHTML = `<span>${fmtDate(pts[0].date)} — ${fmtDate(pts[pts.length - 1].date)}</span><span>Source: FRED</span>`;
+
+  if (modalChartInstance) modalChartInstance.destroy();
+
+  const fillColor = color || '#c9a84c';
+  modalChartInstance = new Chart(canvas.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data: values,
+        borderColor: fillColor,
+        backgroundColor: fillColor + '14',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 3,
+        pointHoverRadius: 6,
+        pointBackgroundColor: fillColor,
+        borderWidth: 2,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0c0c0c',
+          titleColor: '#aaaaaa',
+          bodyColor: '#ffffff',
+          borderColor: '#2a2a2a',
+          borderWidth: 1,
+          padding: 12,
+          callbacks: {
+            label: ctx => formatStatValue(ctx.parsed.y, format)
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#666666', font: { size: 10, family: 'Inter,system-ui' }, maxTicksLimit: 10 },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          border: { color: '#2a2a2a' }
+        },
+        y: {
+          ticks: {
+            color: '#666666',
+            font: { size: 10, family: 'Inter,system-ui' },
+            callback: v => formatStatValue(v, format)
+          },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          border: { color: '#2a2a2a' }
+        }
+      }
+    },
+    plugins: [verticalLinePlugin]
+  });
+
+  overlay.classList.add('open');
+}
+
+function closeChartModal() {
+  document.getElementById('chartModal').classList.remove('open');
+  if (modalChartInstance) { modalChartInstance.destroy(); modalChartInstance = null; }
+}
+
+// Close on overlay click or close button
+document.getElementById('chartModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeChartModal();
+});
+document.getElementById('chartModalClose').addEventListener('click', closeChartModal);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeChartModal(); });
 
 /* ============================= */
 /* MAIN DASHBOARD LOADER         */
@@ -1634,7 +1852,8 @@ async function loadDashboard() {
   // Fetch all FRED series in parallel
   const fetches = {};
   for (const [key, series] of Object.entries(FRED_SERIES)) {
-    fetches[key] = fetchFred(series.id, 24).catch(err => {
+    const limit = key === 'cpi' ? 36 : 24; // CPI needs 36 months for YoY calculation
+    fetches[key] = fetchFred(series.id, limit).catch(err => {
       console.warn(`Failed to fetch ${key} (${series.id}):`, err);
       return null;
     });
@@ -1655,8 +1874,22 @@ async function loadDashboard() {
   populateCard('card-unemployment', results.unemployment, 'percent', 'inverted');
   populateCard('card-income',       results.income,       'currency_rounded', 'appreciation');
 
-  // Affordability
-  populateCard('card-cpi', results.cpi, 'index', 'inverted');
+  // Affordability — convert raw CPI index to YoY inflation rate %
+  if (results.cpi && results.cpi.length >= 13) {
+    const cpiNow = results.cpi[0].value;
+    const cpi12mo = results.cpi[12].value;
+    const yoyRate = ((cpiNow - cpi12mo) / cpi12mo) * 100;
+    // Build a synthetic YoY series for sparkline (each month vs 12 months prior)
+    const cpiYoy = [];
+    for (let i = 0; i < results.cpi.length - 12; i++) {
+      const cur = results.cpi[i].value;
+      const prev = results.cpi[i + 12].value;
+      cpiYoy.push({ date: results.cpi[i].date, value: ((cur - prev) / prev) * 100 });
+    }
+    populateCard('card-cpi', cpiYoy, 'percent', 'inverted');
+  } else {
+    populateCard('card-cpi', results.cpi, 'index', 'inverted');
+  }
 
   // HPI Chart
   if (results.hpi) {
