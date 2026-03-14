@@ -46,6 +46,7 @@ For most Americans, this translates into one very visible and immediate cost: ga
 ---
 
 ## Why Oil Prices Matter to Mortgage Rates
+![How oil prices effect mortgage rates](/assets/images/blog/rising-oil-prices.png)
 
 If you've been following my work, you may remember an earlier post where I broke down [how mortgage rates are actually determined](/blog/understanding-mortgage-rates/). The short version: mortgage rates don't follow the Federal Reserve's rate directly. They follow the bond market, specifically the yield on the 10-year Treasury bond. And what drives those yields? Inflation expectations.
 
@@ -78,6 +79,7 @@ When gas prices jump, the impact goes well beyond your weekly fill-up. Rising oi
 ---
 
 ## What History Tells Us: Past Oil Shocks and the Housing Market
+![Historical timeline of oil shocks and housing market impacts](/assets/images/blog/oil-prices-history-timeline.png)
 
 This isn't the first time an oil crisis has shaken the housing market. And the historical pattern is remarkably consistent: oil prices spike, inflation follows, the Fed tightens, and the housing market slows. Let's look at a few key examples.
 
