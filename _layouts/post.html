@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>{{ page.title }} — 615 Realty Guy</title>
+<meta name="description" content="{{ page.description }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+<meta name="author" content="John Crowder">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:image" content="{{ page.image | default: '/market_widget/Headshot.png' | absolute_url }}">
+<meta property="og:site_name" content="615 Realty Guy">
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+<meta property="article:author" content="John Crowder">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title }}">
+<meta name="twitter:description" content="{{ page.description }}">
+<meta name="twitter:image" content="{{ page.image | default: '/market_widget/Headshot.png' | absolute_url }}">
+
+<!-- RSS -->
+<link rel="alternate" type="application/rss+xml" title="615 Realty Guy Blog" href="/feed.xml">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<!-- Inter font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Blog stylesheet -->
+<link rel="stylesheet" href="/assets/css/blog.css">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RDRY2C6QSY"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-RDRY2C6QSY');
+</script>
+</head>
+<body>
+
+<!-- ========== BROKERAGE BANNER ========== -->
+<div class="banner">
+    <a href="https://sixonefive.homes" target="_blank">
+        <img src="https://i.imgur.com/XLvCp6R.png" alt="SixOneFive Real Estate Advisors">
+    </a>
+</div>
+
+<!-- ========== HEADER / NAV ========== -->
+<header>
+    <div class="logo">
+        <a href="/"><img src="https://i.imgur.com/Mue4Nnr.png" alt="615 Realty Guy"></a>
+    </div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/market_widget/">Market Stats</a>
+        <a href="/blog/">Blog</a>
+        <div class="dropdown">
+            <button class="dropbtn">Areas &#9662;</button>
+            <div class="dropdown-content">
+                <a href="/hendersonville-tn-real-estate.html">Hendersonville</a>
+                <a href="/gallatin-tn-real-estate.html">Gallatin</a>
+                <a href="/white-house-tn-real-estate.html">White House</a>
+                <a href="/portland-tn-real-estate.html">Portland</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Contact &#9662;</button>
+            <div class="dropdown-content">
+                <a href="https://calendly.com/615realtyguy" target="_blank">Schedule a Consult</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScxedGu59411imWmmf8PqwIVbfMvmujJ4HHwSnt5D1uw3bZ6w/viewform?usp=header" target="_blank">Contact Form</a>
+                <a href="/downsizing-guide.html">Downsizing Guide</a>
+                <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">Facebook</a>
+                <a href="https://www.instagram.com/615realtyguy/" target="_blank">Instagram</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- ========== POST HERO ========== -->
+<section class="post-hero">
+    <a href="/blog/" class="back-link">&larr; All Posts</a>
+    <h1 class="gold-text">{{ page.title }}</h1>
+    <div class="post-meta">
+        <span>{{ page.date | date: "%B %-d, %Y" }}</span>
+        <span>&middot;</span>
+        <span>{{ page.author }}</span>
+        <span>&middot;</span>
+        <span>{% assign words = content | number_of_words %}{% assign minutes = words | divided_by: 200 %}{% if minutes < 1 %}1{% else %}{{ minutes }}{% endif %} min read</span>
+    </div>
+    {% if page.image %}
+    <img src="{{ page.image }}" alt="{{ page.title }}" class="post-featured-image">
+    {% endif %}
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ========== POST CONTENT ========== -->
+<article class="post-content">
+{{ content }}
+</article>
+
+<div class="section-divider"></div>
+
+<!-- ========== SOCIAL SHARING ========== -->
+<section class="share-section">
+    <h3>Share this post</h3>
+    <div class="share-links">
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://twitter.com/intent/tweet?url={{ page.url | absolute_url | url_encode }}&text={{ page.title | url_encode }}" target="_blank" rel="noopener">X / Twitter</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:?subject={{ page.title | url_encode }}&body=Check out this article: {{ page.url | absolute_url | url_encode }}">Email</a>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ========== PREV / NEXT ========== -->
+<nav class="post-nav">
+    {% if page.previous.url %}
+    <a href="{{ page.previous.url }}" class="post-nav-link prev">
+        <div class="post-nav-label">&larr; Previous</div>
+        <div class="post-nav-title">{{ page.previous.title }}</div>
+    </a>
+    {% endif %}
+    {% if page.next.url %}
+    <a href="{{ page.next.url }}" class="post-nav-link next">
+        <div class="post-nav-label">Next &rarr;</div>
+        <div class="post-nav-title">{{ page.next.title }}</div>
+    </a>
+    {% endif %}
+</nav>
+
+<div class="section-divider"></div>
+
+<!-- ========== AUTHOR BIO ========== -->
+<section class="author-bio">
+    <img src="https://i.imgur.com/iBz1fy4.jpeg" alt="John Crowder" class="author-photo">
+    <div class="author-info">
+        <h3>John Crowder</h3>
+        <p>Nashville-area REALTOR&reg; with SixOneFive Real Estate Advisors. Former ICU nurse turned data-driven real estate professional helping buyers, sellers, and investors across Middle Tennessee.</p>
+        <a href="/about.html">Learn more &rarr;</a>
+    </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+    <div class="footer-logo">
+        <img src="https://i.imgur.com/Mue4Nnr.png" alt="615 Realty Guy">
+    </div>
+    <p>&copy; 2026 615RealtyGuy.com &mdash; Your Nashville Real Estate Advisor</p>
+    <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=61572719185907" target="_blank">
+            <img src="https://i.imgur.com/pXurSVm.png" alt="Facebook">
+        </a>
+        <a href="https://www.instagram.com/615realtyguy/" target="_blank">
+            <img src="https://i.imgur.com/v2vc2NV.png" alt="Instagram">
+        </a>
+    </div>
+    <div class="footer-contact">
+        <a href="tel:+16154911638">(615) 491-1638</a> &middot;
+        <a href="mailto:615realtyguy@gmail.com">615realtyguy@gmail.com</a>
+    </div>
+</footer>
+
+<!-- ========== JSON-LD SCHEMA ========== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": {{ page.title | jsonify }},
+      "datePublished": "{{ page.date | date_to_xmlschema }}",
+      "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
+      "author": {
+        "@type": "Person",
+        "name": "John Crowder",
+        "url": "https://615realtyguy.com/about.html"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "615 Realty Guy",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://i.imgur.com/Mue4Nnr.png"
+        }
+      },
+      "image": "{{ page.image | default: '/market_widget/Headshot.png' | absolute_url }}",
+      "description": {{ page.description | jsonify }},
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ page.url | absolute_url }}"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://615realtyguy.com/"},
+        {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://615realtyguy.com/blog/"},
+        {"@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }}, "item": "{{ page.url | absolute_url }}"}
+      ]
+    }
+    {% if page.faq %}
+    ,{
+      "@type": "FAQPage",
+      "mainEntity": [
+        {% for item in page.faq %}
+        {
+          "@type": "Question",
+          "name": {{ item.question | jsonify }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ item.answer | jsonify }}
+          }
+        }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
+    }
+    {% endif %}
+  ]
+}
+</script>
+
+</body>
+</html>
