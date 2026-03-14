@@ -5,7 +5,7 @@ date: 2024-11-15
 author: "John Crowder"
 description: "Learn how mortgage rates are actually determined — from the Federal Reserve and bond markets to Treasury spreads and inflation expectations. A guide for homebuyers."
 excerpt: "Mortgage rates don't follow the Fed directly. Here's what actually drives them — and why rates can rise even when the Fed cuts."
-image: "/market_widget/Headshot.png"
+image: "/assets/images/blog/sixonefive-default.png"
 categories: [market-trends]
 tags: [mortgage-rates, federal-reserve, bond-market, treasury-yields, inflation]
 faq:

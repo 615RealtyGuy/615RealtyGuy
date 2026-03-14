@@ -16,39 +16,175 @@ Standard operating procedure for drafting, formatting, and publishing blog posts
 
 ---
 
-## 1. Drafting the Post
+## Step-by-Step Workflow
 
-### Using AI (ChatGPT or Claude)
+### Step 1: Research & Draft
 
-Start with a prompt like:
+1. Research your topic — gather stats, sources, data points
+2. Use the AI prompt template below to generate the draft
+3. Review the output — edit for your voice, verify stats, add Nashville context
+4. Identify 3-6 places in the post where a visual would strengthen the content
 
-> Write a blog post for a real estate blog aimed at Middle Tennessee homebuyers and sellers. The topic is [TOPIC]. The tone should be professional but conversational — like explaining something complex to a smart friend over coffee. Include data and sources where possible. Use markdown formatting with ## headings, bold, bullet lists, and blockquotes. Keep it between 1,500–3,000 words.
+### Step 2: Create Images
 
-**After the draft comes back:**
-- Read it all the way through — edit for your voice and opinions
-- Add personal Nashville/Middle Tennessee context
-- Cross-reference any statistics cited (AI can hallucinate numbers)
-- Add internal links to your existing posts where relevant (see Section 5 below)
+1. **Napkin AI visuals:** Paste each relevant section into Napkin AI, pick/customize a visual, export as PNG
+2. **Found images:** Use royalty-free sources (Unsplash, Pexels, Pixabay) or your own photos
+3. **Featured image:** Create or choose one hero image for the post (1200x630px ideal)
+4. Save all images to `assets/images/blog/` using this naming pattern:
+   ```
+   slug-featured.png        ← the hero/thumbnail image
+   slug-description.png     ← inline images
+   ```
+   Example for a post about zoning reform:
+   ```
+   zoning-reform-featured.png
+   zoning-reform-density-comparison.png
+   zoning-reform-permit-timeline.png
+   ```
+5. Compress images at tinypng.com or squoosh.app (aim for under 500KB each)
 
-### Creating Visuals with Napkin AI
+### Step 3: Assemble the Post
 
-1. Paste a section of your blog into Napkin AI
-2. Pick an infographic, chart, or visual that reinforces your point
-3. Export as PNG (recommended) or JPG
-4. Save to `assets/images/blog/` using a descriptive name (see Section 3)
+1. Copy the front matter template (Section 2 below)
+2. Paste your drafted content below the front matter
+3. Insert image references where they belong:
+   ```markdown
+   ![Brief description of the image](/assets/images/blog/slug-description.png)
+   ```
+4. Add internal links to related posts (see cross-linking table in Section 5)
+5. Save as `_posts/YYYY-MM-DD-slug.md`
 
-### Using Images You Find Online
+### Step 4: Publish
 
-- Only use images that are royalty-free, Creative Commons, or your own
-- Good free sources: Unsplash, Pexels, Pixabay
-- Save to `assets/images/blog/`
-- Resize large images before adding — aim for under 500KB per image (GitHub Pages has a 1GB repo soft limit)
+```bash
+cd ~/OneDrive/Desktop/615RealtyGuy
+git add _posts/YYYY-MM-DD-slug.md assets/images/blog/
+git commit -m "New post: Your Post Title"
+git push
+```
+
+Live in 1-2 minutes at `615realtyguy.com/blog/slug/`.
 
 ---
 
-## 2. Front Matter Template
+## AI Prompt Template
 
-Every post starts with this YAML block. Copy and customize:
+Copy this entire block into Claude or ChatGPT. Fill in the bracketed sections.
+
+---
+
+### PROMPT START — copy everything below this line
+
+```
+You are writing a blog post for 615RealtyGuy.com, a real estate blog by John Crowder,
+a Nashville-area REALTOR with SixOneFive Real Estate Advisors.
+
+TOPIC: [Describe your topic here. Include any specific angles, data points, or arguments you want covered.]
+
+RESEARCH/NOTES: [Paste any research, stats, article links, or talking points you've gathered.]
+
+REQUIREMENTS:
+- Tone: Professional but conversational — like explaining something to a smart friend.
+  First person where natural. Confident opinions backed by data.
+- Length: 1,500–3,000 words
+- Audience: Middle Tennessee homebuyers, sellers, and anyone interested in housing economics
+- Add a Nashville/Middle Tennessee angle where relevant
+
+FORMAT — follow this exactly:
+
+1. Start with an italicized hook/subtitle line, then a --- horizontal rule
+2. Use ## for main section headings, ### for subsections
+3. Use **bold** for key stats and takeaways
+4. Use > blockquotes for standout data or quotes
+5. Use bullet lists for multi-point data
+6. Separate major sections with --- horizontal rules
+7. End with a sources line in italics: *Sources: Source 1, Source 2, ...*
+
+IMAGE PLACEMENT:
+- Mark 3-6 spots in the post where a visual would be valuable
+- Use this exact format:  <!-- IMAGE: brief description of what visual would go here -->
+- Place these AFTER the paragraph they relate to, not before
+- Good image spots: data comparisons, process flows, timeline charts, stat highlights
+
+INTERNAL LINKS — reference these existing posts where relevant (only if they genuinely connect):
+- [how mortgage rates work](/blog/understanding-mortgage-rates/)
+- [tariffs and housing costs](/blog/tariffs-rates-real-estate-ripple-effect/)
+- [wealth inequality and housing](/blog/wealth-inequality-wage-stagnation-housing/)
+- [proposed policies and housing](/blog/proposed-policies-housing-market/)
+- [50-year mortgage analysis](/blog/50-year-mortgage-miracle-or-mirage/)
+- [housing affordability policy vs reality](/blog/housing-affordability-policy-vs-reality/)
+- [first-time buyer tips](/blog/tips-first-time-home-buyers/)
+- [2024 real estate recap](/blog/2024-real-estate-recap/)
+- [remote work and real estate](/blog/remote-work-revolution-real-estate/)
+- [technology in real estate](/blog/tech-transforming-real-estate/)
+- [insulation pros and cons](/blog/wrong-insulation-cost-more/)
+- [landscaping for new construction](/blog/landscaping-new-construction-homes/)
+- [spring maintenance tips](/blog/spring-home-maintenance-tips/)
+- [oil prices and housing](/blog/oil-prices-mortgage-rates-housing-market/)
+
+FAQ — at the end of your response, also provide 2-4 FAQ items in this exact format:
+FAQ:
+Q: [Natural question someone would Google]
+A: [Concise 2-3 sentence answer, front-load the key fact]
+```
+
+### PROMPT END — copy everything above this line
+
+---
+
+### After the AI Returns the Draft
+
+1. **Read the full draft** — edit for your voice, add opinions, fix anything that sounds generic
+2. **Verify every stat** — AI can hallucinate numbers. Spot-check data claims against sources
+3. **Find the `<!-- IMAGE: ... -->` markers** — these show where to create/place visuals
+4. **Create visuals** for each marker using Napkin AI or found images
+5. **Replace each marker** with the actual image markdown:
+   ```markdown
+   <!-- IMAGE: chart comparing 30-year vs 50-year mortgage costs -->
+   ```
+   becomes:
+   ```markdown
+   ![30-year vs 50-year mortgage cost comparison](/assets/images/blog/slug-mortgage-comparison.png)
+   ```
+
+---
+
+## AI Prompt Template: Front Matter
+
+After your post content is finalized, use this prompt to generate the front matter:
+
+```
+Generate Jekyll front matter for this blog post. Follow this exact YAML format:
+
+---
+layout: post
+title: "[exact title in title case]"
+date: [YYYY-MM-DD]
+author: "John Crowder"
+description: "[150-160 character SEO summary — this shows in Google results]"
+excerpt: "[1-2 sentence teaser for blog cards on the homepage]"
+image: "/assets/images/blog/[slug]-featured.[ext]"
+categories: [[pick 1-2: market-trends, affordability, home-maintenance, guides, local-market, industry-trends, homebuying]]
+tags: [[3-8 lowercase hyphenated keywords]]
+faq:
+  - question: "[Q1 from the FAQ section]"
+    answer: "[A1]"
+  - question: "[Q2]"
+    answer: "[A2]"
+---
+
+Here is the blog post:
+[paste your finalized post text]
+
+And here are the FAQ items:
+[paste the FAQ items from the draft]
+```
+
+---
+
+## Front Matter Template (Manual)
+
+If you prefer to fill it in yourself:
 
 ```yaml
 ---
@@ -79,14 +215,14 @@ faq:
 | `author` | Yes | `"John Crowder"` |
 | `description` | Yes | 150-160 characters. This is your SEO meta description — shows in Google snippets. |
 | `excerpt` | Yes | 1-2 sentences. Shows on blog cards on the homepage and `/blog/` page. |
-| `image` | Yes | Path to featured image (see Section 3). Used for social sharing, blog cards, and post hero. |
+| `image` | Yes | Path to featured image. Used for social sharing, blog cards, and post hero. |
 | `categories` | Yes | Pick 1-2: `market-trends`, `affordability`, `home-maintenance`, `guides`, `local-market` |
 | `tags` | Yes | 3-8 specific keywords. Lowercase, hyphenated. |
 | `faq` | Optional | 2-4 Q&A pairs. Generates FAQ rich results in Google search. Strongly recommended. |
 
 ---
 
-## 3. Images
+## Images
 
 ### Where Images Live
 
@@ -122,7 +258,7 @@ This image appears in:
 If you don't have a custom featured image, you can fall back to your headshot:
 
 ```yaml
-image: "/market_widget/Headshot.png"
+image: "/assets/images/blog/sixonefive-default.png"
 ```
 
 ### Inline Images (Within the Post Body)
@@ -135,7 +271,7 @@ Use standard markdown anywhere in your post content:
 
 **Tips:**
 - The `![alt text]` part should describe the image — this helps SEO and accessibility
-- Place images after the paragraph they relate to, not before
+- Place images after the paragraph or heading they relate to, not before
 - Napkin AI exports work great here — export, save to the images folder, reference in markdown
 
 ### Image Sizing Guidelines
@@ -150,7 +286,7 @@ Use tinypng.com or squoosh.app to compress before adding to the repo.
 
 ---
 
-## 4. Writing the Post Body
+## Writing the Post Body
 
 After the front matter `---`, write in standard markdown:
 
@@ -197,7 +333,7 @@ Wrap-up paragraph.
 
 ---
 
-## 5. Internal Links to Other Posts
+## Internal Links to Other Posts
 
 Link to your existing posts using this format:
 
@@ -226,9 +362,11 @@ The URL pattern is always: `/blog/slug-from-filename/`
 | `/blog/housing-affordability-policy-vs-reality/` | Policy vs. affordability |
 | `/blog/oil-prices-mortgage-rates-housing-market/` | Oil prices and housing |
 
+**Remember:** Add new posts to this table after publishing.
+
 ---
 
-## 6. FAQ Schema (Strongly Recommended)
+## FAQ Schema (Strongly Recommended)
 
 Adding an `faq` block to front matter generates FAQ rich results in Google — those expandable Q&A boxes that appear in search results. This significantly boosts visibility.
 
@@ -248,7 +386,7 @@ faq:
 
 ---
 
-## 7. Publishing Checklist
+## Publishing Checklist
 
 Before publishing, verify:
 
@@ -258,6 +396,7 @@ Before publishing, verify:
 - [ ] Excerpt is 1-2 clear sentences
 - [ ] Featured image exists at the path specified in `image:`
 - [ ] All inline images saved to `assets/images/blog/` and referenced correctly
+- [ ] `<!-- IMAGE: ... -->` markers all replaced with actual `![alt](/path)` references
 - [ ] Internal links use `/blog/slug/` format (not Substack URLs)
 - [ ] FAQ section included (2-4 questions)
 - [ ] Proofread — especially any AI-drafted stats/claims
@@ -276,6 +415,20 @@ GitHub Pages builds automatically after push. The post will be live within 1-2 m
 
 ---
 
-## 8. Updating the Internal Links Table
+## Example: Full Workflow Walk-Through
 
-After publishing a new post, add its slug to the table in Section 5 above so you can easily cross-link in future posts.
+**Topic:** "Why Homeowners Insurance Is Getting More Expensive"
+
+1. **Research:** Gather stats on insurance rate increases, climate risk data, Tennessee-specific info
+2. **Prompt AI:** Paste the prompt template with your topic and research notes
+3. **Review draft:** Edit for voice, verify stats, note the `<!-- IMAGE: ... -->` spots
+4. **Create images:**
+   - `insurance-costs-featured.png` — Napkin AI visual of rate increases (hero image)
+   - `insurance-costs-claims-by-state.png` — chart of insurance claims by state
+   - `insurance-costs-premium-timeline.png` — timeline of premium increases
+5. **Save images** to `assets/images/blog/`
+6. **Replace markers** in the post with `![alt text](/assets/images/blog/filename.png)`
+7. **Add front matter** using the template (or ask AI to generate it)
+8. **Save** as `_posts/2026-04-10-homeowners-insurance-getting-expensive.md`
+9. **Run checklist**, then `git add`, `git commit`, `git push`
+10. **Update** the cross-linking table with the new slug

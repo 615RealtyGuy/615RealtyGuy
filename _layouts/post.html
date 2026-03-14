@@ -14,7 +14,7 @@
 <meta property="og:title" content="{{ page.title }}">
 <meta property="og:description" content="{{ page.description }}">
 <meta property="og:url" content="{{ page.url | absolute_url }}">
-<meta property="og:image" content="{{ page.image | default: '/market_widget/Headshot.png' | absolute_url }}">
+<meta property="og:image" content="{{ page.image | default: '/assets/images/blog/sixonefive-default.png' | absolute_url }}">
 <meta property="og:site_name" content="615 Realty Guy">
 <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
 <meta property="article:author" content="John Crowder">
@@ -23,7 +23,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ page.title }}">
 <meta name="twitter:description" content="{{ page.description }}">
-<meta name="twitter:image" content="{{ page.image | default: '/market_widget/Headshot.png' | absolute_url }}">
+<meta name="twitter:image" content="{{ page.image | default: '/assets/images/blog/sixonefive-default.png' | absolute_url }}">
 
 <!-- RSS -->
 <link rel="alternate" type="application/rss+xml" title="615 Realty Guy Blog" href="/feed.xml">
@@ -200,7 +200,7 @@ gtag('config', 'G-RDRY2C6QSY');
           "url": "https://i.imgur.com/Mue4Nnr.png"
         }
       },
-      "image": "{{ page.image | default: '/market_widget/Headshot.png' | absolute_url }}",
+      "image": "{{ page.image | default: '/assets/images/blog/sixonefive-default.png' | absolute_url }}",
       "description": {{ page.description | jsonify }},
       "mainEntityOfPage": {
         "@type": "WebPage",

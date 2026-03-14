@@ -5,7 +5,7 @@ date: 2026-03-14
 author: "John Crowder"
 description: "Oil prices are rising due to Iran tensions and the Strait of Hormuz crisis. Learn how oil shocks affect mortgage rates, inflation, and housing affordability — and what buyers and sellers should watch."
 excerpt: "Oil prices just topped $100 a barrel. Here's why that matters for mortgage rates, housing affordability, and your plans to buy or sell."
-image: "/market_widget/Headshot.png"
+image: "/assets/images/blog/sixonefive-default.png"
 categories: [market-trends, affordability]
 tags: [oil-prices, mortgage-rates, inflation, housing-market, affordability, geopolitics, iran, strait-of-hormuz]
 faq:

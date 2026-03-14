@@ -5,7 +5,7 @@ date: 2025-03-26
 author: "John Crowder"
 description: "Essential spring home maintenance tips to protect your investment — from roof inspections and HVAC service to landscaping and deep cleaning your home."
 excerpt: "Spring is the perfect time to give your home the care it needs. Here are essential maintenance tips to protect your investment."
-image: "/market_widget/Headshot.png"
+image: "/assets/images/blog/sixonefive-default.png"
 categories: [home-maintenance]
 tags: [home-maintenance, spring, curb-appeal, hvac, landscaping, selling-tips]
 ---
