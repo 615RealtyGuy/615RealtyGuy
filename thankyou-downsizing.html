@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You — The Gentle Downsizing Guide</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#0b0d10; --card:#14181d; --muted:#94a3b8; --brand:#c8a652; --text:#e6edf3; }
+    * { box-sizing:border-box }
+    body { margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; background: linear-gradient(180deg, #0b0d10 0%, #0e1216 100%); color:var(--text); min-height:100vh; }
+    .container { max-width:720px; margin:0 auto; padding:48px 20px; text-align:center; }
+    .logo img { max-width:220px; height:auto; margin-bottom:32px; }
+    h1 { font-size: clamp(24px, 3vw, 36px); margin:0 0 8px; }
+    p { color:var(--muted); font-size:18px; line-height:1.5; margin:0 0 24px; }
+    .btn { display:inline-block; appearance:none; border:none; background:var(--brand); color:#111; font-weight:800; padding:14px 28px; border-radius:14px; cursor:pointer; transition: transform .06s ease; text-decoration:none; font-size:16px; margin:6px; }
+    .btn:hover { transform: translateY(-1px) }
+    .btn-outline { background:transparent; border:2px solid var(--brand); color:var(--brand); }
+    .btn-outline:hover { background:rgba(200,166,82,0.1); }
+    .pdf-embed { width:100%; max-width:560px; height:720px; border-radius:14px; border:1px solid rgba(255,255,255,0.1); margin:28px auto; display:block; background:#1a1f26; }
+    .buttons { margin:28px 0; display:flex; flex-wrap:wrap; justify-content:center; gap:12px; }
+    .buttons .btn { margin:0; }
+    .footer { text-align:center; font-size:12px; color:var(--muted); margin-top:40px }
+    @media (max-width: 600px) {
+      .buttons { flex-direction:column; align-items:stretch; padding:0 12px; }
+      .btn { text-align:center; }
+      .pdf-embed { display:none; }
+    }
+  </style>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RDRY2C6QSY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RDRY2C6QSY');
+  </script>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="https://i.imgur.com/XLvCp6R.png" alt="SixOneFive Real Estate Advisors Logo">
+    </div>
+
+    <h1>You're in!</h1>
+    <p>Your download should start automatically. If not, use the button below.</p>
+
+    <div class="buttons">
+      <a href="/downloads/downsizing_guide.pdf" download class="btn">Download the Guide</a>
+      <a href="https://calendly.com/615realtyguy" target="_blank" rel="noopener" class="btn btn-outline">Schedule a Call</a>
+    </div>
+
+    <iframe src="/downloads/downsizing_guide.pdf" class="pdf-embed" title="The Gentle Downsizing Guide Preview"></iframe>
+
+    <p class="footer">&copy; <span id="year"></span> SixOneFive Real Estate Advisors &bull; TN Lic #361652</p>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Auto-trigger PDF download (skip on mobile — iOS blocks programmatic downloads)
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (!isMobile) {
+      setTimeout(function() {
+        var a = document.createElement('a');
+        a.href = '/downloads/downsizing_guide.pdf';
+        a.download = '';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }, 500);
+    }
+  </script>
+</body>
+</html>

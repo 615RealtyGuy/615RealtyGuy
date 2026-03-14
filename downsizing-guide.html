@@ -39,8 +39,6 @@
 
     .success { display:none; }
     .success.show { display:block }
-    .hidden-download { display:none }
-    .pdf-preview { width:100%; aspect-ratio:4/5; border-radius:14px; border:1px solid rgba(255,255,255,0.08); background:linear-gradient(180deg,#17202a,#0f141a); display:grid; place-items:center; color:#cbd5e1 }
     .footer { text-align:center; font-size:12px; color:var(--muted); margin-top:28px }
 
     @media (max-width: 880px) { .hero { grid-template-columns:1fr; } .header { flex-direction:column; align-items:center; } }
@@ -133,9 +131,8 @@
         </form>
 
         <div id="success" class="success">
-          <h2 style="margin:6px 0 4px">You’re in! 🎉</h2>
-          <p class="lead">Your download should start automatically. If not, <a id="downloadLink" href="#" style="color:var(--brand);font-weight:700">click here</a>.</p>
-          <div class="pdf-preview">Your PDF preview image could go here.</div>
+          <h2 style="margin:6px 0 4px">Redirecting...</h2>
+          <p class="lead">Taking you to your download now.</p>
         </div>
       </div>
     </div>
@@ -148,19 +145,8 @@
   const PDF_PATH = '/downloads/downsizing_guide.pdf';
 
   const form = document.getElementById('leadForm');
-  const success = document.getElementById('success');
-  const link = document.getElementById('downloadLink');
 
   document.getElementById('year').textContent = new Date().getFullYear();
-
-  function triggerDownload(path) {
-    const a = document.createElement('a');
-    a.href = path;
-    a.download = '';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  }
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -183,10 +169,8 @@
 
       if (res.ok) {
         try { fbq && fbq('track', 'Lead'); } catch (_) {}
-        form.style.display = 'none';
-        success.classList.add('show');
-        link.href = PDF_PATH;
-        setTimeout(() => triggerDownload(PDF_PATH), 300);
+        window.location.href = '/thankyou-downsizing.html';
+        return;
       } else {
         const payload = await res.json().catch(() => ({}));
         throw new Error(payload.error || `Submission failed (status ${res.status})`);
