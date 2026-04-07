@@ -343,15 +343,17 @@
     }
 
     // --------- Left AI ---------
-    const baseSpeed = canvasHeight * 0.005;
-    const aiSpeed = baseSpeed + Math.random() * canvasHeight * 0.002;
-    const errorMargin = Math.random() * canvasHeight * 0.02 - canvasHeight * 0.01;
-    const reactionDelay = Math.random() > 0.7 ? aiSpeed : 0;
+    const aiSpeed = canvasHeight * 0.006;
+    const deadzone = paddleHeight * 0.15;
+    const paddleCenter = leftPaddleY + paddleHeight / 2;
 
-    if (leftPaddleY + paddleHeight / 2 < ballY + errorMargin + reactionDelay) {
-      leftPaddleY = Math.min(canvasHeight - paddleHeight, leftPaddleY + aiSpeed);
-    } else {
-      leftPaddleY = Math.max(0, leftPaddleY - aiSpeed);
+    // Track the ball when it's coming toward the AI; otherwise drift to center.
+    const aiTargetY = ballSpeedX < 0 ? ballY : canvasHeight / 2;
+    const diff = aiTargetY - paddleCenter;
+
+    if (Math.abs(diff) > deadzone) {
+      const move = Math.sign(diff) * Math.min(aiSpeed, Math.abs(diff));
+      leftPaddleY = Math.max(0, Math.min(canvasHeight - paddleHeight, leftPaddleY + move));
     }
   }
 
