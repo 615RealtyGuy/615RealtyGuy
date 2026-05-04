@@ -121,6 +121,7 @@ INTERNAL LINKS — reference these existing posts where relevant (only if they g
 - [landscaping for new construction](/blog/landscaping-new-construction-homes/)
 - [spring maintenance tips](/blog/spring-home-maintenance-tips/)
 - [oil prices and housing](/blog/oil-prices-mortgage-rates-housing-market/)
+- [should I buy now or wait in Middle Tennessee](/blog/should-i-buy-now-or-wait-middle-tennessee/)
 
 FAQ — at the end of your response, also provide 2-4 FAQ items in this exact format:
 FAQ:
@@ -361,6 +362,7 @@ The URL pattern is always: `/blog/slug-from-filename/`
 | `/blog/50-year-mortgage-miracle-or-mirage/` | 50-year mortgage analysis |
 | `/blog/housing-affordability-policy-vs-reality/` | Policy vs. affordability |
 | `/blog/oil-prices-mortgage-rates-housing-market/` | Oil prices and housing |
+| `/blog/should-i-buy-now-or-wait-middle-tennessee/` | Buy now or wait — Middle Tennessee market timing |
 
 **Remember:** Add new posts to this table after publishing.
 
