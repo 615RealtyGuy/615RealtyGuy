@@ -123,6 +123,7 @@ INTERNAL LINKS — reference these existing posts where relevant (only if they g
 - [oil prices and housing](/blog/oil-prices-mortgage-rates-housing-market/)
 - [should I buy now or wait in Middle Tennessee](/blog/should-i-buy-now-or-wait-middle-tennessee/)
 - [do I need an agent for new construction in Middle Tennessee](/blog/do-i-need-agent-buying-new-construction-middle-tennessee/)
+- [should I sell before buying in Middle Tennessee](/blog/should-i-sell-before-buying-middle-tennessee/)
 
 FAQ — at the end of your response, also provide 2-4 FAQ items in this exact format:
 FAQ:
@@ -365,6 +366,7 @@ The URL pattern is always: `/blog/slug-from-filename/`
 | `/blog/oil-prices-mortgage-rates-housing-market/` | Oil prices and housing |
 | `/blog/should-i-buy-now-or-wait-middle-tennessee/` | Buy now or wait — Middle Tennessee market timing |
 | `/blog/do-i-need-agent-buying-new-construction-middle-tennessee/` | Buyer representation for new construction north of Nashville |
+| `/blog/should-i-sell-before-buying-middle-tennessee/` | Sell first vs. buy first vs. home sale contingency — Middle Tennessee |
 
 **Remember:** Add new posts to this table after publishing.
 
