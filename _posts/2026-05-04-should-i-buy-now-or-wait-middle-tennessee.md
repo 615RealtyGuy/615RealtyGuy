@@ -45,7 +45,7 @@ Here's how I'm thinking about it for clients buying in White House, Portland, Ga
 
 This isn't a vibes statement. The numbers say it.
 
-According to the most recent monthly report from [Greater Nashville REALTORS®](https://www.greaternashvillerealtors.org/news/2026/03/09/home-sales-release/inventory-climbs-while-sales-hold-steady-buyers-gain-the-edge), March 2026 closed with:
+According to the most recent monthly report from [Greater Nashville REALTORS®](https://www.greaternashvillerealtors.org/market-data-monthly/), March 2026 closed with:
 
 - **13,694 active listings** across the region — up roughly 11% year over year
 - **2,752 closings**, a 3% dip from March 2025
@@ -162,4 +162,4 @@ If you want help walking through your specific situation, that's the conversatio
 
 ---
 
-*Sources: [Greater Nashville REALTORS® — March 2026 Home Sales Release](https://www.greaternashvillerealtors.org/news/2026/03/09/home-sales-release/inventory-climbs-while-sales-hold-steady-buyers-gain-the-edge), [Greater Nashville REALTORS® Market Data Monthly](https://www.greaternashvillerealtors.org/market-data-monthly/), [Freddie Mac Primary Mortgage Market Survey](https://www.freddiemac.com/pmms), [NAR 2025 Profile of Home Buyers and Sellers](https://www.nar.realtor/newsroom/first-time-home-buyer-share-falls-to-historic-low-of-21-median-age-rises-to-40).*
+*Sources: [Greater Nashville REALTORS® Market Data Monthly](https://www.greaternashvillerealtors.org/market-data-monthly/), [Freddie Mac Primary Mortgage Market Survey](https://www.freddiemac.com/pmms), [NAR 2025 Profile of Home Buyers and Sellers](https://www.nar.realtor/newsroom/first-time-home-buyer-share-falls-to-historic-low-of-21-median-age-rises-to-40).*
