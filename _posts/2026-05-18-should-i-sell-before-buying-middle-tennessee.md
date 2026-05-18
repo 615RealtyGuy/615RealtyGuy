@@ -5,7 +5,7 @@ date: 2026-05-18
 author: "John Crowder"
 description: "Trying to buy and sell at the same time in Middle Tennessee? Learn when to sell first, buy first, or use a home sale contingency in today's more balanced market."
 excerpt: "Sell first, buy first, or use a home sale contingency? Here's how I help Middle Tennessee homeowners decide — based on equity, financing, and how marketable their current home actually is."
-image: "/assets/images/blog/sixonefive-default.png"
+image: "/assets/images/blog/sell-before-buying-featured.png"
 categories: [homebuying, local-market]
 tags: [middle-tennessee, sell-before-buy, home-sale-contingency, downsizing, move-up-buyers, relocation, north-of-nashville, white-house, portland, gallatin, hendersonville]
 faq:
@@ -50,6 +50,8 @@ Greater Nashville REALTORS® has reported higher inventory and longer days on ma
 That backdrop opens up strategies that didn't really exist during the frenzy years. A contingent offer that would have been thrown straight in the trash in 2021 can be a workable negotiation in 2026 — if the rest of your situation is strong.
 
 Mortgage rates are still a factor too. Freddie Mac's Primary Mortgage Market Survey put the average 30-year fixed-rate mortgage at **6.36%** as of May 14, 2026. That number matters because it sets the monthly payment math on both sides of your move — including whether you can comfortably carry two homes if the timing slips.
+
+![Side-by-side comparison of the three buy-sell strategies in Middle Tennessee — Sell First, Buy First, and Contingent Offer — with the one-line summary, the conditions where each works best, and the main risk](/assets/images/blog/sell-before-buying-three-paths.png)
 
 ---
 
@@ -136,6 +138,8 @@ A seller isn't just looking at your price. They're looking at **certainty**. Spe
 - When is your current closing date?
 - What's your backup plan if your sale falls apart?
 
+![Strength ladder showing the eight questions a seller evaluates on a contingent offer — current home listed, priced correctly, under contract, inspected, appraised, financing type, closing date, and backup plan](/assets/images/blog/sell-before-buying-contingent-checklist.png)
+
 The further along your current sale is, the more comfortable a seller will be with your contingency. A buyer whose current home is under contract, inspected, appraised, and three weeks from closing looks completely different from a buyer who hasn't even listed yet.
 
 When I write a contingent offer for a client, the cover page essentially answers all of those questions before the listing agent has to ask. That presentation matters — and it's part of what a buyer's agent should be doing on your behalf. (For more on that side of the equation, see last week's post: [Do I Need a Real Estate Agent When Buying New Construction in Middle Tennessee?](/blog/do-i-need-agent-buying-new-construction-middle-tennessee/).)
@@ -162,6 +166,8 @@ For the local numbers behind the towns above, the ZIP-level reports I publish ar
 ---
 
 ## My Practical Recommendation
+
+![Three-question decision framework for Middle Tennessee homeowners buying and selling at the same time — do you need the equity, can you carry two homes, and how specific is your next-home search](/assets/images/blog/sell-before-buying-decision-framework.png)
 
 If you're buying and selling at the same time, I'd start with three honest questions:
 
