@@ -203,4 +203,4 @@ If you want help walking through your specific situation — the equity math, th
 
 ---
 
-*Sources: [NAR — Contingencies in Real Estate Contracts](https://www.nar.realtor/), [Greater Nashville REALTORS® Market Data Monthly](https://www.greaternashvillerealtors.org/market-data-monthly/), [Greater Nashville REALTORS® — March 2026 Home Sales Release](https://www.greaternashvillerealtors.org/news/2026/03/09/home-sales-release/inventory-climbs-while-sales-hold-steady-buyers-gain-the-edge), [Freddie Mac Primary Mortgage Market Survey](https://www.freddiemac.com/pmms).*
+*Sources: [NAR Consumer Guide: Real Estate Sales Contract Contingencies](https://www.nar.realtor/the-facts/consumer-guide-real-estate-contract-contingencies), [Greater Nashville REALTORS® Market Data Monthly](https://www.greaternashvillerealtors.org/market-data-monthly/), [Freddie Mac Primary Mortgage Market Survey](https://www.freddiemac.com/pmms).*
