@@ -96,7 +96,7 @@ Practically, that often looks like:
 
 In other words, the rate drop you were waiting for becomes the *signal* that pulls the rest of your leverage off the table.
 
-I've seen this cycle three times in fifteen years. The buyers who wait for the "perfect" rate often end up paying more in total — through a higher purchase price, no concessions, and inspection items they had to eat — than the buyers who bought when conditions were softer.
+This is how rate-driven markets tend to work. Buyers who hold out for the "perfect" rate often end up paying more in total — through a higher purchase price, no concessions, and inspection items they had to eat — than buyers who bought when conditions were softer.
 
 ![Side-by-side comparison: today's softer Middle Tennessee market versus a rate-driven competitive market](/assets/images/blog/wait-for-rates-tradeoffs.png)
 
