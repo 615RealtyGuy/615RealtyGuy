@@ -367,6 +367,7 @@ The URL pattern is always: `/blog/slug-from-filename/`
 | `/blog/should-i-buy-now-or-wait-middle-tennessee/` | Buy now or wait — Middle Tennessee market timing |
 | `/blog/do-i-need-agent-buying-new-construction-middle-tennessee/` | Buyer representation for new construction north of Nashville |
 | `/blog/should-i-sell-before-buying-middle-tennessee/` | Sell first vs. buy first vs. home sale contingency — Middle Tennessee |
+| `/blog/should-i-wait-for-mortgage-rates-to-drop-before-buying-middle-tennessee/` | Should I wait for mortgage rates to drop — Middle Tennessee buyer guide |
 
 **Remember:** Add new posts to this table after publishing.
 
