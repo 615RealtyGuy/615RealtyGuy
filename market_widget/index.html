@@ -1076,7 +1076,7 @@ nav a:hover {
           <div class="score-subtitle">A composite index of Nashville metro housing and economic indicators</div>
           <details class="score-methodology">
             <summary>&#63; How is this calculated?</summary>
-            <p>The 615 Score combines active inventory, days on market, home price appreciation, unemployment, income growth, and inflation into a single market health index. Each metric is normalized against its trailing 24-month range and weighted by importance. Updated as new data is released.</p>
+            <p>The 615 Score blends six Nashville-metro indicators into one market-health reading on a 0–100 scale (higher = stronger seller's market). Days on market, home-price appreciation (year-over-year), unemployment, income growth, and inflation are each scored against absolute reference levels — so the score reflects what the numbers actually mean, not just how they compare to the last few years. Active inventory is measured relative to the metro's own recent range. Components are weighted by importance and updated as new data is released.</p>
           </details>
         </div>
       </div>
@@ -1552,6 +1552,24 @@ const FRED_SERIES = {
   cpi:         { id: 'CPIAUCSL',                 label: 'Annual Inflation Rate',             format: 'percent' },
 };
 
+/* How many observations to pull per series. Sized so the 615 Score has a
+ * comparable trailing window across mixed release frequencies, plus the
+ * extra lookback needed to compute year-over-year change:
+ *   hpi  quarterly → 16 YoY pts need +4   listings/dom/unemp monthly levels (36mo)
+ *   cpi  monthly   → 36 YoY pts need +12  income annual → ~10 YoY pts need +1
+ */
+const FETCH_LIMITS = {
+  hpi: 20,
+  listings: 36,
+  dom: 36,
+  ppsf: 24,
+  unemployment: 36,
+  income: 12,
+  cpi: 48,
+};
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 /* Fetch a single FRED series via proxy, returning array of {date, value} (most recent first) */
 async function fetchFred(seriesId, limit) {
   const res = await fetch(`${FRED_PROXY}?id=${seriesId}&limit=${limit || 24}`);
@@ -1561,6 +1579,36 @@ async function fetchFred(seriesId, limit) {
   return json.observations
     .map(o => ({ date: o.date, value: parseFloat(o.value) }))
     .filter(o => Number.isFinite(o.value));
+}
+
+/* The proxy returns intermittent 502s when hit with many concurrent
+ * requests, so callers fetch sequentially. Retry transient failures with
+ * a short backoff before giving up on a series. */
+async function fetchFredRetry(seriesId, limit, attempts = 4) {
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try { return await fetchFred(seriesId, limit); }
+    catch (err) { lastErr = err; await sleep(1500 * (i + 1)); }
+  }
+  throw lastErr;
+}
+
+/* Browser-side cache. FRED series only update monthly/quarterly, so caching
+ * each response for ~12h means most page loads never hit the (flaky, uncached)
+ * proxy at all — and a failed fetch falls back to last-good data instead of a
+ * blank card. */
+const CACHE_TTL_MS = 12 * 60 * 60 * 1000;
+const cacheKey = (id, limit) => `fred:${id}:${limit}`;
+
+function readCache(id, limit) {
+  try {
+    const obj = JSON.parse(localStorage.getItem(cacheKey(id, limit)));
+    return obj && Array.isArray(obj.data) ? obj : null; // { ts, data }
+  } catch { return null; }
+}
+
+function writeCache(id, limit, data) {
+  try { localStorage.setItem(cacheKey(id, limit), JSON.stringify({ ts: Date.now(), data })); } catch {}
 }
 
 /* Format helpers */
@@ -1709,63 +1757,123 @@ function cardError(cardId) {
 /* 615 SCORE CALCULATION         */
 /* ============================= */
 
-function calculate615Score(seriesData) {
-  /*
-   * Weights & direction:
-   *   listings    25%  inverted  (lower = higher score)
-   *   dom         20%  inverted
-   *   hpi         20%  normal    (higher = higher score)
-   *   unemployment 15% inverted
-   *   income      10%  normal
-   *   cpi         10%  inverted
-   */
-  const components = [
-    { key: 'listings',     weight: 0.25, inverted: true  },
-    { key: 'dom',          weight: 0.20, inverted: true  },
-    { key: 'hpi',          weight: 0.20, inverted: false },
-    { key: 'unemployment', weight: 0.15, inverted: true  },
-    { key: 'income',       weight: 0.10, inverted: false },
-    { key: 'cpi',          weight: 0.10, inverted: true  },
-  ];
+/*
+ * Component config for the composite index. Each component scores 0–100 where
+ * 100 = strongest seller's-market signal.
+ *
+ *   mode 'bands'    — map the current value onto an ABSOLUTE reference scale,
+ *                     so the score reflects what the number actually means
+ *                     (3.6% unemployment is excellent, not "the worst in the
+ *                     last 3 years"). `bands` is [value, score] anchors with
+ *                     linear interpolation; direction is baked into the table.
+ *   mode 'relative' — min-max normalize against the metro's own recent range.
+ *                     Used only for active-listing count, which has no
+ *                     universal good/bad threshold (it's metro-size specific).
+ *   yoy             — score the year-over-year % change instead of the level
+ *                     (periods/year: monthly 12, quarterly 4, annual 1).
+ */
+const SCORE_CONFIG = {
+  // --- Supply / demand / price tempo (75%) — what defines buyer's vs seller's ---
+  // Inventory: relative to the metro's own 3-year range (inverted: more = buyer-friendly)
+  listings:     { weight: 0.30, mode: 'relative', inverted: true, windowObs: 36 },
+  // Days on market (days): ~40 is balanced; faster = seller's, slower = buyer's
+  dom:          { weight: 0.25, mode: 'bands', bands: [[10,100],[20,88],[30,72],[40,58],[50,46],[65,32],[90,15],[120,5]] },
+  // Home-price appreciation (YoY %): ~3-4% (≈ inflation) is flat in real terms = balanced;
+  // below = buyer's, strong nominal growth = seller's
+  hpi:          { weight: 0.20, mode: 'bands', yoy: 4,  bands: [[-10,0],[-3,22],[0,38],[3,48],[5,60],[8,75],[12,92],[15,100]] },
+  // --- Economic context (25%) — modifies, doesn't drive, the buyer/seller read ---
+  // Unemployment (%): low = healthy demand = high score
+  unemployment: { weight: 0.10, mode: 'bands', bands: [[3,100],[4,85],[5,60],[6,40],[8,12],[10,0]] },
+  // Income growth (YoY %): faster = healthier
+  income:       { weight: 0.07, mode: 'bands', yoy: 1,  bands: [[-2,15],[0,30],[2,48],[3,57],[5,72],[8,90],[12,100]] },
+  // Inflation (YoY %): near the 2% target = good for affordability; high = bad
+  cpi:          { weight: 0.08, mode: 'bands', yoy: 12, bands: [[1,95],[2,88],[3,68],[4,50],[6,22],[8,8],[10,0]] },
+};
 
-  let totalWeight = 0;
-  let weightedSum = 0;
-
-  for (const comp of components) {
-    const data = seriesData[comp.key];
-    if (!data || data.length < 2) continue; // need at least current + some history
-
-    const values = data.map(d => d.value);
-    const current = values[0];
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    const range = max - min;
-
-    if (range === 0) {
-      // No variation — assign neutral 50
-      weightedSum += 50 * comp.weight;
-      totalWeight += comp.weight;
-      continue;
+/* Year-over-year % change. Input and output are most-recent-first. */
+function toYoY(data, periodsPerYear) {
+  const out = [];
+  for (let i = 0; i + periodsPerYear < data.length; i++) {
+    const cur = data[i].value;
+    const prior = data[i + periodsPerYear].value;
+    if (Number.isFinite(cur) && Number.isFinite(prior) && prior !== 0) {
+      out.push({ date: data[i].date, value: ((cur - prior) / prior) * 100 });
     }
+  }
+  return out;
+}
 
-    // Normalize 0–100 within 24-month range
-    let normalized = ((current - min) / range) * 100;
-    // Invert if lower is better
-    if (comp.inverted) normalized = 100 - normalized;
+/* Min-max normalize the current reading (series[0]) within a trailing
+ * window, returning 0–100. Inverts when lower is better. */
+function normalizeComponent(series, windowObs, inverted) {
+  if (!series || series.length < 2) return null;
+  const win = series.slice(0, windowObs).map(d => d.value).filter(Number.isFinite);
+  if (win.length < 2) return null;
+  const current = win[0];
+  const min = Math.min(...win);
+  const max = Math.max(...win);
+  const range = max - min;
+  let normalized = range === 0 ? 50 : ((current - min) / range) * 100;
+  if (inverted) normalized = 100 - normalized;
+  return Math.max(0, Math.min(100, normalized));
+}
 
-    weightedSum += normalized * comp.weight;
-    totalWeight += comp.weight;
+/* Map a value onto a [value, score] anchor table with linear interpolation,
+ * clamped at the ends. Anchors are sorted ascending by value. */
+function scoreBands(value, anchors) {
+  if (!Number.isFinite(value)) return null;
+  if (value <= anchors[0][0]) return anchors[0][1];
+  const last = anchors[anchors.length - 1];
+  if (value >= last[0]) return last[1];
+  for (let i = 0; i < anchors.length - 1; i++) {
+    const [x0, y0] = anchors[i];
+    const [x1, y1] = anchors[i + 1];
+    if (value >= x0 && value <= x1) {
+      return y0 + ((value - x0) / (x1 - x0)) * (y1 - y0);
+    }
+  }
+  return 50;
+}
+
+function calculate615Score(seriesData) {
+  let weightedSum = 0;
+  let totalWeight = 0;
+  const breakdown = {};
+
+  for (const [key, cfg] of Object.entries(SCORE_CONFIG)) {
+    const raw = seriesData[key];
+    if (!raw || raw.length < 2) continue;
+
+    let normalized;
+    if (cfg.mode === 'bands') {
+      // Score the latest reading (or its YoY change) against the absolute scale.
+      const series = cfg.yoy ? toYoY(raw, cfg.yoy) : raw;
+      if (!series.length) continue;
+      normalized = scoreBands(series[0].value, cfg.bands);
+    } else {
+      normalized = normalizeComponent(raw, cfg.windowObs, cfg.inverted);
+    }
+    if (normalized === null) continue;
+    normalized = Math.max(0, Math.min(100, normalized));
+
+    weightedSum += normalized * cfg.weight;
+    totalWeight += cfg.weight;
+    breakdown[key] = Math.round(normalized);
   }
 
-  if (totalWeight === 0) return null;
-  return Math.round(weightedSum / totalWeight);
+  // Require a majority of the index weight to be present — otherwise a few
+  // failed fetches would yield a confident-looking but meaningless score.
+  if (totalWeight < 0.6) return null;
+  const score = Math.round(weightedSum / totalWeight);
+  console.log('615 Score breakdown:', JSON.stringify(breakdown), 'totalWeight', totalWeight, '→', score);
+  return score;
 }
 
 function getScoreBand(score) {
-  if (score >= 75) return { emoji: '🔴', label: "Strong Seller's Market",   color: '#ef4444' };
-  if (score >= 55) return { emoji: '🟡', label: "Moderate Seller's Market", color: '#f59e0b' };
-  if (score >= 40) return { emoji: '⚪', label: 'Balanced Market',           color: '#aaaaaa' };
-  if (score >= 20) return { emoji: '🟢', label: "Moderate Buyer's Market",  color: '#22c55e' };
+  if (score >= 70) return { emoji: '🔴', label: "Strong Seller's Market",   color: '#ef4444' };
+  if (score >= 57) return { emoji: '🟡', label: "Moderate Seller's Market", color: '#f59e0b' };
+  if (score >= 43) return { emoji: '⚪', label: 'Balanced Market',           color: '#aaaaaa' };
+  if (score >= 30) return { emoji: '🟢', label: "Moderate Buyer's Market",  color: '#22c55e' };
   return                   { emoji: '🟢', label: "Strong Buyer's Market",    color: '#22c55e' };
 }
 
@@ -1797,7 +1905,7 @@ function drawScoreGauge(score) {
 
   // Tick marks
   let ticks = '';
-  const tickAngles = [0, 0.20, 0.40, 0.55, 0.75, 1.0];
+  const tickAngles = [0, 0.30, 0.43, 0.57, 0.70, 1.0];
   for (const t of tickAngles) {
     const a = startAngle - t * totalArc;
     const ix = cx + (r - 10) * Math.cos(a);
@@ -2057,19 +2165,27 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeChartMo
 /* ============================= */
 
 async function loadDashboard() {
-  // Fetch all FRED series in parallel
-  const fetches = {};
-  for (const [key, series] of Object.entries(FRED_SERIES)) {
-    const limit = key === 'cpi' ? 36 : 24; // CPI needs 36 months for YoY calculation
-    fetches[key] = fetchFred(series.id, limit).catch(err => {
-      console.warn(`Failed to fetch ${key} (${series.id}):`, err);
-      return null;
-    });
-  }
-
+  // Fetch series sequentially with a small gap — the proxy 502s when it
+  // receives all of them at once (see fetchFredRetry).
   const results = {};
-  for (const [key, promise] of Object.entries(fetches)) {
-    results[key] = await promise;
+  for (const [key, series] of Object.entries(FRED_SERIES)) {
+    const limit = FETCH_LIMITS[key] || 24;
+    const cached = readCache(series.id, limit);
+
+    // Fresh cache → use it, skip the network and the throttle gap entirely.
+    if (cached && (Date.now() - cached.ts) < CACHE_TTL_MS) {
+      results[key] = cached.data;
+      continue;
+    }
+
+    try {
+      results[key] = await fetchFredRetry(series.id, limit);
+      writeCache(series.id, limit, results[key]);
+    } catch (err) {
+      console.warn(`Failed to fetch ${key} (${series.id}):`, err);
+      results[key] = cached ? cached.data : null; // fall back to stale data
+    }
+    await sleep(900);
   }
 
   // Populate stat cards
@@ -2083,17 +2199,8 @@ async function loadDashboard() {
   populateCard('card-income',       results.income,       'currency_rounded', 'appreciation');
 
   // Affordability — convert raw CPI index to YoY inflation rate %
-  if (results.cpi && results.cpi.length >= 13) {
-    const cpiNow = results.cpi[0].value;
-    const cpi12mo = results.cpi[12].value;
-    const yoyRate = ((cpiNow - cpi12mo) / cpi12mo) * 100;
-    // Build a synthetic YoY series for sparkline (each month vs 12 months prior)
-    const cpiYoy = [];
-    for (let i = 0; i < results.cpi.length - 12; i++) {
-      const cur = results.cpi[i].value;
-      const prev = results.cpi[i + 12].value;
-      cpiYoy.push({ date: results.cpi[i].date, value: ((cur - prev) / prev) * 100 });
-    }
+  const cpiYoy = results.cpi ? toYoY(results.cpi, 12) : [];
+  if (cpiYoy.length) {
     populateCard('card-cpi', cpiYoy, 'percent', 'inverted');
   } else {
     populateCard('card-cpi', results.cpi, 'index', 'inverted');
@@ -2111,8 +2218,9 @@ async function loadDashboard() {
   renderScore(score);
 }
 
-// Launch dashboard
-loadDashboard();
+// Launch dashboard — delayed so its first request doesn't collide with the
+// mortgage card's own call to the same (burst-sensitive) proxy at page load.
+setTimeout(loadDashboard, 1500);
 
 </script>
 
