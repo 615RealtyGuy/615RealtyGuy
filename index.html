@@ -1107,9 +1107,9 @@ footer p {
             <h3 id="mrw-title">Get the Market Report</h3>
             <button class="mrw-x" title="Close" data-mrw-close>&times;</button>
         </div>
-        <form id="mrw-form" class="mrw-frm"
-              action="https://formsubmit.co/83702f691ccf936247e5971732f874a1" method="POST">
+        <form id="mrw-form" class="mrw-frm" action="" method="POST">
             <input type="text" name="company" id="mrw-hp" style="display:none" tabindex="-1" autocomplete="off">
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
             <input type="hidden" name="_next" id="mrw-next-url" value="">
             <input type="hidden" name="_subject" value="New Market Report Request">
             <input type="hidden" name="_captcha" value="false">
@@ -1145,8 +1145,10 @@ footer p {
     <div class="valuation-container">
         <img src="https://i.imgur.com/9Fkpeih.png" alt="Home Valuation" class="valuation-image">
         <button class="toggle-form-button" onclick="toggleForm()">Get My Home Value</button>
-        <form action="https://formsubmit.co/83702f691ccf936247e5971732f874a1" method="POST" class="valuation-form" id="valuation-form">
+        <form action="" method="POST" class="valuation-form" id="valuation-form">
             <input type="hidden" name="_next" value="https://615realtyguy.com/thankyou.html">
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+            <input type="text" name="company" id="val-hp" style="display:none" tabindex="-1" autocomplete="off">
             <input type="text" name="first_name" placeholder="First Name" required>
             <input type="text" name="last_name" placeholder="Last Name" required>
             <input type="text" name="address" placeholder="Home Address" required>
@@ -1299,6 +1301,11 @@ const msg = document.getElementById("mrw-msg");
 
 let mrwIndex = 0;
 let selectedReport = null;
+let mrwArmedAt = 0; // timestamp set when the form is shown — used for the time-trap
+
+// FormSubmit endpoint assembled at runtime (kept out of the static HTML so
+// scrapers can't lift a <form action> URL to POST to directly).
+const FS_ENDPOINT = 'https://' + 'formsubmit' + '.co/' + '83702f691ccf936247e5971732f874a1';
 
 function buildCarousel() {
     track.innerHTML = reports.map((r, i) => `
@@ -1358,6 +1365,7 @@ function openModal(report) {
     reportLinkEl.value = report.reportUrl;
     msg.innerHTML = "";
     modalWrap.style.display = "flex";
+    mrwArmedAt = Date.now();
     nameEl.focus();
 }
 
@@ -1373,7 +1381,10 @@ modalWrap.querySelectorAll("[data-mrw-close]").forEach(el => el.addEventListener
 document.addEventListener("keydown", (e) => { if (e.key === "Escape" && modalWrap.style.display === "flex") closeModal(); });
 
 form.addEventListener("submit", (e) => {
-    if (hp.value) { e.preventDefault(); return; }
+    // Honeypots \u2014 bots fill hidden fields; humans never see them.
+    if (hp.value || (form._honey && form._honey.value)) { e.preventDefault(); return; }
+    // Time-trap \u2014 a real person can't open the modal and submit in under 3s.
+    if (!mrwArmedAt || Date.now() - mrwArmedAt < 3000) { e.preventDefault(); return; }
     if (!nameEl.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
         e.preventDefault();
         msg.innerHTML = `<div class="mrw-err">Please enter your name and a valid email.</div>`;
@@ -1384,6 +1395,8 @@ form.addEventListener("submit", (e) => {
         msg.innerHTML = `<div class="mrw-err">Please confirm consent to receive your report.</div>`;
         return;
     }
+    // Passed all checks \u2014 point the form at the real endpoint and let it POST.
+    form.action = FS_ENDPOINT;
     msg.innerHTML = `<div class="mrw-ok">Thanks! Sending you the report link now\u2026</div>`;
 });
 
@@ -1393,10 +1406,28 @@ goTo(0);
 
 <!-- Home Valuation Toggle -->
 <script>
+let valArmedAt = 0; // time-trap reference, set when the form is revealed
+
 function toggleForm() {
     const form = document.getElementById("valuation-form");
-    form.style.display = (form.style.display === "none" || form.style.display === "") ? "flex" : "none";
+    const opening = (form.style.display === "none" || form.style.display === "");
+    form.style.display = opening ? "flex" : "none";
+    if (opening) valArmedAt = Date.now();
 }
+
+(function () {
+    const vform = document.getElementById("valuation-form");
+    if (!vform) return;
+    const VAL_ENDPOINT = 'https://' + 'formsubmit' + '.co/' + '83702f691ccf936247e5971732f874a1';
+    vform.addEventListener("submit", (e) => {
+        // Honeypots — auto-discarded server-side by FormSubmit (_honey) and here.
+        if (vform._honey && vform._honey.value) { e.preventDefault(); return; }
+        if (vform.company && vform.company.value) { e.preventDefault(); return; }
+        // Time-trap — block submissions faster than a human could fill the form.
+        if (!valArmedAt || Date.now() - valArmedAt < 3000) { e.preventDefault(); return; }
+        vform.action = VAL_ENDPOINT;
+    });
+})();
 </script>
 
 <!-- Schema.org Structured Data -->
