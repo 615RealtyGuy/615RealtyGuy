@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /sb-venue-map-x7k2p9.html
 
 Sitemap: https://615realtyguy.com/sitemap.xml
 

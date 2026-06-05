@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Venue Comparison Map</title>
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Full interactive Leaflet map of venue comps -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <style>
+    html, body { margin: 0; padding: 0; }
+    #map { width: 100%; height: 100vh; background: #FAF8F3; }
+    .legend {
+      position: absolute; top: 12px; right: 12px; z-index: 1000;
+      background: #fff; border: 1px solid #E7E2D8; border-radius: 9px;
+      padding: 10px 12px; font-family: 'Inter', -apple-system, sans-serif; font-size: 12.5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.12); line-height: 1.7;
+    }
+    .legend b { font-size: 12px; letter-spacing: .03em; text-transform: uppercase; color: #1C1917; }
+    .legend .row { display: flex; align-items: center; gap: 7px; }
+    .legend .swatch { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.2); }
+    .legend .star { font-size: 14px; line-height: 1; }
+    .pin-pop { font-family: 'Inter', -apple-system, sans-serif; font-size: 13px; line-height: 1.45; min-width: 180px; }
+    .pin-pop h3 { margin: 0 0 2px; font-size: 14.5px; }
+    .pin-pop .tier { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: #78716C; margin-bottom: 6px; }
+    .pin-pop .addr { color: #57534E; margin-bottom: 5px; }
+    .pin-pop a { color: #C2410C; text-decoration: none; font-weight: 500; }
+    .pin-pop .note { margin-top: 6px; padding-top: 6px; border-top: 1px solid #eee; color: #1C1917; }
+    .pin-pop .price { margin-top: 5px; font-size: 12.5px; background: #FDF2EA; border: 1px solid #F3D9C6; color: #9a330a; padding: 4px 7px; border-radius: 6px; }
+    .subj-icon { font-size: 26px; line-height: 26px; text-align: center; filter: drop-shadow(0 1px 2px rgba(0,0,0,.4)); }
+    .leaflet-tooltip.pin-label {
+      background: rgba(255,255,255,.96); border: 1px solid #E7E2D8; border-radius: 5px;
+      font-family: 'Inter', -apple-system, sans-serif; font-size: 10.5px; font-weight: 600;
+      color: #1C1917; padding: 2px 6px; box-shadow: 0 1px 3px rgba(0,0,0,.14); white-space: nowrap;
+    }
+    .leaflet-tooltip.pin-label.t0 { border-color: #F59E0B; color: #92400E; font-size: 11px; }
+    .leaflet-tooltip.pin-label.t1 { border-color: #C2410C; }
+    .leaflet-tooltip.pin-label.t2 { border-color: #2563EB; }
+    .leaflet-tooltip-top.pin-label::before { border-top-color: #E7E2D8; }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div class="legend">
+  <b>Venue tiers</b>
+  <div class="row"><span class="star">⭐</span> Your listing</div>
+  <div class="row"><span class="swatch" style="background:#C2410C"></span> Tier 1 — closest match</div>
+  <div class="row"><span class="swatch" style="background:#2563EB"></span> Tier 2 — rural feel</div>
+  <div class="row"><span class="swatch" style="background:#6B7280"></span> Tier 3 — indoor / in-town</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+  var venues = [
+    {t:0, n:"Sleepin' Bear Lodge & Farms", a:"7552 Swift Rd, Greenbrier (YOUR LISTING)", lat:36.4349512, lng:-86.7111039, ph:"615-672-0050", w:"sleepingbearlodgeweddings.com", note:"Subject property — ~2,100 sqft event bldg + 2-story cabin, full kitchen.", price:""},
+
+    {t:1, n:"The Venue at Fiddle Dee Farms", a:"7526 Swift Rd, Greenbrier", lat:36.4326057, lng:-86.7126312, ph:"615-669-6293", w:"fiddledeefarms.com", note:"Your next-door neighbor; 53 ac, 8,300 sqft barn.", price:"$8,650 Fri/Sun, $9,650 Sat (confirmed)"},
+    {t:1, n:"The Brier Barn", a:"2000 Dorris Rd, Greenbrier", lat:36.4080352, lng:-86.8085098, ph:"615-417-3107", w:"thebrierbarn.com", note:"Converted tobacco barn, kitchen, full-weekend rental.", price:""},
+    {t:1, n:"Paradise Ranch & Retreat", a:"2701 Bedwell Rd, Springfield", lat:36.445049, lng:-86.8533135, ph:"615-382-7256", w:"paradiseranchandretreat.com", note:"150 ac + log cabin & cottage; closest cabin comp.", price:"~$3,900 (unverified, quote-only site)"},
+    {t:1, n:"Red River Farms", a:"5350 Draper Rd, Springfield", lat:36.5877303, lng:-86.7554724, ph:"615-813-1426", w:"redriverfarmstn.com", note:"70 ac, owner-built barn, bridal/groom suites.", price:""},
+    {t:1, n:"Rock Creek Farm", a:"475 Dry Fork Creek Rd, Gallatin", lat:36.4798113, lng:-86.3735045, ph:"916-240-3571", w:"rockcreekfarmnashville.com", note:"B&B + 3,000 sqft pavilion w/ catering kitchen, all-inclusive.", price:""},
+    {t:1, n:"Drakewood Farm", a:"5508 Brick Church Pike, Goodlettsville", lat:36.3333246, lng:-86.7375128, ph:"615-513-7273", w:"drakewoodfarm.com", note:"40 ac, 170-yr barn + 6,000 sqft pavilion + 1850s mansion.", price:"~$6,382 (unverified)"},
+    {t:1, n:"The Mirewood", a:"5329 Youngville Rd, Springfield", lat:36.5829086, lng:-86.8299913, ph:"615-519-2951", w:"mirewoodtn.com", note:"Owner-built, climate-controlled rustic barn on acreage, secluded. Note: low Google rating (2.6) — owner-behavior complaints.", price:""},
+
+    {t:2, n:"Grahams Estate", a:"262 Harris Ln, Gallatin", lat:36.3764098, lng:-86.4937715, ph:"615-339-0317", w:"grahamsestate.com", note:"Barn-style private country estate.", price:""},
+    {t:2, n:"The Pick Inn", a:"550 Zieglers Fort Rd, Gallatin", lat:36.3757107, lng:-86.3625842, ph:"615-946-4306", w:"pickinnevents.com", note:"13 ac + log cabin, secluded, all-inclusive.", price:"$7K–$25K; ~$14–16K/100 guests (confirmed)"},
+    {t:2, n:"The Hideaway Nashville", a:"199 Terrapin Private Run, Gallatin", lat:36.4324323, lng:-86.4110505, ph:"615-913-4500", w:"thehideawaynashville.com", note:"Secluded 50-ac estate w/ lodging.", price:""},
+    {t:2, n:"The Barn at Spring Lake Farms", a:"395 N Happy Hollow Rd, Portland", lat:36.5496752, lng:-86.5521035, ph:"615-625-1355", w:"thebarnatspringlakefarms.com", note:"Barn / farm venue, indoor + outdoor.", price:""},
+    {t:2, n:"Hill Haven Chapel", a:"401 N Jones Rd, Portland", lat:36.6493151, lng:-86.4034148, ph:"615-429-5002", w:"hillhavenchapel.com", note:"Country chapel on a working horse farm.", price:""},
+    {t:2, n:"Chappell Acres of Coopertown", a:"2630 Woods Rd, Springfield", lat:36.4384765, lng:-86.965393, ph:"", w:"", note:"Rustic country venue. Phone/site via Facebook.", price:""},
+    {t:2, n:"Mahala Springs and Farm", a:"6455 Hwy 49 E, Springfield", lat:36.5289052, lng:-86.8384562, ph:"", w:"", note:"Farm w/ trails + tobacco-barn pavilion. Facebook only.", price:""},
+    {t:2, n:"Turning Point Farm", a:"6112 Dividing Ridge Rd, Goodlettsville", lat:36.3655026, lng:-86.8082646, ph:"615-926-1216", w:"turningpointfarm.com", note:"All-inclusive farm venue.", price:""},
+    {t:2, n:"Spring Haven Mansion and Estate", a:"1 Spring Haven Ct, Hendersonville", lat:36.3176106, lng:-86.5735174, ph:"615-826-9702", w:"springhavenmansion.com", note:"Historic mansion / estate.", price:""},
+    {t:2, n:"The Templet House", a:"1251 Hogans Branch Rd, Hendersonville", lat:36.3953857, lng:-86.6358566, ph:"615-487-6031", w:"thetemplethouse.com", note:"Home + grounds venue.", price:""},
+    {t:2, n:"The Chapel At Three Oaks", a:"502 Douglas Bend Rd, Gallatin", lat:36.3314056, lng:-86.5138702, ph:"615-989-1515", w:"threeoakschapel.com", note:"Chapel with an outdoor feel.", price:""},
+
+    {t:3, n:"The FlexSpace", a:"2952 US-31W, White House", lat:36.463995, lng:-86.6590226, ph:"615-925-2970", w:"theflexspace.org", note:"Indoor flex space, full kitchen + 2 baths.", price:"$80/hr or $450/6hr (unverified)"},
+    {t:3, n:"The Patio at Town Square", a:"120 Portland Rd, White House", lat:36.4705272, lng:-86.6503441, ph:"615-359-9205", w:"thepatioattownsquare.com", note:"Small party space.", price:""},
+    {t:3, n:"Southern Occasions Event Center", a:"107 N Russell St, Portland", lat:36.581091, lng:-86.513885, ph:"615-715-1253", w:"facebook.com/SOECPortland", note:"Downtown rustic hall + catering.", price:""},
+    {t:3, n:"Temple Theatre", a:"109 N Russell St, Portland", lat:36.5812638, lng:-86.5140041, ph:"615-745-5327", w:"templetheatretn.com", note:"Historic theater.", price:""},
+    {t:3, n:"Epic Event Centre", a:"392 W Main St, Gallatin", lat:36.3862609, lng:-86.4549942, ph:"615-452-1912", w:"epiceventcentre.com", note:"Banquet hall + in-house catering.", price:""},
+    {t:3, n:"The Emerald Union", a:"112 Public Square, Gallatin", lat:36.389158, lng:-86.446243, ph:"615-788-6017", w:"emeraldunionweddingandevents.com", note:"Downtown brick, two levels.", price:""},
+    {t:3, n:"The Gathering Place by Bit O Heaven", a:"450 W Main St, Gallatin", lat:36.3848399, lng:-86.4568706, ph:"615-905-1830", w:"bitoheavencatering.net", note:"Catering hall.", price:""},
+    {t:3, n:"Humbol Company", a:"300 Indian Lake Blvd, Hendersonville", lat:36.3294793, lng:-86.5901036, ph:"615-815-6148", w:"humbolco.com", note:"Indoor event space.", price:""},
+    {t:3, n:"Lighthouse on the Lake", a:"133 Sanders Ferry Rd, Hendersonville", lat:36.3009042, lng:-86.6147551, ph:"615-590-7068", w:"lighthouseonthelake.com", note:"Lakefront event center + catering.", price:""},
+    {t:3, n:"The Forum", a:"705 Rivergate Pkwy, Goodlettsville", lat:36.3065059, lng:-86.7047709, ph:"615-559-9900", w:"gatherattheforum.com", note:"Converted church, multiple rooms.", price:""},
+    {t:3, n:"Rizing Events", a:"903 Rivergate Pkwy, Goodlettsville", lat:36.2998486, lng:-86.7011141, ph:"", w:"", note:"Indoor event space, budget-friendly. Facebook only.", price:""},
+    {t:3, n:"The Opal House", a:"500 S Main St, Springfield (downtown)", lat:36.5091711, lng:-86.8846174, ph:"615-400-4256", w:"facebook.com/people/The-Opal-House/61582737763491", note:"New women-owned downtown banquet space; small parties, showers, weddings. Tables/chairs/linens/AV included. FB & IG only.", price:""}
+  ];
+
+  var colors = { 1:"#C2410C", 2:"#2563EB", 3:"#6B7280" };
+  var tierLabel = { 0:"Your listing", 1:"Tier 1 — closest match", 2:"Tier 2 — rural feel", 3:"Tier 3 — indoor / in-town" };
+
+  function init() {
+    if (!window.L) { setTimeout(init, 50); return; }
+
+    var map = L.map('map', { scrollWheelZoom: true });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var bounds = [];
+
+    venues.forEach(function (v) {
+      bounds.push([v.lat, v.lng]);
+
+      var popup = '<div class="pin-pop"><h3>' + v.n + '</h3>' +
+        '<div class="tier">' + tierLabel[v.t] + '</div>' +
+        '<div class="addr">' + v.a + '</div>' +
+        (v.ph ? '<div>📞 <a href="tel:' + v.ph.replace(/[^0-9]/g,'') + '">' + v.ph + '</a></div>' : '<div style="color:#999">📞 not published</div>') +
+        (v.w ? '<div>🌐 <a href="https://' + v.w + '" target="_blank" rel="noopener">' + v.w + '</a></div>' : '') +
+        (v.note ? '<div class="note">' + v.note + '</div>' : '') +
+        (v.price ? '<div class="price">💲 ' + v.price + '</div>' : '') +
+        '</div>';
+
+      var marker;
+      if (v.t === 0) {
+        marker = L.marker([v.lat, v.lng], {
+          icon: L.divIcon({ className: '', html: '<div class="subj-icon">⭐</div>', iconSize: [26,26], iconAnchor: [13,13] }),
+          zIndexOffset: 1000
+        });
+      } else {
+        marker = L.circleMarker([v.lat, v.lng], {
+          radius: 8, color: '#fff', weight: 2, fillColor: colors[v.t], fillOpacity: 1
+        });
+      }
+      marker.addTo(map).bindPopup(popup);
+      var off = v.t === 0 ? [0,-13] : [0,-9];
+      marker.bindTooltip(v.n, { permanent: true, direction: 'top', offset: off, className: 'pin-label t' + v.t });
+    });
+
+    map.fitBounds(bounds, { padding: [40, 40] });
+  }
+
+  init();
+})();
+</script>
+
+</body>
+</html>
