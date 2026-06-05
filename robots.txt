@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /sb-venue-map-x7k2p9.html
+Disallow: /sb-buyer-package-r9w4t2.html
+Disallow: /downloads/sb-comp-research-r9w4t2.pdf
 
 Sitemap: https://615realtyguy.com/sitemap.xml
 

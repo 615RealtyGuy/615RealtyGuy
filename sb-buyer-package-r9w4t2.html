@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sleepin' Bear Lodge &amp; Farms — Opportunity Package</title>
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Buyer-facing income opportunity sheet for Sleepin' Bear Lodge — print-optimized -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ivory:#FBF9F4; --ink:#2A2622; --muted:#7A7268;
+      --green:#46523C; --green-soft:#6E7A5E; --gold:#A98B5D;
+      --line:#E6DFD2; --card:#FFFFFF;
+    }
+    #sheet {
+      background: var(--ivory); color: var(--ink);
+      font-family: 'Inter', -apple-system, sans-serif; line-height: 1.55;
+      padding: 0 0 50px;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 0 26px; }
+    .serif { font-family: 'Fraunces', Georgia, serif; }
+
+    /* Hero */
+    .hero { background: var(--green); color: #F5F2EA; padding: 46px 0 40px; text-align: center; position: relative; }
+    .hero .wrap { padding-top: 0; }
+    .eyebrow { font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: #C9CBB4; margin-bottom: 14px; }
+    .hero h1 { font-family:'Fraunces',serif; font-size: 42px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.05; }
+    .hero .tag { font-family:'Fraunces',serif; font-style: italic; font-size: 19px; color: #DCE0CB; margin-top: 10px; }
+    .hero .meta { margin-top: 20px; font-size: 14px; letter-spacing: .04em; color:#E9E7DA; }
+
+    /* Snapshot cards */
+    .snapshot { display:grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin: -28px auto 0; position: relative; }
+    .snap { background: var(--card); border:1px solid var(--line); border-radius: 12px; padding: 16px 14px; text-align:center; box-shadow: 0 6px 18px rgba(70,82,60,.07); }
+    .snap .n { font-family:'Fraunces',serif; font-size: 24px; color: var(--green); font-weight:600; }
+    .snap .l { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing:.06em; margin-top: 4px; }
+
+    section { margin-top: 40px; }
+    h2 { font-family:'Fraunces',serif; font-size: 26px; font-weight:500; color: var(--ink); margin-bottom: 6px; }
+    h2 .bar { display:block; width: 44px; height: 3px; background: var(--gold); border-radius:2px; margin-bottom: 14px; }
+    .lead { font-size: 15px; color:#4A443D; max-width: 70ch; }
+
+    /* Stat strip */
+    .strip { display:grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 20px; }
+    .stat { background: #F2EFE5; border-radius: 12px; padding: 20px 18px; }
+    .stat .big { font-family:'Fraunces',serif; font-size: 27px; color: var(--green); font-weight:600; }
+    .stat .desc { font-size: 13px; color: var(--muted); margin-top:5px; }
+
+    /* Table */
+    table { width:100%; border-collapse: collapse; margin-top: 18px; background:var(--card); border:1px solid var(--line); border-radius: 12px; overflow:hidden; }
+    thead th { background:#EFEADC; font-size: 11.5px; letter-spacing:.05em; text-transform:uppercase; color:#5A5347; text-align:left; padding: 12px 16px; }
+    tbody td { padding: 12px 16px; border-top:1px solid var(--line); font-size: 14px; vertical-align: top; }
+    tbody tr:nth-child(even) { background:#FAF7F0; }
+    td .v { font-weight:600; }
+    td .loc { color:var(--muted); font-size:12.5px; }
+    td.rate { font-family:'Fraunces',serif; color: var(--green); font-weight:600; white-space:nowrap; }
+    .tnote { font-size: 12px; color: var(--muted); margin-top: 8px; font-style: italic; }
+
+    /* Map embed + research download */
+    .map-embed { margin-top: 18px; border:1px solid var(--line); border-radius: 14px; overflow:hidden; box-shadow: 0 6px 18px rgba(70,82,60,.07); }
+    .map-embed iframe { width:100%; height: 520px; border:0; display:block; }
+    .map-print-note { display:none; }
+    .research-cta {
+      display:inline-block; margin-top: 16px; background: var(--green); color:#F4F1E8;
+      font-size: 13.5px; font-weight:600; letter-spacing:.02em; padding: 13px 22px;
+      border-radius: 10px; text-decoration:none; border:1px solid var(--green); transition: background .15s;
+    }
+    .research-cta:hover { background:#3A4631; }
+
+    /* Income */
+    .streams { display:grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+    .stream { background: var(--card); border:1px solid var(--line); border-radius: 14px; padding: 22px; }
+    .stream .k { font-size: 12px; letter-spacing:.1em; text-transform:uppercase; color: var(--gold); font-weight:600; }
+    .stream h3 { font-family:'Fraunces',serif; font-size: 20px; font-weight:600; margin: 6px 0 10px; }
+    .stream p { font-size: 13.5px; color:#4A443D; }
+    .scenario { margin-top: 14px; }
+    .scenario div { display:flex; justify-content:space-between; padding: 7px 0; border-top:1px dashed var(--line); font-size: 13.5px; }
+    .scenario div:first-child { border-top:none; }
+    .scenario .amt { font-family:'Fraunces',serif; font-weight:600; color: var(--green); }
+    .total-band { margin-top: 18px; background: var(--green); color:#F4F1E8; border-radius: 14px; padding: 22px 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; }
+    .total-band .lab { font-size: 13px; letter-spacing:.06em; text-transform:uppercase; color:#CBCFB5; }
+    .total-band .fig { font-family:'Fraunces',serif; font-size: 30px; font-weight:600; }
+
+    /* Land callout */
+    .landnote { margin-top: 22px; background: #F2EFE5; border:1px solid var(--line); border-left: 4px solid var(--gold); border-radius: 12px; padding: 20px 24px; }
+    .landnote .k { font-size: 12px; letter-spacing:.1em; text-transform:uppercase; color: var(--gold); font-weight:600; margin-bottom: 6px; }
+    .landnote p { font-size: 14px; color:#4A443D; max-width: 74ch; }
+
+    /* Differentiators */
+    .diffs { display:grid; grid-template-columns: 1fr 1fr; gap: 14px 26px; margin-top: 18px; }
+    .diff { display:flex; gap: 12px; }
+    .diff .dot { flex:none; width: 10px; height: 10px; border-radius:50%; background: var(--gold); margin-top: 6px; }
+    .diff h4 { font-size: 15px; font-weight:600; margin-bottom: 2px; }
+    .diff p { font-size: 13px; color: var(--muted); }
+
+    .disclaimer { margin-top: 26px; font-size: 11.5px; color: var(--muted); font-style: italic; border-top:1px solid var(--line); padding-top: 14px; max-width: 78ch; }
+    footer { margin-top: 36px; background:#EFEADC; border-radius: 14px; padding: 24px 26px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+    footer .name { font-family:'Fraunces',serif; font-size: 19px; font-weight:600; color: var(--ink); }
+    footer .sub { font-size: 13px; color: var(--muted); margin-top:2px; }
+    footer .contact { font-size: 13.5px; text-align:right; color:#4A443D; line-height:1.7; }
+
+    @media (max-width: 720px) {
+      .snapshot, .strip, .streams, .diffs { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 32px; }
+      .map-embed iframe { height: 420px; }
+      footer { flex-direction:column; align-items:flex-start; }
+      footer .contact { text-align:left; }
+    }
+
+    /* ---------- PRINT (US Letter flyer) ---------- */
+    @page { size: letter portrait; margin: 0.5in; }
+    @media print {
+      #sheet { background:#fff; padding: 0; font-size: 11.5px; }
+      .wrap { max-width: 100%; padding: 0; }
+      .hero { padding: 24px 0 20px; }
+      .hero h1 { font-size: 30px; }
+      .hero .tag { font-size: 15px; }
+      .hero .meta { font-size: 11.5px; margin-top: 12px; }
+      section { margin-top: 18px; }
+      h2 { font-size: 21px; margin-bottom: 4px; }
+      h2 .bar { margin-bottom: 10px; }
+      .lead { font-size: 12px; }
+      .snapshot { margin-top: -18px; gap: 10px; }
+      .strip { margin-top: 14px; gap: 10px; }
+      .streams { margin-top: 14px; gap: 12px; }
+      .diffs { margin-top: 14px; gap: 10px 22px; }
+      .snap { padding: 12px 10px; }
+      .snap .n, .stat .big { font-size: 20px; }
+      .stat { padding: 16px 14px; }
+      .stream { padding: 18px; }
+      .total-band { padding: 18px 22px; margin-top: 14px; }
+      .total-band .fig { font-size: 24px; }
+      .landnote { padding: 16px 20px; margin-top: 16px; }
+      tbody td { padding: 10px 14px; }
+      .disclaimer { margin-top: 18px; }
+      footer { margin-top: 22px; padding: 20px 24px; }
+
+      /* Interactive map can't print — show its URL instead */
+      .map-embed { display:none; }
+      .map-print-note { display:block; font-size: 11.5px; color: var(--muted); margin-top: 8px; }
+      .research-cta { border:1px solid var(--line); color: var(--ink); background:#EFEADC; padding: 8px 14px; font-size: 11px; }
+
+      /* Only keep small, atomic blocks from splitting — let sections flow to fill the page */
+      .snap, .stat, .stream, .total-band, .landnote, .diff, thead, tbody tr, footer {
+        break-inside: avoid; page-break-inside: avoid;
+      }
+      h2, h3, h4 { break-after: avoid; page-break-after: avoid; }
+
+      /* ensure background colors render on paper */
+      .hero, .total-band, .stat, .snap, .stream, .landnote, footer,
+      thead th, tbody tr:nth-child(even) {
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+      .snap, .stream, table, footer, .stat { box-shadow:none; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="sheet">
+
+  <div class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Event Venue · Guest Cabin · 10± Acres</div>
+      <h1 class="serif">Sleepin' Bear Lodge &amp; Farms</h1>
+      <div class="tag">An established Middle-Tennessee venue brand, ready to reopen</div>
+      <div class="meta">On the Robertson–Sumner County line · Minutes from White House · ~30 minutes to Nashville</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="snapshot">
+      <div class="snap"><div class="n">10±</div><div class="l">Private Acres</div></div>
+      <div class="snap"><div class="n">~2,100</div><div class="l">Sq Ft Event Building</div></div>
+      <div class="snap"><div class="n">2-Story</div><div class="l">Guest Cabin</div></div>
+      <div class="snap"><div class="n">Full</div><div class="l">Kitchen · 2 Baths</div></div>
+    </div>
+
+    <section>
+      <h2 class="serif">A Proven Local Market<span class="bar"></span></h2>
+      <p class="lead">Middle Tennessee's wedding and event demand continues to grow, and the rural barn-and-farm venue is among its most sought-after settings. Robertson and Sumner counties together support a thriving cluster of event venues — and Sleepin' Bear Lodge sits right on the line between them. While the venue is not currently operating, it carries an established, recognized name and online presence built up by its previous owners — an unusual head start for a new owner ready to reopen and build on a brand the area already knows.</p>
+      <div class="strip">
+        <div class="stat"><div class="big">25+</div><div class="desc">Comparable event venues across Robertson &amp; Sumner counties</div></div>
+        <div class="stat"><div class="big">$3K–$9.6K</div><div class="desc">Typical per-event space-rental rates at comparable venues</div></div>
+        <div class="stat"><div class="big">On-site</div><div class="desc">Guest cabin — a lodging revenue stream few area venues offer</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="serif">What Comparable Venues Charge<span class="bar"></span></h2>
+      <p class="lead">A sample of comparable rural and farm venues in the area and their advertised per-event rates. These reflect space-rental pricing for a typical wedding — the model Sleepin' Bear is positioned to operate.</p>
+      <table>
+        <thead><tr><th>Venue</th><th>Setting</th><th>Per-Event Rate</th></tr></thead>
+        <tbody>
+          <tr><td><span class="v">Rock Creek Farm</span><div class="loc">Gallatin · Sumner Co.</div></td><td>Farm · pavilion · cabin suite</td><td class="rate">from $2,950</td></tr>
+          <tr><td><span class="v">Red River Farms</span><div class="loc">Springfield · Robertson Co.</div></td><td>70-acre farm · barn</td><td class="rate">$3,000–$4,300</td></tr>
+          <tr><td><span class="v">Paradise Ranch &amp; Retreat</span><div class="loc">Springfield · Robertson Co.</div></td><td>150-acre ranch · cabin &amp; cottage</td><td class="rate">$4,800 / 8 hrs</td></tr>
+          <tr><td><span class="v">The Barn at Spring Lake Farms</span><div class="loc">Portland · Sumner Co.</div></td><td>Barn · indoor/outdoor</td><td class="rate">$4,800–$6,300</td></tr>
+          <tr><td><span class="v">The Pick Inn</span><div class="loc">Gallatin · Sumner Co.</div></td><td>13-acre farm · cabin · pavilion</td><td class="rate">$6,500–$7,000</td></tr>
+          <tr><td><span class="v">The Venue at Fiddle Dee Farms</span><div class="loc">Greenbrier · Robertson Co.</div></td><td>53-acre farm · 8,300 sf barn</td><td class="rate">$8,650–$9,650</td></tr>
+        </tbody>
+      </table>
+      <p class="tnote">Full-service / all-inclusive operators in the same area (catering, florals, DJ bundled) command $15,000–$50,000+ per event — an additional avenue should an owner choose to offer packaged services.</p>
+    </section>
+
+    <section>
+      <h2 class="serif">The Competitive Landscape<span class="bar"></span></h2>
+      <p class="lead">Every comparable venue across Robertson and Sumner counties, mapped. Sleepin' Bear sits right on the county line — positioned to draw from both wedding markets. Click any pin for its pricing, amenities, and contact details.</p>
+      <div class="map-embed">
+        <iframe src="/sb-venue-map-x7k2p9.html" title="Interactive venue comparison map" loading="lazy"></iframe>
+      </div>
+      <p class="map-print-note">Interactive venue map: 615realtyguy.com/sb-venue-map-x7k2p9.html</p>
+      <a class="research-cta" href="/downloads/sb-comp-research-r9w4t2.pdf" target="_blank" rel="noopener">↓ Download the full comp research — pricing, capacity, amenities &amp; terms (PDF)</a>
+    </section>
+
+    <section>
+      <h2 class="serif">Two Built-In Revenue Streams<span class="bar"></span></h2>
+      <div class="streams">
+        <div class="stream">
+          <div class="k">Stream 1 · Venue Rentals</div>
+          <h3 class="serif">Event &amp; Wedding Bookings</h3>
+          <p>Comparable area venues book a mix of weddings, corporate gatherings, reunions, and showers across the season. Illustrative annual venue-rental revenue at comparable rates:</p>
+          <div class="scenario">
+            <div><span>Conservative — 18 events @ ~$5,000</span><span class="amt">$90,000</span></div>
+            <div><span>Moderate — 28 events @ ~$5,500</span><span class="amt">$154,000</span></div>
+            <div><span>Strong — 38 events @ ~$6,000</span><span class="amt">$228,000</span></div>
+          </div>
+        </div>
+        <div class="stream">
+          <div class="k">Stream 2 · The Cabin</div>
+          <h3 class="serif">On-Site Lodging</h3>
+          <p>The two-story cabin adds income most competitors can't match on-property — bridal-party stays tied to events plus independent short-term rental nights between bookings. Comparable venues charge $300–$850+ per overnight stay.</p>
+          <div class="scenario">
+            <div><span>Event-tied stays</span><span class="amt">$300–$850 ea.</span></div>
+            <div><span>Independent nightly rental</span><span class="amt">$150–$250 / night</span></div>
+            <div><span>Illustrative annual range</span><span class="amt">$15K–$40K</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="total-band">
+        <div><div class="lab">Illustrative Combined Annual Potential</div></div>
+        <div class="fig">$105,000 – $268,000+</div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="serif">Why This Property Stands Apart<span class="bar"></span></h2>
+      <div class="diffs">
+        <div class="diff"><div class="dot"></div><div><h4>An established name to build on</h4><p>A recognized local venue brand, with existing online presence and event infrastructure already in place — dormant today and ready to reopen under new ownership.</p></div></div>
+        <div class="diff"><div class="dot"></div><div><h4>On-site guest cabin</h4><p>A second revenue stream and bridal-party lodging — a feature most area venues simply don't have on the property.</p></div></div>
+        <div class="diff"><div class="dot"></div><div><h4>Right on the county line</h4><p>Positioned between Robertson and Sumner counties near White House, drawing from both wedding markets — and ~30 minutes from Nashville.</p></div></div>
+        <div class="diff"><div class="dot"></div><div><h4>Flexible vendor model</h4><p>A choose-your-own-vendor approach (like top area venues) keeps operating overhead low and margins strong.</p></div></div>
+        <div class="diff"><div class="dot"></div><div><h4>10± private acres</h4><p>Room, privacy, and scenic grounds — the qualities couples consistently rank highest.</p></div></div>
+        <div class="diff"><div class="dot"></div><div><h4>Full kitchen &amp; climate control</h4><p>A year-round, all-weather event building with full kitchen and two baths.</p></div></div>
+        <div class="diff"><div class="dot"></div><div><h4>On-site storage building</h4><p>A 24′ × 17′ block storage building for décor, tables, equipment, and grounds gear — keeping the operation organized and turnkey.</p></div></div>
+      </div>
+
+      <div class="landnote">
+        <div class="k">Room to Grow — Additional Acreage Available</div>
+        <p>Beyond the 10± acres, a buyer can acquire more land if desired — including an adjacent 11± acre parcel with a large pond. Take the venue as it stands, or expand the footprint to suit your vision.</p>
+      </div>
+    </section>
+
+    <p class="disclaimer">Income figures shown are illustrative estimates based on advertised rates at comparable area venues and assumed booking levels. They are provided for general reference only and are not a guarantee or representation of actual or future income. A prospective buyer should conduct independent due diligence regarding revenue, expenses, zoning, and permitted use.</p>
+
+    <footer>
+      <div>
+        <div class="name">John Crowder, REALTOR®</div>
+        <div class="sub">SixOneFive Real Estate Advisors · 615 Realty Guy</div>
+      </div>
+      <div class="contact">
+        615-491-1638 &nbsp;·&nbsp; 615realtyguy@gmail.com<br>
+        TN License #361652
+      </div>
+    </footer>
+  </div>
+</div>
+
+</body>
+</html>
