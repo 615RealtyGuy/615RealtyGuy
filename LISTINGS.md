@@ -49,6 +49,17 @@ and a manifest stub to `scripts/out/<slug>.photos.yml`.
 > The script strips GPS/EXIF automatically and never upscales past the source.
 > `scripts/originals/` and `scripts/out/` are gitignored — raw photos don't get committed.
 
+After the data file is filled in (step 2), generate the **social-share card** —
+a 1200×630 JPEG with the photo + price + address, used for the Open Graph /
+Twitter image so links unfurl with the hero (JPEG, because iMessage/SMS and some
+platforms won't preview WebP):
+
+```powershell
+node make-og-card.mjs <slug>      # writes assets/listings/<slug>/og.jpg
+```
+
+Re-run it any time the price or status changes so the share card stays current.
+
 ### 2. Data file
 Copy an existing one as a starting point:
 
