@@ -43,7 +43,7 @@ async function main() {
   const md = await fs.readFile(mdPath, "utf8");
   const fm = md.split(/^---$/m)[1] || md; // front matter block
 
-  const status = (field(fm, "status") || "active").toUpperCase();
+  const status = (field(fm, "status") || "active").replace(/_/g, " ").toUpperCase();
   const newCon = /new_construction:\s*true/.test(fm);
   const price = field(fm, "price_display");
   const address = field(fm, "address");

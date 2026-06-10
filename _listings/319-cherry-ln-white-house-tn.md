@@ -104,10 +104,10 @@ faq:
 # To go live with photos: drop them in scripts/originals/319-cherry-ln-white-house-tn/,
 # run the photo + og-card scripts, fill the gallery below, set photos_ready: true,
 # and switch status to active.
-photos_ready: false
+photos_ready: true                 # teaser hero in place; full gallery on 6/15
 photos:
   hero:
     file: "exterior-front-01"
-    alt: "Front exterior of 319 Cherry Ln, an all-brick home in White House TN"
+    alt: "Front exterior of 319 Cherry Ln, a large all-brick two-story home in White House TN"
   gallery: []
 ---
