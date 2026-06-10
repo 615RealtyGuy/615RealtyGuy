@@ -47,6 +47,7 @@ description: "Active and recently sold listings represented by John Crowder, Six
   .lcard-badge { position:absolute; top:12px; left:12px; font-family:'JetBrains Mono',monospace; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; padding:5px 9px; border-radius:2px; }
   .b-active { background:var(--gold); color:var(--ink); font-weight:500; }
   .b-pending { background:#b9742f; color:#fff; font-weight:600; }
+  .b-soon { background:#2f6f8f; color:#fff; font-weight:600; }
   .b-sold { background:var(--gold-deep); color:var(--ink); font-weight:600; }
   .lcard-body { padding:18px 20px 22px; }
   .lcard-price { font-family:'Fraunces',serif; font-weight:600; font-size:1.5rem; color:var(--gold); }
@@ -85,9 +86,17 @@ description: "Active and recently sold listings represented by John Crowder, Six
     <p>Active listings and recently sold homes across Middle Tennessee — each one represented by John Crowder with SixOneFive Real Estate Advisors.</p>
   </div>
 
+  {%- assign comingsoon = site.listings | where: "status", "coming_soon" | sort: "list_date" | reverse -%}
   {%- assign actives  = site.listings | where: "status", "active"  | sort: "list_date" | reverse -%}
   {%- assign pendings = site.listings | where: "status", "pending" | sort: "list_date" | reverse -%}
   {%- assign solds    = site.listings | where: "status", "sold"    | sort: "list_date" | reverse -%}
+
+  {%- if comingsoon.size > 0 %}
+  <div class="group-title">Coming soon</div>
+  <div class="grid">
+    {%- for L in comingsoon %}{% include listing-card.html L=L %}{% endfor -%}
+  </div>
+  {%- endif %}
 
   {%- if actives.size > 0 or pendings.size > 0 %}
   <div class="group-title">Available now</div>

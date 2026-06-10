@@ -89,9 +89,14 @@ updates automatically (`jekyll-sitemap`).
 Edit **one field** in `_listings/<slug>.md`:
 
 ```yaml
-status: active     # → pending → sold
+status: active     # coming_soon → active → pending → sold
 ```
 
+- **coming_soon** — blue **Coming Soon** badge (+ "Available {date}" from the
+  `available_date` field); form becomes "Get early access." Works with **no photos
+  yet** — shows a clean teaser ("Professional photos arriving {date}") instead of
+  broken placeholders. When photos land, add them, set `photos_ready: true`, and
+  flip to `active`.
 - **active** — full marketing page + incentive ticket + "Request a showing".
 - **pending** — badge flips to **Under Contract**; ticket hidden; form becomes
   "ask about backup offers / similar homes."

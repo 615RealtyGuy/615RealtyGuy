@@ -11,6 +11,7 @@
     {%- endif %}
     {%- if L.status == "sold" %}<span class="lcard-badge b-sold">Sold</span>
     {%- elsif L.status == "pending" %}<span class="lcard-badge b-pending">Under Contract</span>
+    {%- elsif L.status == "coming_soon" %}<span class="lcard-badge b-soon">Coming Soon</span>
     {%- else %}<span class="lcard-badge b-active">Active</span>{%- endif %}
   </div>
   <div class="lcard-body">

@@ -12,6 +12,8 @@
   {%- assign avail = "https://schema.org/SoldOut" -%}
 {%- elsif page.status == "pending" -%}
   {%- assign avail = "https://schema.org/LimitedAvailability" -%}
+{%- elsif page.status == "coming_soon" -%}
+  {%- assign avail = "https://schema.org/PreOrder" -%}
 {%- else -%}
   {%- assign avail = "https://schema.org/InStock" -%}
 {%- endif -%}
@@ -111,6 +113,7 @@
   .badge-status { background: var(--gold); color: var(--ink); font-weight: 500; }
   .badge-sold { background: var(--gold-deep); color: var(--ink); font-weight: 600; }
   .badge-pending { background: #b9742f; color: #fff; font-weight: 600; }
+  .badge-soon { background: #2f6f8f; color: #fff; font-weight: 600; }
   .badge-line { border: 1px solid var(--line); color: var(--cream-dim); }
   h1.address { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(2rem, 4.6vw, 3.3rem); line-height: 1.08; letter-spacing: -0.01em; }
   .address small { display: block; font-family: 'Inter', sans-serif; font-weight: 400; font-size: clamp(0.95rem, 1.6vw, 1.1rem); color: var(--cream-dim); margin-top: 10px; }
@@ -155,6 +158,15 @@
   .gallery .ph { aspect-ratio: 4 / 3; border-radius: 2px; }
   .gallery .ph.wide { grid-column: span 2; aspect-ratio: 8 / 3; }
   .gallery-note { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--cream-dim); margin-top: 12px; }
+  .gallery-soon { color: #DDD6C8; font-size: 0.95rem; max-width: 60ch; padding: 18px 0; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+  /* Coming-soon hero panel (shown until real photos land) */
+  .hero-soon { display: flex; align-items: center; justify-content: center; text-align: center;
+    background: radial-gradient(120% 120% at 50% 0%, #25201e 0%, #15120b 70%);
+    border: 1px solid var(--line); }
+  .hero-soon-tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); background: #2f6f8f; color: #fff;
+    padding: 7px 14px; border-radius: 3px; }
+  .hero-soon p { color: var(--cream-dim); margin-top: 16px; font-size: 0.95rem; }
 
   /* ---- Spec tables ---- */
   .spec-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
@@ -265,6 +277,13 @@
     <img class="hero-media" src="{{ media }}/{{ page.photos.hero.file }}-1200.webp"
       srcset="{{ media }}/{{ page.photos.hero.file }}-600.webp 600w, {{ media }}/{{ page.photos.hero.file }}-1200.webp 1200w, {{ media }}/{{ page.photos.hero.file }}-2400.webp 2400w"
       sizes="(max-width: 1120px) 100vw, 1120px" alt="{{ page.photos.hero.alt }}" width="1120" height="595" fetchpriority="high">
+    {%- elsif page.status == "coming_soon" %}
+    <div class="hero-media hero-soon" role="img" aria-label="{{ page.address }} — coming soon">
+      <div>
+        <span class="hero-soon-tag">Coming Soon</span>
+        <p>Professional photo tour arriving{% if page.available_date %} {{ page.available_date }}{% endif %}.</p>
+      </div>
+    </div>
     {%- else %}
     <div class="ph hero-media" data-id="{{ page.photos.hero.file }} · hero" role="img" aria-label="{{ page.photos.hero.alt }}"></div>
     {%- endif %}
@@ -276,6 +295,9 @@
           <span class="badge badge-sold">Sold by SixOneFive</span>
           {%- elsif page.status == "pending" %}
           <span class="badge badge-pending">Under Contract</span>
+          {%- elsif page.status == "coming_soon" %}
+          <span class="badge badge-soon">Coming Soon</span>
+          {%- if page.available_date %}<span class="badge badge-line">Available {{ page.available_date }}</span>{%- endif %}
           {%- else %}
           <span class="badge badge-status">Active</span>
           {%- endif %}
@@ -328,9 +350,13 @@
       </section>
       {%- endif %}
 
+      {%- assign has_gallery = false -%}
+      {%- if page.photos.gallery and page.photos.gallery.size > 0 -%}{%- assign has_gallery = true -%}{%- endif -%}
+      {%- if has_gallery or page.status == "coming_soon" %}
       <section class="section">
         <div class="eyebrow">Gallery</div>
-        <h2 class="section-title display">Walk through it</h2>
+        <h2 class="section-title display">{% if has_gallery %}Walk through it{% else %}A first look{% endif %}</h2>
+        {%- if has_gallery %}
         <div class="gallery">
           {%- for img in page.photos.gallery %}
             {%- if page.photos_ready %}
@@ -345,7 +371,11 @@
           {%- endfor %}
         </div>
         {%- unless page.photos_ready %}<p class="gallery-note">// placeholders — set photos_ready: true after running the photo script</p>{%- endunless %}
+        {%- else %}
+        <p class="gallery-soon">Professional photos arriving{% if page.available_date %} {{ page.available_date }}{% endif %}. Get on the early list and we'll send the full tour the moment it goes live.</p>
+        {%- endif %}
       </section>
+      {%- endif %}
 
       {%- if page.rooms or page.specs %}
       <section class="section">
@@ -411,6 +441,9 @@
           {%- elsif page.status == "pending" %}
           <h3 class="display">Under contract — ask about backups</h3>
           <p class="sub">This home is pending, but plans change. Ask about backup offers or similar homes nearby.</p>
+          {%- elsif page.status == "coming_soon" %}
+          <h3 class="display">Be the first through the door</h3>
+          <p class="sub">Coming soon{% if page.available_date %} — available {{ page.available_date }}{% endif %}. Get on the early list and we'll line up a private showing before it hits the market.</p>
           {%- else %}
           <h3 class="display">See it in person</h3>
           <p class="sub">Tell us when works and we'll set it up — usually same-day.</p>
@@ -421,17 +454,17 @@
             <input type="text" name="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_subject" value="{% if page.status == 'sold' %}Home valuation request{% else %}Showing request{% endif %} — {{ page.address }}">
+            <input type="hidden" name="_subject" value="{% if page.status == 'sold' %}Home valuation request{% elsif page.status == 'coming_soon' %}Early access request{% else %}Showing request{% endif %} — {{ page.address }}">
             <input type="hidden" name="_next" value="https://615realtyguy.com/thankyou.html">
             <input type="hidden" name="listing_slug" value="{{ slug }}">
             <input type="hidden" name="listing_address" value="{{ full_addr }}">
             <input type="hidden" name="listing_status" value="{{ page.status }}">
-            <input type="hidden" name="lead_intent" id="lead-intent" value="{% if page.status == 'sold' %}valuation{% else %}showing{% endif %}">
+            <input type="hidden" name="lead_intent" id="lead-intent" value="{% if page.status == 'sold' %}valuation{% elsif page.status == 'coming_soon' %}early_access{% else %}showing{% endif %}">
             <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
             <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
             <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
             <div class="field"><label for="f-msg">{% if page.status == 'sold' %}Your address &amp; anything to know{% else %}Anything we should know?{% endif %}</label><textarea id="f-msg" name="message" placeholder="{% if page.status == 'sold' %}Your home's address, timeline…{% else %}Preferred day/time, financing questions…{% endif %}"></textarea></div>
-            <button class="btn" type="submit">{% if page.status == 'sold' %}Get my home's value{% else %}Request a showing{% endif %}</button>
+            <button class="btn" type="submit">{% if page.status == 'sold' %}Get my home's value{% elsif page.status == 'coming_soon' %}Get early access{% else %}Request a showing{% endif %}</button>
             <div class="form-msg" id="lead-msg" role="status"></div>
           </form>
           {%- if page.status == "sold" and page.area_page %}
@@ -453,7 +486,7 @@
         <div class="card">
           <h3 class="display">Key facts</h3>
           <ul class="key-facts">
-            <li><span class="k">Status</span><span class="v">{% if page.status == 'sold' %}Sold{% elsif page.status == 'pending' %}Under Contract{% else %}Active{% endif %}</span></li>
+            <li><span class="k">Status</span><span class="v">{% if page.status == 'sold' %}Sold{% elsif page.status == 'pending' %}Under Contract{% elsif page.status == 'coming_soon' %}Coming Soon{% else %}Active{% endif %}</span></li>
             <li><span class="k">MLS #</span><span class="v mono">{{ page.mls }}</span></li>
             <li><span class="k">Year built</span><span class="v">{{ page.year_built }}{% if page.new_construction %} · new{% endif %}</span></li>
             <li><span class="k">County</span><span class="v">{{ page.county }}</span></li>
