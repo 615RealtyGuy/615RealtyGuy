@@ -32,11 +32,10 @@ list_date: "2026-02-11"           # confirmed (string form = no timezone drift)
 possession: "Date of deed"
 financing: "Conv · FHA · USDA · VA"
 
-# Coordinates power the lazy OpenStreetMap embed. Leave blank to show a
-# placeholder instead. The Realtracs report has no lat/lng — drop a pin for
-# 1204 Vickie Ln (Angelina Estates, off Briley Ln) to enable the map.
-lat:
-lng:
+# Coordinates power the precise OpenStreetMap marker embed.
+# From 36°37'04.2"N 86°31'07.0"W (John's pin, June 2026).
+lat: 36.617833
+lng: -86.518611
 
 # ─── SEO / AEO ───────────────────────────────────────────────────────────
 seo_title: "1204 Vickie Ln, Portland TN 37148 — New Construction on 1 Acre"
