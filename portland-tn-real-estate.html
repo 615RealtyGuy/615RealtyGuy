@@ -1,6 +1,10 @@
 ---
-# Front matter enables Jekyll to auto-render the "Homes I'm Listing in Portland"
-# section below from the _listings collection. URL is unchanged.
+# Explicit permalink REQUIRED: adding front matter otherwise drops the .html
+# (Jekyll would serve this at /portland-tn-real-estate/ and 404 the original
+# URL that the nav, listing links, and existing SEO all point to).
+permalink: /portland-tn-real-estate.html
+# Front matter also enables the auto-rendered "Homes I'm Listing in Portland"
+# section below (loops the _listings collection).
 ---
 <!DOCTYPE html>
 <html lang="en">

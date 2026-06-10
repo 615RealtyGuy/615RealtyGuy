@@ -167,8 +167,9 @@
   .form-msg .err { color: #e9a; }
   .agent-row { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
   .agent-row:last-of-type { margin-bottom: 0; }
-  .avatar { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(140deg, #d2b56c 0%, #6B5424 100%);
+  .avatar { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; overflow: hidden; background: linear-gradient(140deg, #d2b56c 0%, #6B5424 100%);
     display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-weight: 600; color: var(--ink); font-size: 1rem; }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
   .agent-row b { display: block; font-size: 0.92rem; font-weight: 600; }
   .agent-row span { font-size: 0.78rem; color: var(--cream-dim); display: block; }
   .agent-row a { color: var(--gold-soft); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
@@ -204,6 +205,9 @@
   .foot-legal .mono { font-size: 0.7rem; color: var(--cream-dim); }
 
   @media (max-width: 920px) {
+    /* Show the whole hero photo at screen width — no crop. */
+    .hero-media { aspect-ratio: auto; height: auto; object-fit: contain; }
+    .ph.hero-media { aspect-ratio: 3 / 2; }  /* keep the placeholder visible pre-photos */
     .body-grid { grid-template-columns: 1fr; gap: 48px; }
     .rail-inner { position: static; }
     .stats { grid-template-columns: repeat(3, 1fr); }
@@ -426,7 +430,7 @@
           <p class="sub">SixOneFive Real Estate Advisors</p>
           {%- for a in page.agents %}
           <div class="agent-row">
-            <div class="avatar">{{ a.initials }}</div>
+            <div class="avatar">{% if a.photo %}<img src="{{ a.photo }}" alt="{{ a.name }}" loading="lazy" width="48" height="48">{% else %}{{ a.initials }}{% endif %}</div>
             <div><b>{{ a.name }}</b><span>{{ a.title }}</span><a href="tel:{{ a.tel }}">{{ a.phone }}</a></div>
           </div>
           {%- endfor %}

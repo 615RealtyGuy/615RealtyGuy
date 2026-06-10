@@ -48,6 +48,7 @@ agents:
     phone: "(615) 491-1638"
     tel: "6154911638"
     initials: "JC"
+    photo: "/market_widget/Headshot.png"
   - name: "Mike Honeycutt"
     title: "Realtor®"
     phone: "(615) 430-9923"
