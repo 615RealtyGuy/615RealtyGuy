@@ -360,11 +360,15 @@
         </div>
         {%- endif %}
         {%- if page.lat and page.lng %}
+        {%- comment -%} Precise marker when coordinates are known (OpenStreetMap, no key needed) {%- endcomment -%}
         <iframe class="map-embed" loading="lazy" title="Map of {{ full_addr }}"
           src="https://www.openstreetmap.org/export/embed.html?bbox={{ page.lng | minus: 0.012 }}%2C{{ page.lat | minus: 0.008 }}%2C{{ page.lng | plus: 0.012 }}%2C{{ page.lat | plus: 0.008 }}&layer=mapnik&marker={{ page.lat }}%2C{{ page.lng }}"></iframe>
         {%- else %}
-        <div class="ph map-ph" data-id="map · {{ page.city | downcase }}" role="img" aria-label="Map of {{ page.city }}"></div>
+        {%- comment -%} No coordinates (e.g. new construction not yet in OSM): let Google geocode the address string. Keyless embed. {%- endcomment -%}
+        <iframe class="map-embed" loading="lazy" title="Map of {{ full_addr }}"
+          src="https://maps.google.com/maps?q={{ full_addr | url_encode }}&z=14&output=embed"></iframe>
         {%- endif %}
+        <p style="margin-top:10px;"><a href="https://www.google.com/maps/search/?api=1&amp;query={{ full_addr | url_encode }}" target="_blank" rel="noopener" style="color:var(--gold-soft);font-size:0.85rem;">Open in Google Maps &rarr;</a></p>
       </section>
 
       {%- if page.faq %}
