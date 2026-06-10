@@ -1,3 +1,9 @@
+---
+# Explicit permalink REQUIRED: front matter otherwise moves this off
+# /greenbrier-tn-real-estate.html and 404s the original URL. Front matter
+# enables the auto-rendered "Homes I'm Listing in Greenbrier" section below.
+permalink: /greenbrier-tn-real-estate.html
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -201,6 +207,50 @@ footer p { font-size: 0.8rem; color: #555; margin: 0; flex: 1; text-align: cente
             <h3>Real Value for the Money</h3>
             <p>Greenbrier often delivers more home and land per dollar than Goodlettsville or Hendersonville while still keeping the commute manageable. It's a strong fit for budget-aware buyers who don't want to go all the way to Portland.</p>
         </div>
+    </div>
+</section>
+<div class="section-divider"></div>
+
+<style>
+  .pl-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:18px; max-width:900px; margin:0 auto; }
+  .pl-card { display:block; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:10px; overflow:hidden; transition:border-color .2s, transform .2s; text-decoration:none; }
+  .pl-card:hover { border-color:#c9a84c; transform:translateY(-3px); }
+  .pl-media { position:relative; aspect-ratio:4/3; background:#111; overflow:hidden; }
+  .pl-media img { width:100%; height:100%; object-fit:cover; display:block; }
+  .pl-badge { position:absolute; top:10px; left:10px; font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:4px 9px; border-radius:4px; }
+  .pl-active { background:#d2b56c; color:#000; }
+  .pl-pending { background:#b9742f; color:#fff; }
+  .pl-sold { background:#c9a84c; color:#000; }
+  .pl-body { padding:14px 16px 18px; }
+  .pl-price { font-size:1.35rem; font-weight:700; color:#d2b56c; }
+  .pl-addr { font-size:.95rem; color:#f2ede1; margin-top:3px; }
+  .pl-stats { font-size:.78rem; color:#b7ae9b; margin-top:8px; }
+  .pl-allbtn { display:inline-block; margin-top:24px; padding:12px 26px; border:1px solid #c9a84c; border-radius:6px; color:#d2b56c; font-weight:600; text-decoration:none; transition:background .2s,color .2s; }
+  .pl-allbtn:hover { background:#d2b56c; color:#000; }
+</style>
+<section class="listings-section">
+    <h2 class="section-heading gold-text">Homes I'm Listing in Greenbrier</h2>
+    <p class="section-subtext">My current and recently sold listings in the Greenbrier area — represented by John Crowder with SixOneFive Real Estate Advisors.</p>
+    {% assign greenbrier_listings = site.listings | where: "city", "Greenbrier" | sort: "list_date" | reverse %}
+    {% if greenbrier_listings.size > 0 %}
+    <div class="pl-grid">
+      {% for L in greenbrier_listings %}
+      <a class="pl-card" href="{{ L.url }}">
+        <div class="pl-media">
+          {% if L.photos_ready %}<img loading="lazy" src="{{ site.listing_media_base }}/{{ L.slug }}/{{ L.photos.hero.file }}-600.webp" alt="{{ L.photos.hero.alt }}">{% endif %}
+          <span class="pl-badge pl-{{ L.status }}">{% if L.status == 'sold' %}Sold{% elsif L.status == 'pending' %}Under Contract{% else %}Active{% endif %}</span>
+        </div>
+        <div class="pl-body">
+          <div class="pl-price">{{ L.price_display }}</div>
+          <div class="pl-addr">{{ L.address }}{% if L.subdivision %} · {{ L.subdivision }}{% endif %}</div>
+          <div class="pl-stats">{{ L.beds }} bd · {{ L.baths }} ba · {{ L.sqft }} sqft · {{ L.acres }} ac</div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div style="text-align:center;">
+      <a href="/listings/" class="pl-allbtn">View all my listings →</a>
     </div>
 </section>
 <div class="section-divider"></div>
