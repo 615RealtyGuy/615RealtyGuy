@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{%- comment -%} ---- derived values ---- {%- endcomment -%}
+{%- assign slug = page.slug | default: page.name | replace: ".md","" -%}
+{%- assign media = site.listing_media_base | append: "/" | append: slug -%}
+{%- assign full_addr = page.street | append: ", " | append: page.city | append: ", " | append: page.state | append: " " | append: page.zip -%}
+{%- if page.status == "sold" -%}
+  {%- assign avail = "https://schema.org/SoldOut" -%}
+{%- elsif page.status == "pending" -%}
+  {%- assign avail = "https://schema.org/LimitedAvailability" -%}
+{%- else -%}
+  {%- assign avail = "https://schema.org/InStock" -%}
+{%- endif -%}
+
+<title>{{ page.seo_title | default: full_addr }} | SixOneFive Real Estate Advisors</title>
+<meta name="description" content="{{ page.seo_description }}">
+<link rel="canonical" href="https://615realtyguy.com/listings/{{ slug }}/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ page.seo_title | default: full_addr }}">
+<meta property="og:description" content="{{ page.seo_description }}">
+<meta property="og:url" content="https://615realtyguy.com/listings/{{ slug }}/">
+{%- if page.photos_ready %}
+<meta property="og:image" content="https://615realtyguy.com{{ media }}/{{ page.photos.hero.file }}-1200.webp">
+{%- endif %}
+
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Reconciled to the 615 / SixOneFive brand: brand gold family on near-black,
+       cream body text retained from the approved listing mockup for long-form legibility. */
+    --ink: #000000;
+    --ink-2: #0d0c09;
+    --panel: #1a160c80;
+    --gold: #d2b56c;        /* brand primary */
+    --gold-soft: #feee9f;   /* brand bright (hover) */
+    --gold-deep: #c9a84c;   /* brand border/accent */
+    --cream: #F2EDE1;
+    --cream-dim: #B7AE9B;
+    --line: #3A3322;
+    --line-soft: #2C2718;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink); color: var(--cream);
+    font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .display { font-family: 'Fraunces', serif; }
+  img { display: block; max-width: 100%; }
+
+  /* ---- brokerage banner (matches area pages) ---- */
+  .banner { text-align: center; padding: 10px 0 0; }
+  .banner img { height: 30px; display: inline-block; opacity: 0.85; }
+
+  /* ---- Top bar ---- */
+  .topbar { position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--ink) 90%, transparent);
+    backdrop-filter: blur(12px); border-bottom: 1px solid var(--line-soft); }
+  .topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; }
+  .topbar-logo img { height: 42px; }
+  .topbar-right { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .topbar-nav { color: var(--cream-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+  .topbar-nav:hover { color: var(--gold-soft); }
+  .topbar-phone { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--cream-dim); text-decoration: none; }
+  .btn { display: inline-block; padding: 10px 22px; background: var(--gold); color: var(--ink);
+    font-weight: 600; font-size: 0.85rem; text-decoration: none; border: none; border-radius: 2px; cursor: pointer; transition: background 0.15s ease; }
+  .btn:hover { background: var(--gold-soft); }
+  .btn:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--gold); outline-offset: 2px; }
+
+  /* ---- Photo placeholder (shown until photos_ready) ---- */
+  .ph { position: relative; overflow: hidden;
+    background: repeating-linear-gradient(-45deg, transparent 0 14px, #d2b56c0a 14px 15px),
+      linear-gradient(160deg, #2A2415 0%, #1C1810 60%, #15120B 100%);
+    border: 1px solid var(--line-soft); display: flex; align-items: flex-end; }
+  .ph::after { content: attr(data-id); font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+    color: #d2b56c66; letter-spacing: 0.06em; padding: 10px 12px; }
+
+  /* ---- Hero ---- */
+  .hero { padding: 28px 0 0; }
+  .hero-media { aspect-ratio: 16 / 8.5; border-radius: 3px; width: 100%; object-fit: cover; }
+  .hero-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px; padding: 28px 0 8px; }
+  .status-row { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .badge { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 10px; border-radius: 2px; }
+  .badge-status { background: var(--gold); color: var(--ink); font-weight: 500; }
+  .badge-sold { background: var(--gold-deep); color: var(--ink); font-weight: 600; }
+  .badge-pending { background: #b9742f; color: #fff; font-weight: 600; }
+  .badge-line { border: 1px solid var(--line); color: var(--cream-dim); }
+  h1.address { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(2rem, 4.6vw, 3.3rem); line-height: 1.08; letter-spacing: -0.01em; }
+  .address small { display: block; font-family: 'Inter', sans-serif; font-weight: 400; font-size: clamp(0.95rem, 1.6vw, 1.1rem); color: var(--cream-dim); margin-top: 10px; }
+  .price-block { text-align: right; }
+  .price { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.9rem, 4vw, 2.9rem); color: var(--gold); line-height: 1; }
+  .price-sub { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--cream-dim); margin-top: 8px; }
+
+  /* ---- Stats ---- */
+  .stats { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 26px; }
+  .stat { padding: 18px 8px; text-align: center; border-left: 1px solid var(--line-soft); }
+  .stat:first-child { border-left: none; }
+  .stat b { display: block; font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.5rem; color: var(--cream); }
+  .stat span { font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); }
+
+  /* ---- Incentive ticket ---- */
+  .ticket { margin: 48px 0 0; position: relative; background: linear-gradient(135deg, #d2b56c 0%, #b8903b 100%);
+    color: var(--ink); border-radius: 4px; display: grid; grid-template-columns: 1fr auto; overflow: hidden; }
+  .ticket::before { content: ""; position: absolute; top: 0; bottom: 0; right: 200px; border-left: 2px dashed #16130D55; }
+  .ticket-main { padding: 30px 34px; }
+  .ticket-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; }
+  .ticket-main h2 { font-family: 'Fraunces', serif; font-weight: 600; font-size: clamp(1.3rem, 2.6vw, 1.8rem); line-height: 1.2; margin: 8px 0 6px; }
+  .ticket-main p { font-size: 0.92rem; max-width: 56ch; opacity: 0.85; }
+  .ticket-stub { width: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 24px; }
+  .ticket-stub .btn { background: var(--ink); color: var(--gold); width: 100%; text-align: center; }
+  .ticket-stub .btn:hover { background: var(--ink-2); }
+  .ticket-stub small { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; opacity: 0.7; text-align: center; }
+
+  /* ---- Body layout ---- */
+  .body-grid { display: grid; grid-template-columns: 1fr 320px; gap: 56px; padding: 64px 0; }
+  .section { margin-bottom: 64px; }
+  .section:last-child { margin-bottom: 0; }
+  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  h2.section-title { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; margin-bottom: 20px; }
+  .prose p { color: #DDD6C8; margin-bottom: 18px; max-width: 64ch; }
+  .prose p:last-child { margin-bottom: 0; }
+
+  /* ---- Gallery ---- */
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .gallery .cell { aspect-ratio: 4 / 3; border-radius: 2px; overflow: hidden; }
+  .gallery .cell.wide { grid-column: span 2; aspect-ratio: 8 / 3; }
+  .gallery .cell img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery .ph { aspect-ratio: 4 / 3; border-radius: 2px; }
+  .gallery .ph.wide { grid-column: span 2; aspect-ratio: 8 / 3; }
+  .gallery-note { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--cream-dim); margin-top: 12px; }
+
+  /* ---- Spec tables ---- */
+  .spec-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; }
+  .spec-table { width: 100%; border-collapse: collapse; }
+  .spec-table th, .spec-table td { text-align: left; padding: 12px 14px; font-size: 0.85rem; border-bottom: 1px solid var(--line-soft); }
+  .spec-table th { font-family: 'JetBrains Mono', monospace; font-weight: 400; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-dim); width: 42%; }
+  .spec-table td { color: #E5DECF; }
+  .spec-table .dim { font-family: 'JetBrains Mono', monospace; color: var(--gold-soft); font-size: 0.8rem; }
+
+  /* ---- Sticky rail ---- */
+  .rail-inner { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 22px; }
+  .card { background: var(--panel); border: 1px solid var(--line-soft); border-radius: 4px; padding: 24px; }
+  .card h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.15rem; margin-bottom: 6px; }
+  .card .sub { font-size: 0.82rem; color: var(--cream-dim); margin-bottom: 16px; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-dim); margin-bottom: 6px; }
+  .field input, .field textarea { width: 100%; background: var(--ink); border: 1px solid var(--line); border-radius: 2px; padding: 10px 12px; color: var(--cream); font-family: 'Inter', sans-serif; font-size: 0.9rem; }
+  .field textarea { resize: vertical; min-height: 70px; }
+  .card .btn { width: 100%; text-align: center; margin-top: 4px; }
+  .card .btn-secondary { display: block; text-align: center; margin-top: 10px; color: var(--gold-soft); font-size: 0.82rem; text-decoration: none; }
+  .card .btn-secondary:hover { color: var(--gold); }
+  .form-msg { font-size: 0.8rem; margin-top: 10px; }
+  .form-msg .ok { color: var(--gold-soft); }
+  .form-msg .err { color: #e9a; }
+  .agent-row { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
+  .agent-row:last-of-type { margin-bottom: 0; }
+  .avatar { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(140deg, #d2b56c 0%, #6B5424 100%);
+    display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-weight: 600; color: var(--ink); font-size: 1rem; }
+  .agent-row b { display: block; font-size: 0.92rem; font-weight: 600; }
+  .agent-row span { font-size: 0.78rem; color: var(--cream-dim); display: block; }
+  .agent-row a { color: var(--gold-soft); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+  .key-facts { list-style: none; }
+  .key-facts li { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line-soft); font-size: 0.82rem; }
+  .key-facts li:last-child { border-bottom: none; }
+  .key-facts .k { color: var(--cream-dim); font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; padding-top: 2px; }
+  .key-facts .v { text-align: right; color: #E5DECF; }
+
+  /* ---- Area / map ---- */
+  .map-embed { aspect-ratio: 16/7; border-radius: 3px; margin-top: 22px; width: 100%; border: 1px solid var(--line-soft); }
+  .map-ph { aspect-ratio: 16/7; border-radius: 3px; margin-top: 22px; }
+  .schools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 22px; }
+  .school { border: 1px solid var(--line-soft); border-radius: 3px; padding: 16px; background: var(--panel); }
+  .school span { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 6px; }
+  .school b { font-size: 0.88rem; font-weight: 500; }
+
+  /* ---- FAQ ---- */
+  details.faq { border-bottom: 1px solid var(--line-soft); padding: 4px 0; }
+  details.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 0; font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 500; }
+  details.faq summary::-webkit-details-marker { display: none; }
+  details.faq summary::after { content: "+"; color: var(--gold); font-family: 'JetBrains Mono', monospace; }
+  details.faq[open] summary::after { content: "\2212"; }
+  details.faq p { color: #DDD6C8; font-size: 0.92rem; padding: 0 0 18px; max-width: 64ch; }
+
+  /* ---- Footer ---- */
+  footer { border-top: 1px solid var(--line); padding: 40px 0 56px; margin-top: 24px; }
+  .foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; }
+  .foot-firm b { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1rem; }
+  .foot-firm b span { color: var(--gold); }
+  .foot-firm p, .foot-legal p { font-size: 0.74rem; color: var(--cream-dim); max-width: 62ch; margin-top: 8px; line-height: 1.7; }
+  .foot-legal { text-align: right; }
+  .foot-legal .mono { font-size: 0.7rem; color: var(--cream-dim); }
+
+  @media (max-width: 920px) {
+    .body-grid { grid-template-columns: 1fr; gap: 48px; }
+    .rail-inner { position: static; }
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    .stat:nth-child(4), .stat:nth-child(5) { border-top: 1px solid var(--line-soft); }
+    .stat:nth-child(4) { border-left: none; }
+    .price-block { text-align: left; }
+    .ticket { grid-template-columns: 1fr; }
+    .ticket::before { display: none; }
+    .ticket-stub { width: 100%; border-top: 2px dashed #16130D55; }
+    .schools { grid-template-columns: 1fr; }
+    .gallery { grid-template-columns: repeat(2, 1fr); }
+    .spec-cols { grid-template-columns: 1fr; gap: 0; }
+    .foot-legal { text-align: left; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <a href="https://sixonefive.homes" target="_blank" rel="noopener"><img src="https://i.imgur.com/XLvCp6R.png" alt="SixOneFive Real Estate Advisors"></a>
+</div>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="topbar-logo" href="/"><img src="https://i.imgur.com/Mue4Nnr.png" alt="615 Realty Guy"></a>
+    <div class="topbar-right">
+      <a class="topbar-nav" href="/listings/">All listings</a>
+      <a class="topbar-nav" href="/{{ page.city | downcase }}-tn-real-estate.html">{{ page.city }}</a>
+      <a class="topbar-phone" href="tel:6154911638">(615) 491-1638</a>
+      <a class="btn" href="#contact">{% if page.status == "sold" %}Contact me{% else %}Schedule a showing{% endif %}</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    {%- if page.photos_ready %}
+    <img class="hero-media" src="{{ media }}/{{ page.photos.hero.file }}-1200.webp"
+      srcset="{{ media }}/{{ page.photos.hero.file }}-600.webp 600w, {{ media }}/{{ page.photos.hero.file }}-1200.webp 1200w, {{ media }}/{{ page.photos.hero.file }}-2400.webp 2400w"
+      sizes="(max-width: 1120px) 100vw, 1120px" alt="{{ page.photos.hero.alt }}" width="1120" height="595" fetchpriority="high">
+    {%- else %}
+    <div class="ph hero-media" data-id="{{ page.photos.hero.file }} · hero" role="img" aria-label="{{ page.photos.hero.alt }}"></div>
+    {%- endif %}
+
+    <div class="hero-head">
+      <div>
+        <div class="status-row">
+          {%- if page.status == "sold" %}
+          <span class="badge badge-sold">Sold by SixOneFive</span>
+          {%- elsif page.status == "pending" %}
+          <span class="badge badge-pending">Under Contract</span>
+          {%- else %}
+          <span class="badge badge-status">Active</span>
+          {%- endif %}
+          {%- if page.new_construction %}<span class="badge badge-line">New Construction · {{ page.year_built }}</span>{%- endif %}
+          <span class="badge badge-line">MLS {{ page.mls }}</span>
+        </div>
+        <h1 class="address display">{{ page.address }}
+          <small>{% if page.subdivision %}{{ page.subdivision }} · {% endif %}{{ page.city }}, {{ page.state_full | default: "Tennessee" }} {{ page.zip }}</small>
+        </h1>
+      </div>
+      <div class="price-block">
+        <div class="price">{{ page.price_display }}</div>
+        {%- if page.price_sub %}<div class="price-sub">{{ page.price_sub }}</div>{%- endif %}
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>{{ page.beds }}</b><span>Bedrooms</span></div>
+      <div class="stat"><b>{{ page.baths }}</b><span>Bathrooms</span></div>
+      <div class="stat"><b>{{ page.sqft }}</b><span>Square feet</span></div>
+      <div class="stat"><b>{{ page.acres }}</b><span>Acre lot</span></div>
+      <div class="stat"><b>{{ page.garage }}</b><span>Garage</span></div>
+    </div>
+
+    {%- comment -%} Incentive ticket: active listings only {%- endcomment -%}
+    {%- if page.status == "active" and page.incentive %}
+    <div class="ticket">
+      <div class="ticket-main">
+        <div class="ticket-eyebrow">{{ page.incentive.eyebrow }}</div>
+        <h2 class="display">{{ page.incentive.headline }}</h2>
+        <p>{{ page.incentive.body }}</p>
+      </div>
+      <div class="ticket-stub">
+        <a class="btn" href="#contact" data-incentive>Claim this incentive</a>
+        <small>{{ page.incentive.disclaimer }}</small>
+      </div>
+    </div>
+    {%- endif %}
+  </section>
+
+  <!-- BODY -->
+  <div class="body-grid">
+    <div class="body-main">
+
+      {%- if page.narrative %}
+      <section class="section prose">
+        <div class="eyebrow">{{ page.narrative.eyebrow }}</div>
+        <h2 class="section-title display">{{ page.narrative.title }}</h2>
+        {%- for p in page.narrative.paragraphs %}<p>{{ p }}</p>{%- endfor %}
+      </section>
+      {%- endif %}
+
+      <section class="section">
+        <div class="eyebrow">Gallery</div>
+        <h2 class="section-title display">Walk through it</h2>
+        <div class="gallery">
+          {%- for img in page.photos.gallery %}
+            {%- if page.photos_ready %}
+          <div class="cell{% if img.wide %} wide{% endif %}">
+            <img loading="lazy" src="{{ media }}/{{ img.file }}-1200.webp"
+              srcset="{{ media }}/{{ img.file }}-600.webp 600w, {{ media }}/{{ img.file }}-1200.webp 1200w"
+              sizes="(max-width: 920px) 50vw, 360px" alt="{{ img.alt }}">
+          </div>
+            {%- else %}
+          <div class="ph{% if img.wide %} wide{% endif %}" data-id="{{ img.file }}" role="img" aria-label="{{ img.alt }}"></div>
+            {%- endif %}
+          {%- endfor %}
+        </div>
+        {%- unless page.photos_ready %}<p class="gallery-note">// placeholders — set photos_ready: true after running the photo script</p>{%- endunless %}
+      </section>
+
+      {%- if page.rooms or page.specs %}
+      <section class="section">
+        <div class="eyebrow">Rooms &amp; dimensions</div>
+        <h2 class="section-title display">The spec sheet</h2>
+        <div class="spec-cols">
+          <table class="spec-table">
+            {%- for r in page.rooms %}
+            <tr><th>{{ r.name }}</th><td>{% if r.dim %}<span class="dim">{{ r.dim }}</span>{% endif %}{% if r.note %} · {{ r.note }}{% endif %}</td></tr>
+            {%- endfor %}
+          </table>
+          <table class="spec-table">
+            {%- for s in page.specs %}
+            <tr><th>{{ s.label }}</th><td>{{ s.value }}</td></tr>
+            {%- endfor %}
+          </table>
+        </div>
+      </section>
+      {%- endif %}
+
+      <section class="section">
+        <div class="eyebrow">Location</div>
+        <h2 class="section-title display">{% if page.subdivision %}{{ page.subdivision }}, {% endif %}{{ page.city }}</h2>
+        {%- if page.location_blurb %}<div class="prose"><p>{{ page.location_blurb }}{% if page.area_page %} <a href="{{ page.area_page }}" style="color:var(--gold-soft);white-space:nowrap;">More about living in {{ page.city }} →</a>{% endif %}</p></div>{%- endif %}
+        {%- if page.schools %}
+        <div class="schools">
+          {%- if page.schools.elementary %}<div class="school"><span>Elementary</span><b>{{ page.schools.elementary }}</b></div>{%- endif %}
+          {%- if page.schools.middle %}<div class="school"><span>Middle</span><b>{{ page.schools.middle }}</b></div>{%- endif %}
+          {%- if page.schools.high %}<div class="school"><span>High</span><b>{{ page.schools.high }}</b></div>{%- endif %}
+        </div>
+        {%- endif %}
+        {%- if page.lat and page.lng %}
+        <iframe class="map-embed" loading="lazy" title="Map of {{ full_addr }}"
+          src="https://www.openstreetmap.org/export/embed.html?bbox={{ page.lng | minus: 0.012 }}%2C{{ page.lat | minus: 0.008 }}%2C{{ page.lng | plus: 0.012 }}%2C{{ page.lat | plus: 0.008 }}&layer=mapnik&marker={{ page.lat }}%2C{{ page.lng }}"></iframe>
+        {%- else %}
+        <div class="ph map-ph" data-id="map · {{ page.city | downcase }}" role="img" aria-label="Map of {{ page.city }}"></div>
+        {%- endif %}
+      </section>
+
+      {%- if page.faq %}
+      <section class="section">
+        <div class="eyebrow">Questions buyers ask</div>
+        <h2 class="section-title display">Straight answers</h2>
+        {%- for item in page.faq %}
+        <details class="faq"><summary>{{ item.q }}</summary><p>{{ item.a }}</p></details>
+        {%- endfor %}
+      </section>
+      {%- endif %}
+
+    </div>
+
+    <!-- STICKY RAIL -->
+    <aside class="rail">
+      <div class="rail-inner">
+        <div class="card" id="contact">
+          {%- if page.status == "sold" %}
+          <h3 class="display">This one sold — what's yours worth?</h3>
+          <p class="sub">I sold {{ page.address }}. Want the same for your home? Get a no-pressure valuation.</p>
+          {%- elsif page.status == "pending" %}
+          <h3 class="display">Under contract — ask about backups</h3>
+          <p class="sub">This home is pending, but plans change. Ask about backup offers or similar homes nearby.</p>
+          {%- else %}
+          <h3 class="display">See it in person</h3>
+          <p class="sub">Tell us when works and we'll set it up — usually same-day.</p>
+          {%- endif %}
+
+          <form id="lead-form" action="" method="POST" novalidate>
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+            <input type="text" name="company" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_subject" value="{% if page.status == 'sold' %}Home valuation request{% else %}Showing request{% endif %} — {{ page.address }}">
+            <input type="hidden" name="_next" value="https://615realtyguy.com/thankyou.html">
+            <input type="hidden" name="listing_slug" value="{{ slug }}">
+            <input type="hidden" name="listing_address" value="{{ full_addr }}">
+            <input type="hidden" name="listing_status" value="{{ page.status }}">
+            <input type="hidden" name="lead_intent" id="lead-intent" value="{% if page.status == 'sold' %}valuation{% else %}showing{% endif %}">
+            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+            <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+            <div class="field"><label for="f-msg">{% if page.status == 'sold' %}Your address &amp; anything to know{% else %}Anything we should know?{% endif %}</label><textarea id="f-msg" name="message" placeholder="{% if page.status == 'sold' %}Your home's address, timeline…{% else %}Preferred day/time, financing questions…{% endif %}"></textarea></div>
+            <button class="btn" type="submit">{% if page.status == 'sold' %}Get my home's value{% else %}Request a showing{% endif %}</button>
+            <div class="form-msg" id="lead-msg" role="status"></div>
+          </form>
+          {%- if page.status == "sold" and page.area_page %}
+          <a class="btn-secondary" href="{{ page.area_page }}">See homes like this in {{ page.city }} →</a>
+          {%- endif %}
+        </div>
+
+        <div class="card">
+          <h3 class="display">Listed by</h3>
+          <p class="sub">SixOneFive Real Estate Advisors</p>
+          {%- for a in page.agents %}
+          <div class="agent-row">
+            <div class="avatar">{{ a.initials }}</div>
+            <div><b>{{ a.name }}</b><span>{{ a.title }}</span><a href="tel:{{ a.tel }}">{{ a.phone }}</a></div>
+          </div>
+          {%- endfor %}
+        </div>
+
+        <div class="card">
+          <h3 class="display">Key facts</h3>
+          <ul class="key-facts">
+            <li><span class="k">Status</span><span class="v">{% if page.status == 'sold' %}Sold{% elsif page.status == 'pending' %}Under Contract{% else %}Active{% endif %}</span></li>
+            <li><span class="k">MLS #</span><span class="v mono">{{ page.mls }}</span></li>
+            <li><span class="k">Year built</span><span class="v">{{ page.year_built }}{% if page.new_construction %} · new{% endif %}</span></li>
+            <li><span class="k">County</span><span class="v">{{ page.county }}</span></li>
+            <li><span class="k">Lot</span><span class="v">{{ page.acres }} acre</span></li>
+            {%- if page.financing %}<li><span class="k">Financing</span><span class="v">{{ page.financing }}</span></li>{%- endif %}
+            {%- if page.possession %}<li><span class="k">Possession</span><span class="v">{{ page.possession }}</span></li>{%- endif %}
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="foot-firm">
+      <b>SixOneFive <span>Real Estate Advisors</span></b>
+      <p>(615) 200-0278 · White House, Tennessee<br>
+      Information is believed accurate but not guaranteed. Buyers should independently verify all details — including schools, square footage, acreage, restrictions, and utility connections — prior to purchase.{% if page.new_construction %} New construction: taxes and HOA fees TBD.{% endif %}</p>
+    </div>
+    <div class="foot-legal">
+      <p class="mono">Equal Housing Opportunity &#8962; · Realtor&#174;<br>Source: Realtracs · MLS {{ page.mls }} · &copy; 2026</p>
+    </div>
+  </div>
+</footer>
+
+{%- comment -%} ---- FormSubmit wiring: mirrors the site's existing anti-spam pattern ---- {%- endcomment -%}
+<script>
+(function () {
+  var form = document.getElementById("lead-form");
+  if (!form) return;
+  var msg = document.getElementById("lead-msg");
+  // Endpoint assembled at runtime so scrapers can't lift a static action URL.
+  var FS_ENDPOINT = 'https://' + 'formsubmit' + '.co/' + '83702f691ccf936247e5971732f874a1';
+  var armedAt = Date.now();
+
+  // Incentive button: scroll to form, tag the intent, pre-note the message.
+  document.querySelectorAll('[data-incentive]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var intent = document.getElementById('lead-intent');
+      var note = document.getElementById('f-msg');
+      if (intent) intent.value = 'incentive';
+      if (note && !note.value) note.value = "I'd like details on the builder incentive.";
+    });
+  });
+
+  form.addEventListener("submit", function (e) {
+    var hp = form._honey, comp = form.company;
+    if ((hp && hp.value) || (comp && comp.value)) { e.preventDefault(); return; }
+    if (Date.now() - armedAt < 3000) { e.preventDefault(); return; }
+    var name = form.name.value.trim();
+    var email = form.email.value.trim();
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      e.preventDefault();
+      msg.innerHTML = '<span class="err">Please enter your name and a valid email.</span>';
+      return;
+    }
+    form.action = FS_ENDPOINT;
+    msg.innerHTML = '<span class="ok">Thanks! Sending now…</span>';
+  });
+})();
+</script>
+
+{%- comment -%} ---- JSON-LD: RealEstateListing + Offer + PostalAddress + FAQPage ---- {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "RealEstateListing",
+      "name": {{ full_addr | jsonify }},
+      "url": "https://615realtyguy.com/listings/{{ slug }}/",
+      {% if page.list_date %}"datePosted": "{{ page.list_date | date: '%Y-%m-%d' }}",{% endif %}
+      "description": {{ page.seo_description | jsonify }},
+      "offers": {
+        "@type": "Offer",
+        "price": {{ page.price }},
+        "priceCurrency": "USD",
+        "availability": "{{ avail }}"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": {{ page.street | jsonify }},
+        "addressLocality": {{ page.city | jsonify }},
+        "addressRegion": "{{ page.state }}",
+        "postalCode": "{{ page.zip }}"
+      }{% if page.lat and page.lng %},
+      "geo": { "@type": "GeoCoordinates", "latitude": {{ page.lat }}, "longitude": {{ page.lng }} }{% endif %}
+    }{% if page.faq %},
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {% for item in page.faq %}{
+          "@type": "Question",
+          "name": {{ item.q | jsonify }},
+          "acceptedAnswer": { "@type": "Answer", "text": {{ item.a | jsonify }} }
+        }{% unless forloop.last %},{% endunless %}{% endfor %}
+      ]
+    }{% endif %}
+  ]
+}
+</script>
+
+</body>
+</html>

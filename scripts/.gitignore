@@ -1,0 +1,4 @@
+# Local-only — never commit these
+node_modules/
+originals/
+out/

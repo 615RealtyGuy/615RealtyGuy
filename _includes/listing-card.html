@@ -1,0 +1,22 @@
+{%- comment -%}
+  Listing card for the /listings/ index. Expects: include.L = a listing doc.
+{%- endcomment -%}
+{%- assign L = include.L -%}
+{%- assign cslug = L.slug | default: L.name | replace: ".md","" -%}
+{%- assign cmedia = site.listing_media_base | append: "/" | append: cslug -%}
+<a class="lcard" href="{{ L.url }}">
+  <div class="lcard-media">
+    {%- if L.photos_ready %}
+    <img loading="lazy" src="{{ cmedia }}/{{ L.photos.hero.file }}-600.webp" alt="{{ L.photos.hero.alt }}">
+    {%- endif %}
+    {%- if L.status == "sold" %}<span class="lcard-badge b-sold">Sold</span>
+    {%- elsif L.status == "pending" %}<span class="lcard-badge b-pending">Under Contract</span>
+    {%- else %}<span class="lcard-badge b-active">Active</span>{%- endif %}
+  </div>
+  <div class="lcard-body">
+    <div class="lcard-price">{{ L.price_display }}</div>
+    <div class="lcard-addr">{{ L.address }}</div>
+    <div class="lcard-sub">{% if L.subdivision %}{{ L.subdivision }} · {% endif %}{{ L.city }}, {{ L.state }} {{ L.zip }}</div>
+    <div class="lcard-stats"><span>{{ L.beds }} bd</span><span>{{ L.baths }} ba</span><span>{{ L.sqft }} sqft</span><span>{{ L.acres }} ac</span></div>
+  </div>
+</a>

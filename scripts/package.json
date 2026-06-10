@@ -1,0 +1,13 @@
+{
+  "name": "615-listing-photos",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local image pipeline for 615realtyguy.com listing pages (EXIF-strip + WebP variants).",
+  "scripts": {
+    "photos": "node process-listing-photos.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.33.5"
+  }
+}
