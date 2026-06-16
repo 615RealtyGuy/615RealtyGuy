@@ -38,6 +38,16 @@ description: "Active and recently sold listings represented by John Crowder, Six
   .page-head .eyebrow { font-family:'JetBrains Mono',monospace; font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); margin-bottom:12px; }
   .page-head h1 { font-family:'Fraunces',serif; font-weight:500; font-size:clamp(2rem,4.6vw,3rem); line-height:1.1; }
   .page-head p { color:var(--cream-dim); margin-top:12px; max-width:60ch; }
+  .page-head-inner { display:flex; justify-content:space-between; align-items:flex-end; gap:28px; flex-wrap:wrap; }
+  .page-head-text { flex:1 1 360px; }
+  .agent-card { display:flex; align-items:center; gap:14px; background:var(--panel); border:1px solid var(--line-soft); border-radius:6px; padding:14px 18px; flex:0 0 auto; }
+  .agent-card img { width:64px; height:64px; border-radius:50%; object-fit:cover; border:1px solid var(--line); }
+  .agent-card .ac-info { display:flex; flex-direction:column; line-height:1.35; }
+  .agent-card .ac-info b { font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; color:var(--cream); }
+  .agent-card .ac-info span { font-family:'JetBrains Mono',monospace; font-size:0.64rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--cream-dim); margin:2px 0 6px; }
+  .agent-card .ac-info a { font-size:0.86rem; color:var(--gold); }
+  .agent-card .ac-info a:hover { color:var(--gold-soft); }
+  @media (max-width:600px) { .agent-card { width:100%; } }
   .group-title { font-family:'JetBrains Mono',monospace; font-size:0.7rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--cream-dim); margin:48px 0 18px; border-bottom:1px solid var(--line-soft); padding-bottom:10px; }
   .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
   .lcard { display:block; background:var(--panel); border:1px solid var(--line-soft); border-radius:4px; overflow:hidden; transition:border-color 0.15s ease; }
@@ -81,9 +91,22 @@ description: "Active and recently sold listings represented by John Crowder, Six
 
 <main class="wrap">
   <div class="page-head">
-    <div class="eyebrow">My listings</div>
-    <h1>Homes I'm representing</h1>
-    <p>Active listings and recently sold homes across Middle Tennessee — each one represented by John Crowder with SixOneFive Real Estate Advisors.</p>
+    <div class="page-head-inner">
+      <div class="page-head-text">
+        <div class="eyebrow">My listings</div>
+        <h1>Homes I'm representing</h1>
+        <p>Active listings and recently sold homes across Middle Tennessee — each one represented by John Crowder with SixOneFive Real Estate Advisors.</p>
+      </div>
+      <div class="agent-card">
+        <img src="/market_widget/Headshot.png" alt="John Crowder, Realtor and Affiliate Broker" loading="lazy" width="64" height="64">
+        <div class="ac-info">
+          <b>John Crowder</b>
+          <span>Realtor® · Affiliate Broker</span>
+          <a href="tel:6154911638">(615) 491-1638</a>
+          <a href="mailto:615realtyguy@gmail.com">615realtyguy@gmail.com</a>
+        </div>
+      </div>
+    </div>
   </div>
 
   {%- assign comingsoon = site.listings | where: "status", "coming_soon" | sort: "list_date" | reverse -%}
