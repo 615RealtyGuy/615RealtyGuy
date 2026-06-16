@@ -17,9 +17,9 @@ county: "Sumner"
 subdivision: "Angelina Estates"
 
 # ─── Numbers ─────────────────────────────────────────────────────────────
-price: 459000
-price_display: "$459,000"          # what shows on the page (with commas/$)
-price_sub: "$255 / sqft · seller concessions offered"
+price: 449000
+price_display: "$449,000"          # what shows on the page (with commas/$)
+price_sub: "$249 / sqft · seller concessions offered"
 beds: 3
 baths: 2
 sqft: "1,800"
@@ -39,7 +39,7 @@ lng: -86.518611
 
 # ─── SEO / AEO ───────────────────────────────────────────────────────────
 seo_title: "1204 Vickie Ln, Portland TN 37148 — New Construction on 1 Acre"
-seo_description: "New construction at 1204 Vickie Ln in Angelina Estates, Portland TN. 3 bed, 2 bath, 1,800 sqft on a full acre with a 20x20 bonus room. $5,000 builder credit available."
+seo_description: "New construction at 1204 Vickie Ln in Angelina Estates, Portland TN. 3 bed, 2 bath, 1,800 sqft on a full acre with a 20x20 bonus room."
 
 # ─── Agents (rail) ───────────────────────────────────────────────────────
 agents:
@@ -54,13 +54,6 @@ agents:
     phone: "(615) 430-9923"
     tel: "6154309923"
     initials: "MH"
-
-# ─── Incentive ticket (shown only while status: active) ──────────────────
-incentive:
-  eyebrow: "Builder incentive · limited time"
-  headline: "$5,000 in builder credits + a 1-point rate buydown"
-  body: "Qualified buyers receive five thousand dollars toward closing costs or upgrades, plus a one-point lender buydown credit through Prosperity Mortgage — a meaningful cut to your monthly payment in year one."
-  disclaimer: "Subject to lender qualification · ask for details"
 
 # ─── Narrative (rewritten from the PDF facts — never copy MLS remarks) ────
 narrative:
@@ -98,8 +91,6 @@ area_page: "/portland-tn-real-estate.html"
 faq:
   - q: "Is 1204 Vickie Lane on city sewer or septic?"
     a: "City water, septic tank — common for acre lots in this part of Sumner County, and one less monthly utility bill."
-  - q: "What builder incentives are available right now?"
-    a: "Qualified buyers can receive $5,000 in builder credits plus a one-point lender buydown credit through Prosperity Mortgage. Incentives are subject to change — confirm current terms before writing an offer."
   - q: "What schools is this home zoned for?"
     a: "Watt Hardison Elementary, Portland West Middle, and Portland High School. Always verify zoning directly with Sumner County Schools before closing."
   - q: "Is there an HOA in Angelina Estates?"

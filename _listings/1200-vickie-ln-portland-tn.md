@@ -17,9 +17,9 @@ county: "Sumner"
 subdivision: "Angelina Estates"
 
 # ─── Numbers ─────────────────────────────────────────────────────────────
-price: 459000
-price_display: "$459,000"
-price_sub: "$270 / sqft · seller concessions offered"
+price: 449000
+price_display: "$449,000"
+price_sub: "$264 / sqft · seller concessions offered"
 beds: 3
 baths: 2
 sqft: "1,700"
@@ -40,7 +40,7 @@ lng:
 
 # ─── SEO / AEO ───────────────────────────────────────────────────────────
 seo_title: "1200 Vickie Ln, Portland TN 37148 — New Construction on 1 Acre"
-seo_description: "New construction at 1200 Vickie Ln in Angelina Estates, Portland TN. 3 bed, 2 bath, 1,700 sqft on a full acre with a bonus room over the garage. $5,000 builder credit available."
+seo_description: "New construction at 1200 Vickie Ln in Angelina Estates, Portland TN. 3 bed, 2 bath, 1,700 sqft on a full acre with a bonus room over the garage."
 
 # ─── Agents (rail) ───────────────────────────────────────────────────────
 agents:
@@ -55,13 +55,6 @@ agents:
     phone: "(615) 430-9923"
     tel: "6154309923"
     initials: "MH"
-
-# ─── Incentive ticket (shown only while status: active) ──────────────────
-incentive:
-  eyebrow: "Builder incentive · limited time"
-  headline: "$5,000 in builder credits + a 1-point rate buydown"
-  body: "Qualified buyers may receive five thousand dollars in builder credits plus a one-point lender buydown when working with the preferred lender — real savings on your closing costs and first-year payment."
-  disclaimer: "Subject to lender qualification · ask for details"
 
 # ─── Narrative (rewritten from the PDF facts — never copy MLS remarks) ────
 narrative:
@@ -99,8 +92,6 @@ area_page: "/portland-tn-real-estate.html"
 faq:
   - q: "Is 1200 Vickie Lane on city sewer or septic?"
     a: "City water, septic tank — common for acre lots in this part of Sumner County, and one less monthly utility bill."
-  - q: "What builder incentives are available right now?"
-    a: "Qualified buyers may receive $5,000 in builder credits plus a one-point lender buydown when working with the preferred lender. Incentives are subject to change — confirm current terms before writing an offer."
   - q: "What schools is this home zoned for?"
     a: "Watt Hardison Elementary, Portland West Middle School, and Portland High School. Always verify zoning directly with Sumner County Schools before closing."
   - q: "Is there an HOA in Angelina Estates?"

@@ -2,8 +2,7 @@
 layout: listing
 
 # active | pending | sold | coming_soon
-status: coming_soon
-available_date: "June 15"          # shown on the Coming Soon badge / teaser
+status: active
 
 slug: 319-cherry-ln-white-house-tn
 address: "319 Cherry Lane"
@@ -35,8 +34,8 @@ lat: 36.461002
 lng: -86.669469
 
 # ─── SEO / AEO ───────────────────────────────────────────────────────────
-seo_title: "319 Cherry Ln, White House TN — All-Brick Home on 0.68 Acre (Coming Soon)"
-seo_description: "Coming soon in White House's Orchard Park: an all-brick 3 bed, 2 bath, 2,350 sqft home on 0.68 acre with a bonus room, screened porch, she-shed, and no HOA. $519,900 — available June 15."
+seo_title: "319 Cherry Ln, White House TN — All-Brick Home on 0.68 Acre"
+seo_description: "In White House's Orchard Park: an all-brick 3 bed, 2 bath, 2,350 sqft home on 0.68 acre with a bonus room, screened porch, she-shed, and no HOA. $519,900."
 
 # ─── Agent (rail) ────────────────────────────────────────────────────────
 agents:
@@ -55,7 +54,7 @@ narrative:
   eyebrow: "The home"
   title: "An all-brick original-owner home in White House's Orchard Park"
   paragraphs:
-    - "Coming soon in the established Orchard Park neighborhood: an all-brick home with 2,350 square feet of move-in-ready space on a roomy 0.68-acre lot — and no HOA. Lovingly kept by its original owners, it shows in excellent shape throughout, with a bonus room over the garage that's ready to be a playroom, office, or media room."
+    - "In the established Orchard Park neighborhood: an all-brick home with 2,350 square feet of move-in-ready space on a roomy 0.68-acre lot — and no HOA. Lovingly kept by its original owners, it shows in excellent shape throughout, with a bonus room over the garage that's ready to be a playroom, office, or media room."
     - "Recent updates do the heavy lifting: a renovated kitchen and two full baths redone with tile showers. All kitchen appliances plus the washer and dryer convey, so it's truly move-in ready. Out back, a screened-in porch is built for relaxing or entertaining, and a detached \"she-shed\" adds flexible space for a studio, hobby room, or extra storage."
     - "A finished two-car garage, a gas fireplace, and fiber internet round it out — all in the White House Heritage school zone, minutes from town and an easy I-65 commute. Ask about the home warranty being offered to the new owners."
 
@@ -85,8 +84,8 @@ area_page: "/white-house-tn-real-estate.html"
 
 # ─── FAQ (drives the FAQPage schema) ─────────────────────────────────────
 faq:
-  - q: "When will 319 Cherry Lane be available to tour?"
-    a: "It's coming soon, with professional photos and showings beginning June 15. Get on the early list and we'll line up a private showing as soon as it's available."
+  - q: "Can I tour 319 Cherry Lane?"
+    a: "Yes — it's active and available to show now. Reach out and we'll line up a private showing at a time that works for you."
   - q: "Is there an HOA?"
     a: "No HOA — no monthly dues or association restrictions on this 0.68-acre lot."
   - q: "What updates have been made?"
