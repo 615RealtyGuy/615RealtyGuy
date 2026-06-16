@@ -598,6 +598,60 @@ nav a:hover {
 }
 .mrw-dot.active { background: #c9a84c; border-color: #c9a84c; }
 
+/* ============================= */
+/* CURRENT LISTINGS CAROUSEL     */
+/* ============================= */
+.lcw { padding: 48px 20px; }
+.lcw-wrap { position: relative; max-width: 1100px; margin: 24px auto 0; }
+.lcw-track {
+    display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory;
+    scroll-behavior: smooth; padding: 4px 4px 8px; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.lcw-track::-webkit-scrollbar { display: none; }
+.lcw-card {
+    flex: 0 0 calc((100% - 36px) / 3); scroll-snap-align: start;
+    background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px;
+    overflow: hidden; text-align: left; text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s;
+}
+.lcw-card:hover { border-color: #c9a84c; transform: translateY(-3px); }
+.lcw-media {
+    position: relative; aspect-ratio: 4/3; overflow: hidden;
+    background: linear-gradient(160deg,#2A2415 0%,#1C1810 60%,#15120B 100%);
+}
+.lcw-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lcw-badge {
+    position: absolute; top: 12px; left: 12px; font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; font-weight: 700; padding: 5px 9px; border-radius: 4px;
+}
+.lcw-badge.active { background: #d2b56c; color: #000; }
+.lcw-badge.soon { background: #2f6f8f; color: #fff; }
+.lcw-body { padding: 16px 18px 20px; }
+.lcw-price { font-size: 1.4rem; font-weight: 700; color: #d2b56c; }
+.lcw-addr { font-size: 0.95rem; color: #f2ede1; margin-top: 4px; }
+.lcw-sub { font-size: 0.8rem; color: #999; margin-top: 2px; }
+.lcw-stats { font-size: 0.75rem; color: #b7ae9b; margin-top: 12px; display: flex; gap: 14px; flex-wrap: wrap; }
+.lcw-arrow {
+    position: absolute; top: 38%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.85); border: 1px solid #2a2a2a; color: #d2b56c;
+    width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; font-size: 1.4rem; z-index: 5; transition: border-color 0.2s, opacity 0.2s;
+}
+.lcw-arrow:hover { border-color: #d2b56c; }
+.lcw-arrow:disabled { opacity: 0.3; cursor: default; }
+.lcw-prev { left: -56px; }
+.lcw-next { right: -56px; }
+.lcw-hide-arrows .lcw-arrow { display: none; }
+.lcw-all {
+    display: inline-block; margin-top: 22px; color: #d2b56c; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85rem; text-decoration: none;
+}
+.lcw-all:hover { color: #feee9f; }
+@media (max-width: 1180px) { .lcw-prev { left: 6px; } .lcw-next { right: 6px; } }
+@media (max-width: 900px)  { .lcw-card { flex-basis: calc((100% - 18px) / 2); } }
+@media (max-width: 600px)  { .lcw-card { flex-basis: 82%; } .lcw-arrow { display: none; } }
+
 /* Modal */
 .mrw-modal-wrap {
     position: fixed; inset: 0; display: none;
@@ -1010,6 +1064,40 @@ footer p {
 </div>
 <div class="section-divider"></div>
 
+<!-- ========== CURRENT LISTINGS CAROUSEL ========== -->
+{% assign _active = site.listings | where: "status", "active" %}
+{% assign _soon = site.listings | where: "status", "coming_soon" %}
+{% assign featured = _active | concat: _soon | sort: "list_date" | reverse %}
+{% if featured.size > 0 %}
+<section class="lcw">
+    <h2 class="section-heading gold-text">My Current Listings</h2>
+    <p class="section-subtext">Homes I'm representing right now across Middle Tennessee.</p>
+    <div class="lcw-wrap" id="lcw-wrap">
+        <button class="lcw-arrow lcw-prev" id="lcw-prev" type="button" aria-label="Previous listings">&#8249;</button>
+        <div class="lcw-track" id="lcw-track">
+            {% for L in featured %}
+            {%- assign s = L.slug | default: L.name | replace: ".md","" -%}
+            <a class="lcw-card" href="{{ L.url }}">
+                <div class="lcw-media">
+                    {% if L.photos_ready %}<img loading="lazy" src="{{ site.listing_media_base }}/{{ s }}/{{ L.photos.hero.file }}-600.webp" alt="{{ L.photos.hero.alt }}" width="400" height="300">{% endif %}
+                    {% if L.status == 'coming_soon' %}<span class="lcw-badge soon">Coming Soon</span>{% else %}<span class="lcw-badge active">Active</span>{% endif %}
+                </div>
+                <div class="lcw-body">
+                    <div class="lcw-price">{{ L.price_display }}</div>
+                    <div class="lcw-addr">{{ L.address }}</div>
+                    <div class="lcw-sub">{% if L.subdivision %}{{ L.subdivision }} &middot; {% endif %}{{ L.city }}, {{ L.state }} {{ L.zip }}</div>
+                    <div class="lcw-stats"><span>{{ L.beds }} bd</span><span>{{ L.baths }} ba</span><span>{{ L.sqft }} sqft</span><span>{{ L.acres }} ac</span></div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <button class="lcw-arrow lcw-next" id="lcw-next" type="button" aria-label="More listings">&#8250;</button>
+    </div>
+    <a class="lcw-all" href="/listings/">View all listings &rarr;</a>
+</section>
+<div class="section-divider"></div>
+{% endif %}
+
 <!-- ========== SERVICES ========== -->
 <section class="services-section">
     <h2 class="section-heading gold-text">Expert Buyer &amp; Seller Services</h2>
@@ -1250,6 +1338,37 @@ footer p {
 </footer>
 
 <!-- ========== SCRIPTS ========== -->
+
+<!-- Current Listings Carousel -->
+<script>
+(function () {
+    var wrap = document.getElementById("lcw-wrap");
+    var track = document.getElementById("lcw-track");
+    if (!wrap || !track) return;
+    var prev = document.getElementById("lcw-prev");
+    var next = document.getElementById("lcw-next");
+
+    function step() {
+        var card = track.querySelector(".lcw-card");
+        if (!card) return track.clientWidth;
+        var gap = parseInt(getComputedStyle(track).gap, 10) || 18;
+        return card.offsetWidth + gap;
+    }
+    function update() {
+        var scrollable = track.scrollWidth > track.clientWidth + 4;
+        wrap.classList.toggle("lcw-hide-arrows", !scrollable);
+        if (!scrollable) return;
+        var maxScroll = track.scrollWidth - track.clientWidth - 2;
+        prev.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft >= maxScroll;
+    }
+    prev.addEventListener("click", function () { track.scrollBy({ left: -step(), behavior: "smooth" }); });
+    next.addEventListener("click", function () { track.scrollBy({ left: step(), behavior: "smooth" }); });
+    track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+})();
+</script>
 
 <!-- Testimonials Carousel -->
 <script>

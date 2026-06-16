@@ -74,9 +74,9 @@ specs:
 # ─── Location ────────────────────────────────────────────────────────────
 location_blurb: "Orchard Park is an established neighborhood right in White House — quiet, convenient, and zoned for White House Heritage schools. You're minutes from White House shopping and dining, with I-65 a short hop away for the commute to Nashville or north toward Bowling Green."
 schools:
-  # NOTE: Realtracs school table was garbled in the PDF (same as the Greenbrier
-  # listing). Remarks confirm the White House Heritage zone — please confirm the
-  # elementary (it listed both Robert F. Woodall and White House Heritage).
+  # CONFIRMED (John, 2026-06-16): WH Heritage zone — Robert F. Woodall Elementary,
+  # White House Heritage Middle, White House Heritage High. The Realtracs table
+  # showed the high school twice because WH Heritage Middle & High share a building.
   elementary: "Robert F. Woodall Elementary"
   middle: "White House Heritage Middle School"
   high: "White House Heritage High School"

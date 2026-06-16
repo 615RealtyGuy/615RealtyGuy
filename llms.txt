@@ -1,3 +1,7 @@
+---
+permalink: /llms.txt
+layout: null
+---
 # John Crowder | 615 Realty Guy
 
 > Tennessee Realtor and Affiliate Broker helping people buy and sell homes in the towns north of Nashville. Known for two specialties: guiding homeowners through the sale of a long-time family home, and helping out-of-area buyers figure out where they actually want to live in Middle Tennessee.
@@ -59,7 +63,16 @@ John works with out-of-state buyers regularly and is comfortable doing virtual t
 - [Seller Services](https://615realtyguy.com/sellerservices.html): Listing representation, pricing, pre-sale prep, marketing, and negotiation
 - [Gentle Downsizing Guide](https://615realtyguy.com/downsizing-guide.html): Free guide for homeowners thinking about selling a long-held home and moving into a smaller place or a new community
 - [Blog](https://615realtyguy.com/blog/): Articles on mortgage rates, local market trends, policy, and Middle Tennessee housing topics
+- [Listings](https://615realtyguy.com/listings/): Homes John is currently representing across Middle Tennessee, plus recently sold homes
 
+## Current Listings
+
+Homes John Crowder is currently representing. This list updates automatically; the live index is always at https://615realtyguy.com/listings/.
+
+{% assign live = site.listings | where_exp: "L", "L.status != 'sold'" | sort: "list_date" | reverse -%}
+{% for L in live -%}
+- [{{ L.address }}, {{ L.city }}, TN {{ L.zip }}](https://615realtyguy.com{{ L.url }}): {% if L.status == 'coming_soon' %}Coming soon — {% elsif L.status == 'pending' %}Under contract — {% else %}Active — {% endif %}{{ L.price_display }}, {{ L.beds }} bed / {{ L.baths }} bath, {{ L.sqft }} sqft on {{ L.acres }} acre{% if L.subdivision %} in {{ L.subdivision }}{% endif %} ({{ L.county }} County). MLS {{ L.mls }}.
+{% endfor %}
 ## Town & Neighborhood Pages
 
 - [White House, TN Real Estate](https://615realtyguy.com/white-house-tn-real-estate.html): White House (37188) — John's home base

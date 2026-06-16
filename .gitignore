@@ -1,0 +1,16 @@
+# Jekyll build output & caches (GitHub Pages builds these itself)
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Local Ruby/Bundler (we run user-local gems; GH Pages uses its own env)
+Gemfile.lock
+vendor/
+
+# Local listing-pipeline working dirs (per LISTINGS.md convention)
+_preview/
+scripts/originals/
+scripts/out/
+scripts/node_modules/
+node_modules/

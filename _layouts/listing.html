@@ -557,16 +557,50 @@
   "@graph": [
     {
       "@type": "RealEstateListing",
+      "@id": "https://615realtyguy.com/listings/{{ slug }}/#listing",
       "name": {{ full_addr | jsonify }},
       "url": "https://615realtyguy.com/listings/{{ slug }}/",
       {% if page.list_date %}"datePosted": "{{ page.list_date | date: '%Y-%m-%d' }}",{% endif %}
       "description": {{ page.seo_description | jsonify }},
+      {%- if page.photos_ready %}
+      "image": [
+        "https://615realtyguy.com{{ media }}/og.jpg",
+        "https://615realtyguy.com{{ media }}/{{ page.photos.hero.file }}-1200.webp"
+      ],
+      {%- endif %}
       "offers": {
         "@type": "Offer",
         "price": {{ page.price }},
         "priceCurrency": "USD",
-        "availability": "{{ avail }}"
+        "availability": "{{ avail }}",
+        "url": "https://615realtyguy.com/listings/{{ slug }}/",
+        "seller": {
+          "@type": "RealEstateAgent",
+          "name": "John Crowder",
+          "telephone": "+16154911638",
+          "url": "https://615realtyguy.com/",
+          "memberOf": { "@type": "RealEstateOrganization", "name": "SixOneFive Real Estate Advisors" }
+        }
       },
+      "about": { "@id": "https://615realtyguy.com/listings/{{ slug }}/#home" }
+    },
+    {
+      "@type": "SingleFamilyResidence",
+      "@id": "https://615realtyguy.com/listings/{{ slug }}/#home",
+      "name": {{ full_addr | jsonify }},
+      "url": "https://615realtyguy.com/listings/{{ slug }}/",
+      {%- if page.photos_ready %}
+      "photo": "https://615realtyguy.com{{ media }}/{{ page.photos.hero.file }}-1200.webp",
+      {%- endif %}
+      {%- if page.beds %}
+      "numberOfBedrooms": {{ page.beds }},
+      {%- endif %}
+      {%- if page.baths %}
+      "numberOfBathroomsTotal": {{ page.baths }},
+      {%- endif %}
+      {%- if page.sqft %}
+      "floorSize": { "@type": "QuantitativeValue", "value": {{ page.sqft | remove: "," }}, "unitCode": "FTK" },
+      {%- endif %}
       "address": {
         "@type": "PostalAddress",
         "streetAddress": {{ page.street | jsonify }},
@@ -575,6 +609,14 @@
         "postalCode": "{{ page.zip }}"
       }{% if page.lat and page.lng %},
       "geo": { "@type": "GeoCoordinates", "latitude": {{ page.lat }}, "longitude": {{ page.lng }} }{% endif %}
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://615realtyguy.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Listings", "item": "https://615realtyguy.com/listings/" },
+        { "@type": "ListItem", "position": 3, "name": {{ full_addr | jsonify }}, "item": "https://615realtyguy.com/listings/{{ slug }}/" }
+      ]
     }{% if page.faq %},
     {
       "@type": "FAQPage",

@@ -85,8 +85,8 @@ specs:
 # ─── Location ────────────────────────────────────────────────────────────
 location_blurb: "Quail Ridge sits in the Cottontown corner of Robertson County, in the White House Heritage school zone and minutes from White House for shopping and dining. I-65 is a short drive for the commute south to Nashville or north toward Bowling Green."
 schools:
-  # NOTE: the Realtracs school table garbled the middle school (it repeated the
-  # high school) — White House Heritage Middle is the correct zone; please confirm.
+  # CONFIRMED: White House Heritage Middle is the correct zone. The Realtracs table
+  # showed the high school twice because WH Heritage Middle & High share a building.
   elementary: "Robert F. Woodall Elementary"
   middle: "White House Heritage Middle School"
   high: "White House Heritage High School"

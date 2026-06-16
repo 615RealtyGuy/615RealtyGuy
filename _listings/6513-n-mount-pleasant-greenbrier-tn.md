@@ -82,8 +82,10 @@ specs:
 # ─── Location ────────────────────────────────────────────────────────────
 location_blurb: "Tucked into Spring View Acres on the White House side of Robertson County, you're surrounded by trees and acreage yet only minutes to White House for shopping and dining — with an easy I-65 commute south to Nashville or north to Bowling Green."
 schools:
-  # NOTE: the Realtracs school table was garbled in the PDF — please confirm,
-  # especially the elementary (it listed both Robert F. Woodall and White House Heritage).
+  # CONFIRMED (John, 2026-06-16): WH Heritage zone — Robert F. Woodall Elementary,
+  # White House Heritage Middle, White House Heritage High. (Greenbrier address, but
+  # zoned to WH Heritage — Robertson County zoning crosses town lines.) The Realtracs
+  # table showed the high school twice because WH Heritage Middle & High share a building.
   elementary: "Robert F. Woodall Elementary"
   middle: "White House Heritage Middle School"
   high: "White House Heritage High School"
