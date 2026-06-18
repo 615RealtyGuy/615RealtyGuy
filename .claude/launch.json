@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "static",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["serve.js"],
+      "port": 3002
+    },
+    {
+      "name": "listings-preview",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["scripts/preview.mjs"],
+      "port": 3002
+    },
+    {
+      "name": "blog-preview",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["scripts/preview-blog.mjs"],
+      "port": 3003
+    }
+  ]
+}

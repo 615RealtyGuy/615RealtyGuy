@@ -95,6 +95,8 @@ The risk is obvious: if your current home doesn't sell quickly, you're carrying 
 
 One thing worth flagging: **bridge financing and HELOCs**. Some buyers tap a home equity line of credit on the current home to cover the down payment on the next one, then pay it back at closing on the sale. Others use a bridge loan specifically designed for this scenario. Both have costs and trade-offs, and not every lender offers them on every property. If you're considering buying first, that conversation with your lender should happen *before* you start touring homes.
 
+For a real example of how this plays out, I wrote up a recent client story: [How a Bridge Loan Let My Buyers Win the Home Before Selling Theirs](/blog/bridge-loan-buy-before-selling-middle-tennessee/) — they found the one on its second day on the market, the seller wouldn't take a contingency, and a bridge loan is what let them compete anyway.
+
 ---
 
 ## Option 3: Make Your Offer Contingent on Selling Your Home

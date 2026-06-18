@@ -166,7 +166,7 @@ If you're a serious buyer in Middle Tennessee right now, here's where I'd land:
 
 **Do use this market to your advantage.** Get pre-approved with a lender who'll actually talk through buydown structures and concession scenarios. Watch the local submarkets that fit your life — not just the metro headline. And be ready to move on the right home when it appears, because in a balanced market the *good* listings still go quickly. It's the overpriced ones that sit.
 
-**If you're thinking about selling first**, the math is different and the timing matters. I broke that down in [Should I Buy Now or Wait in Middle Tennessee?](/blog/should-i-buy-now-or-wait-middle-tennessee/), and the contingent-vs-bridge decision is worth its own conversation.
+**If you're thinking about selling first**, the math is different and the timing matters. I broke that down in [Should I Buy Now or Wait in Middle Tennessee?](/blog/should-i-buy-now-or-wait-middle-tennessee/), and the contingent-vs-bridge decision is worth its own conversation — which I walk through with a real client story in [How a Bridge Loan Let My Buyers Win the Home Before Selling Theirs](/blog/bridge-loan-buy-before-selling-middle-tennessee/).
 
 ---
 
